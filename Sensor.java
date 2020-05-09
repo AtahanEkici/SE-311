@@ -1,4 +1,4 @@
-package com.company;
+
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,9 +14,9 @@ abstract class Sensor
 
     public abstract void setSensorValue(int value);
 
-    public abstract int getSensorValue( );
+    public abstract int getSensorValue();
 
-    protected ArrayList<Apartments> _subscribedApartments = new ArrayList<Apartments>();
+    protected ArrayList<Apartments> _subscribedApartments = new ArrayList<>();
 
 
     public void Attach(Apartments apartmen){
@@ -36,9 +36,9 @@ abstract class Sensor
 
 
     public void Notify() {
-        for (Apartments subscribedApartment : _subscribedApartments) {
+        _subscribedApartments.forEach((subscribedApartment) -> {
             subscribedApartment.Update(this);
-        }
+        });
     }
 
 

@@ -1,11 +1,19 @@
-package com.company;
 
-public class Main {
+import java.util.Random;
 
-    public static void main(String[] args) {
+public class Main 
+{
 
-        Apartments firstApartmen = new Apartments("Sahin Apartmani");
-        Apartments secondApartmen = new Apartments("Yilmaz Apartmani");
+    public static void main(String[] args) 
+    {
+/*
+        Apartments firstApartmen = new Apartments("Sahin Apartmani","Kahramanlar Sokağı","Bucak Mah.");
+        Apartments secondApartmen = new Apartments("Yilmaz Apartmani","Kahramanlar Sokağı","Bucak Mah.");
+        */
+        Pole deneme = new Pole("Deneme","Deneme2","Deneme3");
+        
+        System.out.println(deneme);
+        /*       
 
         Sensor tempSensor = new Temperature_Sensor();
         Sensor polSensor = new Pollution_Sensor();
@@ -26,10 +34,18 @@ public class Main {
         congSensor.Attach(secondApartmen);
 
 
-        tempSensor.setSensorValue(10);
-        polSensor.setSensorValue(20);
-        noiseSensor.setSensorValue(50);
-        congSensor.setSensorValue(60);
-
+        tempSensor.setSensorValue(CodeGenerator(100));
+        polSensor.setSensorValue(CodeGenerator(100));
+        noiseSensor.setSensorValue(CodeGenerator(100));
+        congSensor.setSensorValue(CodeGenerator(100));
+*/
     }
+    
+    public static int CodeGenerator(int deger)
+{
+    Random random = new Random();
+    int a = random.nextInt(deger);
+    return a;
+}  
+
 }
