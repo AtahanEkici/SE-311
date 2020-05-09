@@ -13,6 +13,7 @@ class Interface1 implements UserInterface
         Sensor s1 = new Pollution_Sensor();
         Sensor s2 = new Noise_Sensor();
         Sensor s3 = new Congestion_Sensor();
+        Sensor s4 = new Temperature_Sensor();
         s1.sensorModel();
         s1.sensorName();
         s1.setSensorValue(0);
@@ -22,9 +23,13 @@ class Interface1 implements UserInterface
         s3.sensorModel();
         s3.sensorName();
         s3.setSensorValue(0);
+        s4.sensorModel();
+        s4.sensorName();
+        s4.setSensorValue(0);
         s1.showSensorStats();
-        s2.showSensorStats();
+        s4.showSensorStats();
         s3.showSensorStats();
+        s2.showSensorStats();  
     }
 
     @Override
@@ -70,9 +75,9 @@ class Interface1 implements UserInterface
         }
         public void showInterface1()
         {
-            interface1.showApartment();
-            interface1.showNeighbour();
             interface1.showSensor();
+            interface1.showApartment();
+            interface1.showNeighbour();  
             interface1.showStreet();
         }
     }
