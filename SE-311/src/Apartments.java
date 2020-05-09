@@ -1,9 +1,9 @@
-interface Observer
+interface Observer_Apartment
 {
     public void Update(Sensor sensor);
 }
 
-public class Apartments extends Street implements Observer
+public class Apartments extends Street implements Observer_Apartment
     {
         protected static String Name;
 
