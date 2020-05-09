@@ -3,7 +3,7 @@ interface Observer
     public void Update(Sensor sensor);
 }
 
-public abstract class Apartments extends Street implements Observer
+public class Apartments extends Street implements Observer
     {
         protected static String Name;
 
@@ -12,7 +12,7 @@ public abstract class Apartments extends Street implements Observer
         protected Sensor _congSensor;
         protected Sensor _noiseSensor;
 
-         Apartments(String N_name,String S_name)
+         Apartments(String N_name,String S_name,String Name)
         {
             super(N_name,S_name);
             Apartments.Name = Name;
@@ -20,7 +20,7 @@ public abstract class Apartments extends Street implements Observer
         @Override
         public String toString()
      {
-    return "Apartment Name: "+Name+"";
+    return "Neighborhood Name: "+N_name+" Street Name: "+S_name+" Apartment Name: "+Name+"";
      }
 
         public String getName(){return Apartments.Name;}
