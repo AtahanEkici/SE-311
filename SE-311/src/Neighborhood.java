@@ -1,13 +1,12 @@
-abstract class Neighborhood 
+public class Neighborhood 
 {
-    protected static String N_name;
-    String Street;
-    String Pole_ID;
+    protected String N_name;
+    protected String Street;
+    protected String Pole_ID;
     
     Neighborhood(String name)
     {
-        Neighborhood.N_name = name;
-        
+        this.N_name = name;
     }
     
      @Override

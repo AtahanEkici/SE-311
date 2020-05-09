@@ -1,6 +1,6 @@
 public class Street extends Neighborhood
 {
-    public  String S_name;
+    protected  String S_name;
     
     Street(String N_name,String S_name)
     {
@@ -11,6 +11,6 @@ public class Street extends Neighborhood
      @Override
         public String toString()
      {
-    return " Street Name: "+S_name+" Neighborhood Name: "+N_name+"";
+    return " Neighborhood Name: "+N_name+" Street Name: "+S_name+"";
      }
 }

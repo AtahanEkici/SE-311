@@ -1,3 +1,4 @@
+
 import java.util.Random;
 
 public class Main 
@@ -5,14 +6,13 @@ public class Main
 
     public static void main(String[] args) 
     {
-/*
-        Apartments firstApartmen = new Apartments("Sahin Apartmani","Kahramanlar Sokağı","Bucak Mah.");
-        Apartments secondApartmen = new Apartments("Yilmaz Apartmani","Kahramanlar Sokağı","Bucak Mah.");
-*/
-        Pole deneme = new Pole("Deneme","Deneme2","Deneme3");
+        /*
         
-        System.out.println(deneme);
-        /*       
+        Apartments firstApartment = new Apartments("Bucak Mahallesi","Allahın Sokağı","Birşey Birşey apartmanı");
+        Apartments secondApartment = new Apartments("Mahalle","Sokak","Apartman");
+        
+        System.out.println(firstApartment);
+        System.out.println(secondApartment);          
 
         Sensor tempSensor = new Temperature_Sensor();
         Sensor polSensor = new Pollution_Sensor();
@@ -20,31 +20,34 @@ public class Main
         Sensor congSensor = new Congestion_Sensor();
 
 
-        tempSensor.Attach(firstApartmen);
-        tempSensor.Attach(secondApartmen);
+        tempSensor.Attach(firstApartment);
+        tempSensor.Attach(secondApartment);
 
-        polSensor.Attach(firstApartmen);
-        polSensor.Attach(secondApartmen);
+        polSensor.Attach(firstApartment);
+        polSensor.Attach(secondApartment);
 
-        noiseSensor.Attach(firstApartmen);
-        noiseSensor.Attach(secondApartmen);
+        noiseSensor.Attach(firstApartment);
+        noiseSensor.Attach(secondApartment);
 
-        congSensor.Attach(firstApartmen);
-        congSensor.Attach(secondApartmen);
+        congSensor.Attach(firstApartment);
+        congSensor.Attach(secondApartment);
 
 
         tempSensor.setSensorValue(CodeGenerator(100));
         polSensor.setSensorValue(CodeGenerator(100));
         noiseSensor.setSensorValue(CodeGenerator(100));
         congSensor.setSensorValue(CodeGenerator(100));
-*/
-    }
-    
-    public static int CodeGenerator(int deger)
-{
-    Random random = new Random();
-    int a = random.nextInt(deger);
-    return a;
-}  
+        */
+        
+        InterfacePanel ip;
+        ip = new InterfacePanel();
+        ip.showInterface1();
 
+}
+    private static int CodeGenerator(int i) 
+    {
+         Random random = new Random();
+    int a = random.nextInt(i);
+    return a;
+    }
 }

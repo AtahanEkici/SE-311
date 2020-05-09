@@ -5,7 +5,7 @@ interface Observer_Pole
 
 public   class Pole extends Street implements Observer_Pole
 {
-    private static String Name;
+    protected String Name;
     
         protected Sensor _polSensor;
         protected Sensor _tempSensor;
@@ -15,7 +15,7 @@ public   class Pole extends Street implements Observer_Pole
      Pole(String N_name, String S_name, String Name)
     {
         super(N_name,S_name);
-        Pole.Name = Name;
+        this.Name = Name;
     }
 @Override
         public String toString()
@@ -32,23 +32,29 @@ public   class Pole extends Street implements Observer_Pole
              switch (sensor.sensorID()){
                  case 0:
                      _polSensor = sensor;
-                     System.out.println("Pollution is announced to " + Pole.Name + " as :" + sensor.getSensorValue());
+                     System.out.println("Pollution is announced to " + this.Name + " as :" + sensor.getSensorValue());
                      break;
 
                  case 1:
                      _tempSensor = sensor;
-                     System.out.println("Temp is announced to " + Pole.Name + " as :" + sensor.getSensorValue());
+                     System.out.println("Temp is announced to " + this.Name + " as :" + sensor.getSensorValue());
                      break;
 
                  case 2:
                      _congSensor = sensor;
-                     System.out.println("Cong is announced to " + Pole.Name + " as :"+ sensor.getSensorValue());
+                     System.out.println("Cong is announced to " + this.Name + " as :"+ sensor.getSensorValue());
                      break;
 
                  case 3:
                      _noiseSensor = sensor;
-                     System.out.println("Noise is announced to " + Pole.Name + " as : "+ sensor.getSensorValue() );
+                     System.out.println("Noise is announced to " + this.Name + " as : "+ sensor.getSensorValue() );
                      break;           
              }
         } 
+
+
+    Object getName_Pole() 
+    {
+        return this.Name;
+    }
 }
