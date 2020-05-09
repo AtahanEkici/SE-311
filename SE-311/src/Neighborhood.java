@@ -1,15 +1,18 @@
 abstract class Neighborhood 
 {
-    public static String Name;
+    protected static String N_name;
+    String Street;
+    String Pole_ID;
     
     Neighborhood(String name)
     {
-        this.Name = name;
+        Neighborhood.N_name = name;
+        
     }
     
      @Override
         public String toString()
      {
-    return "Neighborhood Name: "+Name+"";
+    return "Neighborhood Name: "+N_name+"";
      }
 }

@@ -1,28 +1,23 @@
 public  class Pole extends Street implements Observer
 {
-    public static String Pole_ID;
+    private static String Name;
     
         protected Sensor _polSensor;
         protected Sensor _tempSensor;
         protected Sensor _congSensor;
         protected Sensor _noiseSensor;
     
-     Pole(String Pole_ID,String S_name, String N_name)
+     Pole(String N_name, String S_name, String Name)
     {
-        super(S_name, N_name);
-        Pole.Pole_ID = Pole_ID;
+        super(N_name,S_name);
+        Pole.Name = Name;
     }
-     
-             @Override
+@Override
         public String toString()
      {
-    return "Pole_ID: " +Pole_ID+" Street_Name: "+S_name+" Neighbor_Name: "+N_name+"";
+    return " Neighbor_Name: "+N_name+" Street_Name: "+S_name+" Pole Name: " +Name+" ";
      }
-     
-    /**
-     *
-     * @param sensor
-     */
+
     @Override
         public void Update(Sensor sensor) 
         {
@@ -47,7 +42,5 @@ public  class Pole extends Street implements Observer
                      System.out.println("Noise is announced to " + Pole.Name + " as : "+ sensor.getSensorValue() );
                      break;           
              }
-
         } 
-
 }

@@ -1,17 +1,16 @@
 public class Street extends Neighborhood
 {
-    public static String S_name;
-    protected String N_name;
+    public  String S_name;
     
-    Street(String name,String N_name)
+    Street(String N_name,String S_name)
     {
-        super(name);
-        this.N_name = Neighborhood.Name;
+        super(N_name);
+        this.S_name = S_name;    
     }
     
      @Override
         public String toString()
      {
-    return "Street Name: "+Name+"";
+    return " Street Name: "+S_name+" Neighborhood Name: "+N_name+"";
      }
 }

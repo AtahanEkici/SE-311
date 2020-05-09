@@ -5,19 +5,17 @@ interface Observer
 
 public abstract class Apartments extends Street implements Observer
     {
-        public String A_Name;
-        public String Street_name;
-        protected String N_name;
+        protected static String Name;
 
         protected Sensor _polSensor;
         protected Sensor _tempSensor;
         protected Sensor _congSensor;
         protected Sensor _noiseSensor;
 
-         Apartments(String A_Name,String Street_name, String N_name)
+         Apartments(String N_name,String S_name)
         {
-            super(A_Name,Street_name);
-            this.N_name = Neighborhood.Name;
+            super(N_name,S_name);
+            Apartments.Name = Name;
         }
         @Override
         public String toString()
@@ -25,7 +23,7 @@ public abstract class Apartments extends Street implements Observer
     return "Apartment Name: "+Name+"";
      }
 
-        public String getName(){return this.Name;}
+        public String getName(){return Apartments.Name;}
 
     /**
      *
@@ -37,22 +35,22 @@ public abstract class Apartments extends Street implements Observer
              switch (sensor.sensorID()){
                  case 0:
                      _polSensor = sensor;
-                     System.out.println("Pollution is announced to " + this.Name + " as :" + sensor.getSensorValue());
+                     System.out.println("Pollution is announced to " + Apartments.Name + " as :" + sensor.getSensorValue());
                      break;
 
                  case 1:
                      _tempSensor = sensor;
-                     System.out.println("Temp is announced to " + this.Name + " as :" + sensor.getSensorValue());
+                     System.out.println("Temp is announced to " + Apartments.Name + " as :" + sensor.getSensorValue());
                      break;
 
                  case 2:
                      _congSensor = sensor;
-                     System.out.println("Cong is announced to " + this.Name + " as :"+ sensor.getSensorValue());
+                     System.out.println("Cong is announced to " + Apartments.Name + " as :"+ sensor.getSensorValue());
                      break;
 
                  case 3:
                      _noiseSensor = sensor;
-                     System.out.println("Noise is announced to " + this.Name + " as : "+ sensor.getSensorValue() );
+                     System.out.println("Noise is announced to " + Apartments.Name + " as : "+ sensor.getSensorValue() );
                      break;           
              }
 
