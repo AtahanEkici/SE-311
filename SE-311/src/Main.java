@@ -9,6 +9,8 @@ public class Main
     {
         Apartments firstApartment = new Apartments("Bucak Mahallesi","Allahın Sokağı","Birşey Birşey apartmanı");
         Apartments secondApartment = new Apartments("Mahalle","Sokak","Apartman");
+        Apartments dummy = new Apartments("","","");
+        
         
         System.out.println(firstApartment);
         System.out.println(secondApartment);          
@@ -22,8 +24,6 @@ public class Main
         Sensor polSensor2 = new Pollution_Sensor();
         Sensor noiseSensor2 = new Noise_Sensor();
         Sensor congSensor2 = new Congestion_Sensor();
-
-
 
         tempSensor.Attach(firstApartment);
         tempSensor2.Attach(secondApartment);
@@ -51,6 +51,8 @@ public class Main
         InterfacePanel ip;
         ip = new InterfacePanel();
         ip.showInterface1();
+        
+        dummy.Print_Apartments();
 }
     public static int CodeGenerator(int i) 
     {

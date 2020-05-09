@@ -1,4 +1,4 @@
-public class Neighborhood 
+public abstract class Neighborhood 
 {
     protected String N_name;
     protected String Street;

@@ -3,9 +3,9 @@ interface Observer_Pole
     public void Update_Pole(Sensor sensor);
 }
 
-public   class Pole extends Street implements Observer_Pole
+public class Pole extends Street implements Observer_Pole
 {
-    protected String Name;
+       public String Name;
     
         protected Sensor _polSensor;
         protected Sensor _tempSensor;
@@ -50,8 +50,7 @@ public   class Pole extends Street implements Observer_Pole
                      System.out.println("Noise is announced to " + this.Name + " as : "+ sensor.getSensorValue() );
                      break;           
              }
-        } 
-
+        }
 
     Object getName_Pole() 
     {

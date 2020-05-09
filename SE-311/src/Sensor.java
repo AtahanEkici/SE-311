@@ -5,7 +5,7 @@ import java.util.Random;
 abstract class Sensor
 {
    
-        public static int CodeGenerator(int deger)
+public int CodeGenerator(int deger)
 {
     Random random = new Random();
     int a = random.nextInt(deger);
@@ -102,6 +102,7 @@ class Pollution_Sensor extends Sensor
     public void setPollutionNoticed(boolean pollutionNoticed) 
     {
         this.pollutionNoticed = pollutionNoticed;
+        Notify();
     }
 
     public int getPollution() 

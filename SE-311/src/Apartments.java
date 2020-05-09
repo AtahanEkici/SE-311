@@ -1,12 +1,15 @@
-interface Observer_Apartment
+import java.util.ArrayList;
+
+interface Observer_Apartment // Observer Pattern //
 {
     public void Update(Sensor sensor);
 }
 
-public class Apartments extends Street implements Observer_Apartment
+public  class Apartments extends Street implements Observer_Apartment
     {
         public String Name;
-
+        protected static ArrayList<Apartments> list = new ArrayList<>();
+     
         protected Sensor _polSensor;
         protected Sensor _tempSensor;
         protected Sensor _congSensor;
@@ -15,13 +18,19 @@ public class Apartments extends Street implements Observer_Apartment
          Apartments(String N_name,String S_name,String Name)
         {
             super(N_name,S_name);
+            list.add(this);
             this.Name = Name;
         }
         @Override
         public String toString()
      {
-    return "Neighborhood Name: "+N_name+" Street Name: "+S_name+" Apartment Name: "+Name+"";
+         return "Neighborhood Name: "+N_name+" Street Name: "+S_name+" Apartment Name: "+Name+"";
      }
+        
+        public void Print_Apartments()
+        {
+            System.out.println(list);
+        }
 
     /**
      *
@@ -51,7 +60,6 @@ public class Apartments extends Street implements Observer_Apartment
                      System.out.println("Noise is announced to " + this.Name + " as : "+ sensor.getSensorValue() );
                      break;           
              }
-
         }
 
     Object getName() 
