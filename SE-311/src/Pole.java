@@ -1,4 +1,9 @@
-public  class Pole extends Street implements Observer
+interface Observer_Pole
+{
+    public void Update_Pole(Sensor sensor);
+}
+
+public   class Pole extends Street implements Observer_Pole
 {
     private static String Name;
     
@@ -18,8 +23,11 @@ public  class Pole extends Street implements Observer
     return " Neighbor_Name: "+N_name+" Street_Name: "+S_name+" Pole Name: " +Name+" ";
      }
 
-    @Override
-        public void Update(Sensor sensor) 
+    /**
+     *
+     * @param sensor
+     */
+        public void Update_Pole(Sensor sensor) 
         {
              switch (sensor.sensorID()){
                  case 0:
