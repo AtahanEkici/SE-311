@@ -41,7 +41,6 @@ public class UI implements ActionListener{
             String apartman = tf3.getText();
             
             Apartments apt = new Apartments(mahalle,sokak,apartman);
-            Apartments.pushApartments(apt);
             Apartments.Print_Apartments();
         }
     }  
