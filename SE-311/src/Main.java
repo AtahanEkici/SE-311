@@ -5,25 +5,49 @@ public class Main
 {
     public static void main(String[] args) 
     {
+      
         /*
+            create apartments.
+        */
         Apartments firstApartment = new Apartments("Bucak Mahallesi","Allahın Sokağı","Birşey Birşey apartmanı");
         Apartments secondApartment = new Apartments("Mahalle","Sokak","Apartman");
-        Apartments dummy = new Apartments("dummy","dummy","dummy");
-        
-        
-        System.out.println(firstApartment);
-        System.out.println(secondApartment);          
+       
 
-        Sensor tempSensor = new Temperature_Sensor();
-        Sensor polSensor = new Pollution_Sensor();
-        Sensor noiseSensor = new Noise_Sensor();
-        Sensor congSensor = new Congestion_Sensor();
+        /*
+        Create sensors.
+        */
         
-        Sensor tempSensor2 = new Temperature_Sensor();
-        Sensor polSensor2 = new Pollution_Sensor();
-        Sensor noiseSensor2 = new Noise_Sensor();
-        Sensor congSensor2 = new Congestion_Sensor();
+        
+        /*
+        CREATE FACTORY
+        */
+        
+        sensorFactory sensorFac = new ConcreteSensorFactory();
+   
+        /*
+        CREATE BUİLDER
+        */
+        BuildSensor sensorBuilder = new BuildSensor();
+        
+        
+        /*
+        CREATE SENSORS VİA SENSORFACTORY.
+        */
+        Sensor tempSensor = sensorFac.createTemperatureSensor(0);
+        Sensor polSensor = sensorFac.createPollutionSensor(0);
+        Sensor noiseSensor = sensorFac.createNoiseSensor(0);
+        Sensor congSensor = sensorFac.createCongestionSensor(0);
+        
+        Sensor tempSensor2 = sensorFac.createTemperatureSensor(0);
+        Sensor polSensor2 = sensorFac.createPollutionSensor(0);
+        Sensor noiseSensor2 = sensorFac.createNoiseSensor(0);
+        Sensor congSensor2 = sensorFac.createCongestionSensor(0);
 
+        
+        /*
+        Attach apartments to the sensor to let them notified for changes
+        that are wanted to know if spesific values occurs.
+        */
         tempSensor.Attach(firstApartment);
         tempSensor2.Attach(secondApartment);
 
@@ -37,6 +61,9 @@ public class Main
         congSensor2.Attach(secondApartment);
 
 
+        /*
+        Set sensor values randomly from codeGenerator function.
+        */
         tempSensor.setSensorValue(CodeGenerator(100));
         polSensor.setSensorValue(CodeGenerator(100));
         noiseSensor.setSensorValue(CodeGenerator(100));
@@ -46,6 +73,9 @@ public class Main
         polSensor2.setSensorValue(CodeGenerator(100));
         noiseSensor2.setSensorValue(CodeGenerator(100));
         congSensor2.setSensorValue(CodeGenerator(100));
+        
+        
+        
         
         InterfacePanel ip;
         ip = new InterfacePanel();
@@ -58,10 +88,10 @@ public class Main
         
         Sensor.ShowAllSensors();
         Apartments.Print_Apartments();
-                
-        */
+   
       
         UI ui = new UI(); 
+        
 }
     public static int CodeGenerator(int i) 
     {

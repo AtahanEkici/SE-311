@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+
+
+/*
+
+*/
 interface Observer_Pole //Observer Pattern //
 {
     public void Update_Pole(Sensor sensor);

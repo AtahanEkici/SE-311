@@ -1,10 +1,8 @@
-com.company.Temperature_Sensor
-com.company.Noise_Sensor
-com.company.Pollution_Sensor
-com.company.Sensor
+BuildSensor
+ConcreteSensorFactory
 Temperature_Sensor
+sensorFactory
 Congestion_Sensor
 Pollution_Sensor
 Noise_Sensor
 Sensor
-com.company.Congestion_Sensor

@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+
+
+/*
+    An observer that observes the Sensors.
+*/
 interface Observer_Apartment // Observer Pattern //
 {
     public void Update(Sensor sensor);
@@ -7,6 +12,12 @@ interface Observer_Apartment // Observer Pattern //
 
 
 
+
+/*
+
+    Apartments is a concrete observer.
+
+*/
 public  class Apartments extends Street implements Observer_Apartment
     {
        @SuppressWarnings("LeakingThisInConstructor")
@@ -23,6 +34,8 @@ public  class Apartments extends Street implements Observer_Apartment
         protected Sensor _congSensor;
         protected Sensor _noiseSensor;
 
+        
+        
          Apartments(String N_name, String S_name, String Name)
         {
             super(N_name,S_name);
@@ -49,7 +62,7 @@ public  class Apartments extends Street implements Observer_Apartment
                 if(counter % 3 == 0)
                 {
                     System.out.println("");
-                   System.out.println(list.get(i));
+                    System.out.println(list.get(i));
                 }
                 
                 else
@@ -66,32 +79,64 @@ public  class Apartments extends Street implements Observer_Apartment
            //Apartments apartments = new Apartments();
         }
 
-    /**
-     *
-     * @param sensor
-     */
+
+        
+        
+        
     @Override
         public void Update(Sensor sensor) 
         {
              switch (sensor.sensorID()){
                  case 0:
                      _polSensor = sensor;
+                     
+                     /*
+                     user will be notified if pollution AQI value is greater than 100.
+                     */
+                     
+                     if(_polSensor.getSensorValue() >= 100){
                      System.out.println("Pollution is announced to " + this.Name + " as :" + sensor.getSensorValue());
+                     
+                     }
                      break;
 
                  case 1:
                      _tempSensor = sensor;
+                     
+                     /*
+                      You get notified when temperature falls below 0 degrees
+                     */
+                     
+                     if(_tempSensor.getSensorValue() <= 0){
                      System.out.println("Temp is announced to " + this.Name + " as :" + sensor.getSensorValue());
+                     }
                      break;
 
                  case 2:
                      _congSensor = sensor;
+                     
+                     
+                     /*
+                        You will be announced if the Car speed blow 10km/s
+                     */
+                   
+                     if(_congSensor.getSensorValue() <= 10){
                      System.out.println("Cong is announced to " + this.Name + " as :"+ sensor.getSensorValue());
+                     }
                      break;
 
                  case 3:
                      _noiseSensor = sensor;
-                     System.out.println("Noise is announced to " + this.Name + " as : "+ sensor.getSensorValue() );
+                     
+                     
+                       /*
+                      You get notified when noise level is above 85dB
+                     */
+                     
+                     if(_noiseSensor.getSensorValue() >= 85){
+                      System.out.println("Noise is announced to " + this.Name + " as : "+ sensor.getSensorValue() );
+                     }
+                    
                      break;           
              }
         }

@@ -2,13 +2,20 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+
+
+
+/*
+    Sensor is the Subject of the Observer Method. It will be followed by the Apartments and Poles.
+
+*/
 abstract class Sensor
 {
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
     
-  protected static ArrayList <Sensor> AllSensors = new ArrayList<>();
+     protected static ArrayList <Sensor> AllSensors = new ArrayList<>();
     
 public int CodeGenerator(int deger)
 {
@@ -16,6 +23,9 @@ public int CodeGenerator(int deger)
     int a = random.nextInt(deger);
     return a;
 }
+
+
+
     public abstract int sensorID();
     public abstract String sensorName();
     public abstract String sensorModel();
@@ -40,16 +50,22 @@ public int CodeGenerator(int deger)
        }
     }
 
+    
+    
+    /*
+    //Register the apartments Observers
+    */
     public void Attach(Apartments apartmen)
     {
         _subscribedApartments.add(apartmen);
     }
-    
+     //Register the pole observer
      public void Attach_Pole(Pole pole)
     {
         _subscribedPoles.add(pole);
     }
 
+    //Unregister from the list of Observers.
     public void Detach(Apartments apartment)
     {
         for(int i = 0;i<= _subscribedApartments.size();i++ ){
@@ -59,14 +75,8 @@ public int CodeGenerator(int deger)
         }
     }
     
-    public void Reset(Sensor sensor)
-    {
-        for(int i = 0;i<= _subscribedApartments.size();i++ )
-        {
-            
-        }
-    }
     
+    //Unregister from the list of Observers.
      public void Detach_Pole(Pole pole)
     {
         for(int i = 0;i<= _subscribedPoles.size();i++ ){
@@ -75,7 +85,18 @@ public int CodeGenerator(int deger)
            }
         }
     }
+     
+     
+    public void Reset(Sensor sensor)
+    {
+        for(int i = 0;i<= _subscribedApartments.size();i++ )
+        {
+            
+        }
+    }
 
+    // set argument to something that helps
+    // tell the Observers what happened
     public void Notify() 
     {
         _subscribedApartments.forEach((subscribedApartment) -> {
@@ -112,27 +133,97 @@ public int CodeGenerator(int deger)
     }
 }
 
+
+//An 'Abstract Factory' class
+abstract class sensorFactory{
+    
+abstract public Pollution_Sensor createPollutionSensor(int pol);
+abstract public Temperature_Sensor createTemperatureSensor(int temp);
+abstract public Congestion_Sensor createCongestionSensor(int conges);
+abstract public Noise_Sensor createNoiseSensor(int noise);
+
+}
+
+
+
+
+class ConcreteSensorFactory extends sensorFactory{
+
+        @Override
+        public Pollution_Sensor createPollutionSensor(int pol) {
+            return new Pollution_Sensor(pol);
+        }
+
+        @Override
+        public Temperature_Sensor createTemperatureSensor(int temp) {
+           return new Temperature_Sensor(temp);
+        }
+
+        @Override
+        public Congestion_Sensor createCongestionSensor(int conges) {
+            return new Congestion_Sensor(conges);
+        }
+
+        @Override
+        public Noise_Sensor createNoiseSensor(int noise) {
+            return new Noise_Sensor(noise);
+        }
+
+}
+
+
+//The Client
+
+
+class BuildSensor{
+
+public Pollution_Sensor createPollutionSensor(ConcreteSensorFactory sensorFactory, int value){
+    return sensorFactory.createPollutionSensor(value);
+}
+
+public Temperature_Sensor createTemperatureSensor(ConcreteSensorFactory sensorFactory, int value){
+    return sensorFactory.createTemperatureSensor(value);
+
+}
+
+
+public Congestion_Sensor createCongestionSensor(ConcreteSensorFactory sensorFactory, int value){
+    return sensorFactory.createCongestionSensor(value);
+
+}
+
+
+public Noise_Sensor createNoiseSensor(ConcreteSensorFactory sensorFactory, int value){
+    return sensorFactory.createNoiseSensor(value);
+
+}
+}
+
+
+
+
+
+/*
+Pollutuion sonsor is a ConcreteSubject
+*/
+
+
+/*
+Concrete sensor inherits from Sensor.
+*/
+
 class Pollution_Sensor extends Sensor
 {
     private int _pollution;
     private boolean pollutionNoticed;
 
-    public boolean isPollutionNoticed() 
-    {
-        return pollutionNoticed;
+    
+    public Pollution_Sensor(int pollution){
+        _pollution = pollution;
     }
-
-    public void setPollutionNoticed(boolean pollutionNoticed) 
-    {
-        this.pollutionNoticed = pollutionNoticed;
-        Notify();
-    }
-
-    public int getPollution() 
-    {
-        return _pollution;
-    }
-
+    
+    
+    
     public void setPollution(int pollution)
     {
         _pollution = pollution;
@@ -178,7 +269,7 @@ class Pollution_Sensor extends Sensor
     public Pollution_Sensor createPollutionSensor()
     {
          AllSensors.add(this);
-        return new Pollution_Sensor();      
+        return new Pollution_Sensor(1);      
     }
 
     public void calculatePollution(int newPollution)
@@ -189,9 +280,24 @@ class Pollution_Sensor extends Sensor
             newPollution = _pollution;
             setPollution(_pollution);
         }
-        System.out.println("The pollution is: " + getPollution() + "WARNING!" + notified());
+        System.out.println("The pollution is: " + getSensorValue()+ "WARNING!" + notified());
     }
 }
+
+
+
+
+
+
+/*
+Temp sonsor is a ConcreteSubject
+*/
+
+
+/*
+Concrete sensor inherits from Sensor.
+*/
+
 
 class Temperature_Sensor extends Sensor
 {
@@ -200,6 +306,12 @@ class Temperature_Sensor extends Sensor
     int Kelvin;
     int Fahrenheit;
 */
+    
+    public Temperature_Sensor(int temp){
+        _celcius = temp;
+    }
+    
+    
     @Override
     public int sensorID() 
     {
@@ -239,7 +351,7 @@ class Temperature_Sensor extends Sensor
     public Temperature_Sensor createTemperatureSensor()
     {
          AllSensors.add(this);
-        return new Temperature_Sensor();
+         return new Temperature_Sensor(1);
     }
 
     public void setCelcius(int celcius)
@@ -249,9 +361,36 @@ class Temperature_Sensor extends Sensor
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+/*
+Congestion sonsor is a ConcreteSubject
+*/
+
+
+/*
+Concrete sensor inherits from Sensor.
+*/
+
+
 class Congestion_Sensor extends Sensor
 {
     int _congestion;
+    
+    
+    
+    public Congestion_Sensor(int conges){
+    _congestion = conges;
+    }
 
     @Override
     public int sensorID() 
@@ -292,7 +431,7 @@ class Congestion_Sensor extends Sensor
     public Congestion_Sensor createCongestionSensor()
     {
          AllSensors.add(this);
-        return new Congestion_Sensor();
+        return new Congestion_Sensor(1);
     }
 
 
@@ -303,9 +442,28 @@ class Congestion_Sensor extends Sensor
     }
 }
 
+
+
+/*
+Noise sonsor is a ConcreteSubject
+*/
+
+
+
+/*
+Concrete sensor inherits from Sensor.
+*/
 class Noise_Sensor extends Sensor
 {
     int _volume;
+    
+    
+    
+    public Noise_Sensor( int volume ){
+    _volume = volume;
+    }
+    
+    
 
     @Override
     public int sensorID() 
@@ -346,7 +504,7 @@ class Noise_Sensor extends Sensor
     public Noise_Sensor createNoiseSensor()
     {
          AllSensors.add(this);
-        return new Noise_Sensor();
+        return new Noise_Sensor(1);
     }
 
     public void setVolume(int vol)

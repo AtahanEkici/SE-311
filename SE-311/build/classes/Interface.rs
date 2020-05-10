@@ -1,15 +1,6 @@
-Interface3$InterfacePanel
-UserInterface
-InterfacePanel
-Interface3
 Interface1
-Interface2
-Interface3$3
-Interface2$3
-Interface3$2
 Interface1$1
+UserInterface
 Interface1$3
-Interface2$2
-Interface3$1
 Interface1$2
-Interface2$1
+InterfacePanel

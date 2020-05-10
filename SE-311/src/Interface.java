@@ -10,31 +10,46 @@ class Interface1 implements UserInterface
     @Override
     public void showSensor() 
     {
-        Sensor s1 = new Pollution_Sensor();
-        Sensor s2 = new Noise_Sensor();
-        Sensor s3 = new Congestion_Sensor();
-        Sensor s4 = new Temperature_Sensor();
+        /*
+        CREATE FACTORY
+        */
+        sensorFactory sensorFac = new ConcreteSensorFactory();
         
-        s1.sensorModel();
-        s1.sensorName();
-        s1.setSensorValue(0);
         
-        s2.sensorModel();
-        s2.sensorName();
-        s2.setSensorValue(0);
+        /*
+        CREATE BUİLDER
+        */
+        BuildSensor sensorBuilder = new BuildSensor();
         
-        s3.sensorModel();
-        s3.sensorName();
-        s3.setSensorValue(0);
+        /*
+        CREATE SENSORS VİA SENSORFACTORY.
+        */
+        Sensor pollution_sensor = sensorFac.createPollutionSensor(0);
+        Sensor noise_sensor = sensorFac.createNoiseSensor(0);
+        Sensor congestion_sensor = sensorFac.createCongestionSensor(0);
+        Sensor temperature_sensor = sensorFac.createTemperatureSensor(0);
         
-        s4.sensorModel();
-        s4.sensorName();
-        s4.setSensorValue(0);
         
-        s1.showSensorStats();
-        s4.showSensorStats();
-        s3.showSensorStats();
-        s2.showSensorStats();  
+        pollution_sensor.sensorModel();
+        pollution_sensor.sensorName();
+        pollution_sensor.setSensorValue(0);
+        
+        noise_sensor.sensorModel();
+        noise_sensor.sensorName();
+        noise_sensor.setSensorValue(0);
+        
+        congestion_sensor.sensorModel();
+        congestion_sensor.sensorName();
+        congestion_sensor.setSensorValue(0);
+        
+        temperature_sensor.sensorModel();
+        temperature_sensor.sensorName();
+        temperature_sensor.setSensorValue(0);
+        
+        pollution_sensor.showSensorStats();
+        temperature_sensor.showSensorStats();
+        congestion_sensor.showSensorStats();
+        noise_sensor.showSensorStats();  
     }
 
     @Override
