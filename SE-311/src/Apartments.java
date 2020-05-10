@@ -23,9 +23,8 @@ public  class Apartments extends Street implements Observer_Apartment
         protected Sensor _congSensor;
         protected Sensor _noiseSensor;
 
-         Apartments(String N_name,String S_name,String Name)
+         Apartments(String N_name, String S_name, String Name)
         {
-            
             super(N_name,S_name);
             list.add(this);
             this.Name = Name;
@@ -35,6 +34,11 @@ public  class Apartments extends Street implements Observer_Apartment
      {
          return "Neighborhood Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+N_name+"" +ANSI_RESET+" Street Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+S_name+"" + ANSI_RESET+" Apartment Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+Name+"" + ANSI_RESET+"";
      }
+        
+        public static void pushApartments(Apartments a)
+        {
+            list.add(a);
+        }
         
         public static void Print_Apartments()
         {
@@ -55,6 +59,11 @@ public  class Apartments extends Street implements Observer_Apartment
                 counter++;
                 } 
             }
+        }
+        
+        public void CreateApartment()
+        {
+           //Apartments apartments = new Apartments();
         }
 
     /**

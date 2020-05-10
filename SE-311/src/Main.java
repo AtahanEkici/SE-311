@@ -5,7 +5,7 @@ public class Main
 {
     public static void main(String[] args) 
     {
-        
+        /*
         Apartments firstApartment = new Apartments("Bucak Mahallesi","Allahın Sokağı","Birşey Birşey apartmanı");
         Apartments secondApartment = new Apartments("Mahalle","Sokak","Apartman");
         Apartments dummy = new Apartments("dummy","dummy","dummy");
@@ -51,16 +51,22 @@ public class Main
         ip = new InterfacePanel();
         ip.showInterface1();
         
-        //Apartments.Print_Apartments();
         
-        Pole firstpole = new Pole("Deneme Mahalle","Deneme Sokak","Deneme Direk Adı");
         
+        Pole firstpole = new Pole("Deneme Mahalle","Deneme Sokak","Deneme Direk Adı"); 
         Pole.PrintPoles();
+        
+        Sensor.ShowAllSensors();
+        Apartments.Print_Apartments();
+                
+        */
+      
+        UI ui = new UI(); 
 }
     public static int CodeGenerator(int i) 
     {
     Random random = new Random();
     int a = random.nextInt(i);
-    return a;
+    return a;   
     }
 }

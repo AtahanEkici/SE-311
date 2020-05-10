@@ -4,7 +4,12 @@ import java.util.Random;
 
 abstract class Sensor
 {
-   
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+    
+  protected static ArrayList <Sensor> AllSensors = new ArrayList<>();
+    
 public int CodeGenerator(int deger)
 {
     Random random = new Random();
@@ -20,6 +25,20 @@ public int CodeGenerator(int deger)
 
     protected ArrayList<Apartments> _subscribedApartments = new ArrayList<>();
     protected ArrayList<Pole> _subscribedPoles = new ArrayList<>();
+    
+     @Override
+        public String toString()
+     {
+    return "Neighborhood Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+""+this.sensorModel()+"" +ANSI_RESET+" Street Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+this.sensorName()+"" + ANSI_RESET+" Apartment Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+this.sensorID()+"" + ANSI_RESET+"";
+     }
+    
+    public static void ShowAllSensors()
+    {
+       for(int i =0;i<AllSensors.size();i++)
+       {
+           System.out.println(AllSensors.get(i));
+       }
+    }
 
     public void Attach(Apartments apartmen)
     {
@@ -40,6 +59,14 @@ public int CodeGenerator(int deger)
         }
     }
     
+    public void Reset(Sensor sensor)
+    {
+        for(int i = 0;i<= _subscribedApartments.size();i++ )
+        {
+            
+        }
+    }
+    
      public void Detach_Pole(Pole pole)
     {
         for(int i = 0;i<= _subscribedPoles.size();i++ ){
@@ -53,6 +80,7 @@ public int CodeGenerator(int deger)
     {
         _subscribedApartments.forEach((subscribedApartment) -> {
             subscribedApartment.Update(this);
+            //this.notified() == true;
         });
     }
     
@@ -149,7 +177,8 @@ class Pollution_Sensor extends Sensor
 
     public Pollution_Sensor createPollutionSensor()
     {
-        return new Pollution_Sensor();
+         AllSensors.add(this);
+        return new Pollution_Sensor();      
     }
 
     public void calculatePollution(int newPollution)
@@ -209,6 +238,7 @@ class Temperature_Sensor extends Sensor
 
     public Temperature_Sensor createTemperatureSensor()
     {
+         AllSensors.add(this);
         return new Temperature_Sensor();
     }
 
@@ -261,6 +291,7 @@ class Congestion_Sensor extends Sensor
 
     public Congestion_Sensor createCongestionSensor()
     {
+         AllSensors.add(this);
         return new Congestion_Sensor();
     }
 
@@ -314,6 +345,7 @@ class Noise_Sensor extends Sensor
 
     public Noise_Sensor createNoiseSensor()
     {
+         AllSensors.add(this);
         return new Noise_Sensor();
     }
 
