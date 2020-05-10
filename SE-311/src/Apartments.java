@@ -5,9 +5,17 @@ interface Observer_Apartment // Observer Pattern //
     public void Update(Sensor sensor);
 }
 
+
+
 public  class Apartments extends Street implements Observer_Apartment
     {
-        public String Name;
+       @SuppressWarnings("LeakingThisInConstructor")
+    
+       public static final String ANSI_BLUE = "\u001B[34m";
+       public static final String ANSI_RESET = "\u001B[0m";
+       public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+    
+        protected String Name;
         protected static ArrayList<Apartments> list = new ArrayList<>();
      
         protected Sensor _polSensor;
@@ -17,6 +25,7 @@ public  class Apartments extends Street implements Observer_Apartment
 
          Apartments(String N_name,String S_name,String Name)
         {
+            
             super(N_name,S_name);
             list.add(this);
             this.Name = Name;
@@ -24,12 +33,28 @@ public  class Apartments extends Street implements Observer_Apartment
         @Override
         public String toString()
      {
-         return "Neighborhood Name: "+N_name+" Street Name: "+S_name+" Apartment Name: "+Name+"";
+         return "Neighborhood Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+N_name+"" +ANSI_RESET+" Street Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+S_name+"" + ANSI_RESET+" Apartment Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+Name+"" + ANSI_RESET+"";
      }
         
-        public void Print_Apartments()
+        public static void Print_Apartments()
         {
-            System.out.println(list);
+            int counter = 1;
+            
+            for(int i = 0;i<list.size();i++)
+            {
+                if(counter % 3 == 0)
+                {
+                    System.out.println("");
+                   System.out.println(list.get(i));
+                }
+                
+                else
+                {
+                System.out.println(list.get(i));
+                System.out.println("");
+                counter++;
+                } 
+            }
         }
 
     /**

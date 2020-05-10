@@ -3,13 +3,12 @@ import java.util.Random;
 
 public class Main 
 {
-
-
     public static void main(String[] args) 
     {
+        
         Apartments firstApartment = new Apartments("Bucak Mahallesi","Allahın Sokağı","Birşey Birşey apartmanı");
         Apartments secondApartment = new Apartments("Mahalle","Sokak","Apartman");
-        Apartments dummy = new Apartments("","","");
+        Apartments dummy = new Apartments("dummy","dummy","dummy");
         
         
         System.out.println(firstApartment);
@@ -52,7 +51,11 @@ public class Main
         ip = new InterfacePanel();
         ip.showInterface1();
         
-        dummy.Print_Apartments();
+        //Apartments.Print_Apartments();
+        
+        Pole firstpole = new Pole("Deneme Mahalle","Deneme Sokak","Deneme Direk Adı");
+        
+        Pole.PrintPoles();
 }
     public static int CodeGenerator(int i) 
     {

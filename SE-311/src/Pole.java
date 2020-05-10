@@ -1,12 +1,21 @@
-interface Observer_Pole
+import java.util.ArrayList;
+
+interface Observer_Pole //Observer Pattern //
 {
     public void Update_Pole(Sensor sensor);
 }
 
 public class Pole extends Street implements Observer_Pole
 {
-       public String Name;
+    @SuppressWarnings("LeakingThisInConstructor")
     
+       public static final String ANSI_BLUE = "\u001B[34m";
+       public static final String ANSI_RESET = "\u001B[0m";
+       public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+    
+        protected String Name;
+        protected static ArrayList<Pole> Pole_list = new ArrayList<>();
+       
         protected Sensor _polSensor;
         protected Sensor _tempSensor;
         protected Sensor _congSensor;
@@ -15,13 +24,39 @@ public class Pole extends Street implements Observer_Pole
      Pole(String N_name, String S_name, String Name)
     {
         super(N_name,S_name);
-        this.Name = Name;
+        Pole_list.add(this);
+        this.Name = Name; 
     }
 @Override
         public String toString()
      {
-    return " Neighbor_Name: "+N_name+" Street_Name: "+S_name+" Pole Name: " +Name+" ";
+    return "Neighborhood Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+N_name+"" +ANSI_RESET+" Street Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+S_name+"" + ANSI_RESET+" Apartment Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+Name+"" + ANSI_RESET+"";
      }
+        
+        public static void PrintPoles()
+        {
+            int counter = 1;
+            
+            for(int i = 0;i<Pole_list.size();i++)
+            {
+                if(counter % 3 == 0)
+                {
+                    System.out.println("");
+                   System.out.println(Pole_list.get(i));
+                }
+                
+                else
+                {
+                System.out.println(Pole_list.get(i));
+                System.out.println("");
+                counter++;
+                } 
+            }
+        }
+        
+        
+        
+        
 
     /**
      *

@@ -1,6 +1,6 @@
 public class Street extends Neighborhood
 {
-    protected  String S_name;
+    protected String S_name;
     
     Street(String N_name,String S_name)
     {

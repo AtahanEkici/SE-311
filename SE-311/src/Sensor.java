@@ -89,11 +89,6 @@ class Pollution_Sensor extends Sensor
     private int _pollution;
     private boolean pollutionNoticed;
 
-    public Pollution_Sensor()
-    {
-
-    }
-
     public boolean isPollutionNoticed() 
     {
         return pollutionNoticed;
