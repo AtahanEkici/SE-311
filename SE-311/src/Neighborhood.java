@@ -25,4 +25,9 @@ public abstract class Neighborhood
                    System.out.println(Neighborhood_list.get(i));              
             }
         }
+        
+        int Total_Number_Of_Neighborhoods()
+        {
+            return Neighborhood_list.size();
+        }
 }

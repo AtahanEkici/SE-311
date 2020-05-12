@@ -49,12 +49,17 @@ public class Pole extends Street implements Observer_Pole
                 } 
             }
         }
+        int Total_Number_of_Poles()
+        {
+            return Pole_list.size();
+        }
         
 
     /**
      *
      * @param sensor
      */
+    @Override
         public void Update_Pole(Sensor sensor) 
         {
              switch (sensor.sensorID()){

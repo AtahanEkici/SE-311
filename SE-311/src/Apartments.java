@@ -47,6 +47,11 @@ public  class Apartments extends Street implements Observer_Apartment
                    System.out.println(list.get(i));                 
             }
         }
+        
+        int Total_Number()
+        {
+            return list.size();
+        }
 
         public static void deleteApartment(Apartments a,String Name)
 {
