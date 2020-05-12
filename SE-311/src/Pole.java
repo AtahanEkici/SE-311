@@ -1,10 +1,5 @@
 import java.util.ArrayList;
 
-
-
-/*
-
-*/
 interface Observer_Pole //Observer Pattern //
 {
     public void Update_Pole(Sensor sensor);
@@ -13,10 +8,6 @@ interface Observer_Pole //Observer Pattern //
 public class Pole extends Street implements Observer_Pole
 {
     @SuppressWarnings("LeakingThisInConstructor")
-    
-       public static final String ANSI_BLUE = "\u001B[34m";
-       public static final String ANSI_RESET = "\u001B[0m";
-       public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
     
         protected String Name;
         protected static ArrayList<Pole> Pole_list = new ArrayList<>();
@@ -35,7 +26,7 @@ public class Pole extends Street implements Observer_Pole
 @Override
         public String toString()
      {
-    return "Neighborhood Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+N_name+"" +ANSI_RESET+" Street Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+S_name+"" + ANSI_RESET+" Apartment Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+Name+"" + ANSI_RESET+"";
+    return "Neighborhood Name: "+N_name+" Street Name: "+S_name+" Apartment Name: "+Name+"";
      }
         
         public static void PrintPoles()
@@ -46,7 +37,7 @@ public class Pole extends Street implements Observer_Pole
             {
                 if(counter % 3 == 0)
                 {
-                    System.out.println("");
+                   System.out.println("");
                    System.out.println(Pole_list.get(i));
                 }
                 
@@ -58,9 +49,6 @@ public class Pole extends Street implements Observer_Pole
                 } 
             }
         }
-        
-        
-        
         
 
     /**

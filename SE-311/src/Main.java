@@ -10,14 +10,9 @@ public class Main
             create apartments.
         */
         Apartments firstApartment = new Apartments("Bucak Mahallesi","Allahın Sokağı","Birşey Birşey apartmanı");
-        Apartments secondApartment = new Apartments("Mahalle","Sokak","Apartman");
+        Apartments secondApartment = new Apartments("Mahalle","Sokak","Apartman1");
        
 
-        /*
-        Create sensors.
-        */
-        
-        
         /*
         CREATE FACTORY
         */
@@ -38,10 +33,8 @@ public class Main
         Sensor noiseSensor = sensorFac.createNoiseSensor(0);
         Sensor congSensor = sensorFac.createCongestionSensor(0);
         
-        Sensor tempSensor2 = sensorFac.createTemperatureSensor(0);
-        Sensor polSensor2 = sensorFac.createPollutionSensor(0);
-        Sensor noiseSensor2 = sensorFac.createNoiseSensor(0);
-        Sensor congSensor2 = sensorFac.createCongestionSensor(0);
+        
+
 
         
         /*
@@ -49,39 +42,70 @@ public class Main
         that are wanted to know if spesific values occurs.
         */
         tempSensor.Attach(firstApartment);
-        tempSensor2.Attach(secondApartment);
+        tempSensor.Attach(secondApartment);
 
         polSensor.Attach(firstApartment);
-        polSensor2.Attach(secondApartment);
+        polSensor.Attach(secondApartment);
+        
 
         noiseSensor.Attach(firstApartment);
-        noiseSensor2.Attach(secondApartment);
+        noiseSensor.Attach(secondApartment);
 
         congSensor.Attach(firstApartment);
-        congSensor2.Attach(secondApartment);
+        congSensor.Attach(secondApartment);
+        
 
 
         /*
-        Set sensor values randomly from codeGenerator function.
+        Set sensor values to give alerts.
         */
-        tempSensor.setSensorValue(CodeGenerator(100));
-        polSensor.setSensorValue(CodeGenerator(100));
-        noiseSensor.setSensorValue(CodeGenerator(100));
-        congSensor.setSensorValue(CodeGenerator(100));
-        
-        tempSensor2.setSensorValue(CodeGenerator(100));
-        polSensor2.setSensorValue(CodeGenerator(100));
-        noiseSensor2.setSensorValue(CodeGenerator(100));
-        congSensor2.setSensorValue(CodeGenerator(100));
+        tempSensor.setSensorValue(-20);
+        polSensor.setSensorValue(222);
+        noiseSensor.setSensorValue(2222);
+        congSensor.setSensorValue(1);
+
         
         
+        /*
+        Iterate over subscribed apartments collection and get the subscribed
+        aperments names and print them all.
+        */
         
+        tempSensor.getAllSubs();
+        
+        
+        
+        
+                /*
+        Create a sensors class object to collect all sensors and visit them to reset.
+        */
+        
+        Sensors sensorCollection = new Sensors();
+        
+        sensorCollection.add(tempSensor);
+        sensorCollection.add(polSensor);
+        sensorCollection.add(noiseSensor);
+        sensorCollection.add(congSensor);
+        
+            
+        //sensors visited to the admin to Reset them.
+        
+        sensorCollection.Accept(new ResetVisitor());
+        
+        
+        
+        
+        
+        
+        
+        
+       
         
         InterfacePanel ip;
         ip = new InterfacePanel();
         ip.showInterface1();
         
-        
+        /* 
         
         Pole firstpole = new Pole("Deneme Mahalle","Deneme Sokak","Deneme Direk Adı"); 
         Pole.PrintPoles();
@@ -89,7 +113,7 @@ public class Main
         Sensor.ShowAllSensors();
         Apartments.Print_Apartments();
    
-      
+      */
         UI ui = new UI(); 
         
 }

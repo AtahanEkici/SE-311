@@ -1,7 +1,4 @@
 import java.util.ArrayList;
-
-
-
 /*
     An observer that observes the Sensors.
 */
@@ -9,10 +6,6 @@ interface Observer_Apartment // Observer Pattern //
 {
     public void Update(Sensor sensor);
 }
-
-
-
-
 /*
 
     Apartments is a concrete observer.
@@ -20,12 +13,6 @@ interface Observer_Apartment // Observer Pattern //
 */
 public  class Apartments extends Street implements Observer_Apartment
     {
-       @SuppressWarnings("LeakingThisInConstructor")
-    
-       public static final String ANSI_BLUE = "\u001B[34m";
-       public static final String ANSI_RESET = "\u001B[0m";
-       public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
-    
         protected String Name;
         protected static ArrayList<Apartments> list = new ArrayList<>();
      
@@ -34,18 +21,18 @@ public  class Apartments extends Street implements Observer_Apartment
         protected Sensor _congSensor;
         protected Sensor _noiseSensor;
 
-        
-        
          Apartments(String N_name, String S_name, String Name)
         {
             super(N_name,S_name);
-            list.add(this);
             this.Name = Name;
+            list.add(this);
+            Neighborhood_list.add(this);
+            Street_list.add(this);
         }
         @Override
         public String toString()
      {
-         return "Neighborhood Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+N_name+"" +ANSI_RESET+" Street Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+S_name+"" + ANSI_RESET+" Apartment Name: "+ANSI_BLUE+ANSI_BLACK_BACKGROUND+ ""+Name+"" + ANSI_RESET+"";
+         return "Neighborhood Name:"+N_name+" Street Name:"+S_name+" Apartment Name: "+Name+"";
      }
         
         public static void pushApartments(Apartments a)
@@ -54,35 +41,26 @@ public  class Apartments extends Street implements Observer_Apartment
         }
         
         public static void Print_Apartments()
-        {
-            int counter = 1;
-            
+        { 
             for(int i = 0;i<list.size();i++)
             {
-                if(counter % 3 == 0)
-                {
-                    System.out.println("");
-                    System.out.println(list.get(i));
-                }
-                
-                else
-                {
-                System.out.println(list.get(i));
-                System.out.println("");
-                counter++;
-                } 
+                   System.out.println(list.get(i));                 
             }
         }
-        
-        public void CreateApartment()
-        {
-           //Apartments apartments = new Apartments();
-        }
 
+        public static void deleteApartment(Apartments a,String Name)
+{
+            for(int i=0;i<list.size();i++)
+            {
+                if(list.get(i).equals(""+Name+""))
+                {
+                    list.remove(i-2);
+                    list.remove(i-1);
+                    list.remove(i);
+                }
+            }
+}
 
-        
-        
-        
     @Override
         public void Update(Sensor sensor) 
         {

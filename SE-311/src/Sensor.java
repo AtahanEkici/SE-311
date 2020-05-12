@@ -5,11 +5,105 @@ import java.util.Random;
 
 
 
+
+
+
+interface AbstractAggregate {
+	public AbstractIterator CreateIterator();
+	public void add(Apartments it); 		// Not needed for iteration.
+	public int getCount (); // Needed for iteration.
+	public Apartments get(int idx); // Needed for iteration.
+        public ArrayList<Apartments> getItems();
+};
+
+//
+//This is the concrete Aggregate.
+//			Collection
+//
+
+class Collection implements AbstractAggregate {
+	private	 ArrayList<Apartments> _items = new ArrayList<Apartments>();
+	public	ApartmentIterator CreateIterator() {
+		return new ApartmentIterator(this);
+	}
+	public int getCount () {return _items.size(); }
+	public void add(Apartments item) {_items.add(item);};
+	public Apartments get(int index) { return _items.get(index);};
+        
+        
+        public ArrayList<Apartments> getItems(){
+        return _items;
+        }
+};
+
+
+
+
+
+
+
+
+interface AbstractIterator{
+    void first();
+    void next();
+    Boolean isDone();
+    Apartments currentItem();
+}
+
+class ApartmentIterator implements AbstractIterator{
+
+    private Collection _collection;
+    private int _current;
+    
+    	public ApartmentIterator(Collection collection) {
+		_collection = collection; 
+		_current = 0;
+	}
+    
+    
+    @Override
+    public void first() {
+       _current = 0;
+    }
+
+    @Override
+    public void next() {
+       _current++;
+    }
+
+    @Override
+    public Boolean isDone() {
+       return _current >= _collection.getCount();
+    }
+
+    @Override
+    public Apartments currentItem() {
+       if(!isDone()){
+       return _collection.get(_current);
+       }else{
+           System.out.println("collection is not found.");
+       return null;
+       }
+    }
+    
+    
+    
+
+}
+
+
+
+
+
+
 /*
     Sensor is the Subject of the Observer Method. It will be followed by the Apartments and Poles.
 
 */
-abstract class Sensor
+abstract class Sensor implements Element 
+        
+        
+        
 {
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_RESET = "\u001B[0m";
@@ -26,6 +120,9 @@ public int CodeGenerator(int deger)
 
 
 
+
+
+
     public abstract int sensorID();
     public abstract String sensorName();
     public abstract String sensorModel();
@@ -33,8 +130,43 @@ public int CodeGenerator(int deger)
     public abstract void setSensorValue(int value);
     public abstract int getSensorValue();
 
-    protected ArrayList<Apartments> _subscribedApartments = new ArrayList<>();
+    //protected ArrayList<Apartments> _subscribedApartments = new ArrayList<>();
     protected ArrayList<Pole> _subscribedPoles = new ArrayList<>();
+    
+    
+    AbstractAggregate _subscribedApartments = new Collection();
+    
+    
+    static void printAggregate(AbstractIterator i) {
+        
+		System.out.println("Subscribed Apartment names are : ");
+                
+                
+		for(i.first();  !i.isDone(); i.next()) {
+			System.out.println(i.currentItem().getName());
+		}
+		System.out.println();
+	}
+    
+    /*
+    Iterate over the _subscribedApartments and write sensors' observers.
+    */
+    
+    public void getAllSubs(){
+    
+
+    // Create Iterator
+    AbstractIterator iterator = _subscribedApartments.CreateIterator();
+    
+        printAggregate(iterator);
+    
+    }
+    
+    
+    
+    
+    
+    
     
      @Override
         public String toString()
@@ -52,6 +184,7 @@ public int CodeGenerator(int deger)
 
     
     
+    
     /*
     //Register the apartments Observers
     */
@@ -59,21 +192,27 @@ public int CodeGenerator(int deger)
     {
         _subscribedApartments.add(apartmen);
     }
-     //Register the pole observer
-     public void Attach_Pole(Pole pole)
-    {
-        _subscribedPoles.add(pole);
-    }
+     
 
     //Unregister from the list of Observers.
     public void Detach(Apartments apartment)
     {
-        for(int i = 0;i<= _subscribedApartments.size();i++ ){
+        for(int i = 0 ; i  <=  _subscribedApartments.getCount()  ; i++ ){
            if(this.getName().equals(_subscribedApartments.get(i).getName())) {
-               _subscribedApartments.remove(apartment);
+               _subscribedApartments.getItems().remove(apartment);
            }
         }
     }
+    
+    
+    
+    
+    //Register the pole observer
+     public void Attach_Pole(Pole pole)
+    {
+        _subscribedPoles.add(pole);
+    }
+    
     
     
     //Unregister from the list of Observers.
@@ -89,7 +228,7 @@ public int CodeGenerator(int deger)
      
     public void Reset(Sensor sensor)
     {
-        for(int i = 0;i<= _subscribedApartments.size();i++ )
+        for(int i = 0;i<= _subscribedApartments.getCount();i++ )
         {
             
         }
@@ -99,7 +238,7 @@ public int CodeGenerator(int deger)
     // tell the Observers what happened
     public void Notify() 
     {
-        _subscribedApartments.forEach((subscribedApartment) -> {
+        _subscribedApartments.getItems().forEach((subscribedApartment) -> {
             subscribedApartment.Update(this);
             //this.notified() == true;
         });
@@ -122,6 +261,15 @@ public int CodeGenerator(int deger)
         System.out.println("---------------------------");
     }
 
+    
+    
+    
+    /*
+    
+    BU NE DİR?
+    
+    
+    */
     private Object getName() 
     {
         return this._subscribedApartments;
@@ -131,7 +279,10 @@ public int CodeGenerator(int deger)
     {
         return this._subscribedPoles;
     }
+
 }
+
+
 
 
 //An 'Abstract Factory' class
@@ -145,7 +296,9 @@ abstract public Noise_Sensor createNoiseSensor(int noise);
 }
 
 
-
+/*
+AN CONCRETE SENSORFACTORY CLASS
+*/
 
 class ConcreteSensorFactory extends sensorFactory{
 
@@ -201,6 +354,47 @@ public Noise_Sensor createNoiseSensor(ConcreteSensorFactory sensorFactory, int v
 
 
 
+/*
+    Visitor pattern
+*/
+    interface Element{
+        public void Accept(Visitor visitor);
+    }
+
+    interface Visitor{
+        public void Visit(Sensor sensor);
+    }
+
+
+
+
+class Sensors{
+private ArrayList<Sensor> _sensors = new ArrayList<Sensor>();
+
+public void add(Sensor sensor){_sensors.add(sensor);}
+
+
+public void Accept(Visitor visitor){
+for(int i = 0; i < _sensors.size() ; i++){
+_sensors.get(i).Accept(visitor);
+}
+}
+}
+
+
+class ResetVisitor implements Visitor{
+    @Override
+    public void Visit(Sensor sensor) {
+        
+       System.out.println(sensor.sensorName()+" is resetted by admin.");
+       
+       sensor.setSensorValue(0);
+       System.out.println("new sensorValue is : " + sensor.getSensorValue());
+       
+    }
+}
+
+
 
 
 /*
@@ -212,11 +406,12 @@ Pollutuion sonsor is a ConcreteSubject
 Concrete sensor inherits from Sensor.
 */
 
-class Pollution_Sensor extends Sensor
+class Pollution_Sensor extends Sensor 
 {
     private int _pollution;
     private boolean pollutionNoticed;
-
+    
+   
     
     public Pollution_Sensor(int pollution){
         _pollution = pollution;
@@ -282,6 +477,11 @@ class Pollution_Sensor extends Sensor
         }
         System.out.println("The pollution is: " + getSensorValue()+ "WARNING!" + notified());
     }
+
+  
+    public void Accept(Visitor visitor) {
+        visitor.Visit(this);
+    }
 }
 
 
@@ -299,7 +499,7 @@ Concrete sensor inherits from Sensor.
 */
 
 
-class Temperature_Sensor extends Sensor
+class Temperature_Sensor extends Sensor 
 {
     int _celcius;
 /*
@@ -359,6 +559,11 @@ class Temperature_Sensor extends Sensor
         _celcius = celcius;
         Notify();
     }
+
+    
+    public void Accept(Visitor visitor) {
+       visitor.Visit(this);
+    }
 }
 
 
@@ -382,7 +587,7 @@ Concrete sensor inherits from Sensor.
 */
 
 
-class Congestion_Sensor extends Sensor
+class Congestion_Sensor extends Sensor 
 {
     int _congestion;
     
@@ -439,6 +644,11 @@ class Congestion_Sensor extends Sensor
     {
         _congestion = pollution;
         Notify();
+    }
+
+    
+    public void Accept(Visitor visitor) {
+        visitor.Visit(this);
     }
 }
 
@@ -511,6 +721,11 @@ class Noise_Sensor extends Sensor
     {
         _volume = vol;
         Notify();
+    }
+
+  
+    public void Accept(Visitor visitor) {
+        visitor.Visit(this);
     }
 }
 
