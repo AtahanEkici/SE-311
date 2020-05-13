@@ -288,14 +288,17 @@ public static int CodeGenerator(int i)
         {
             if(Sensors._sensors.isEmpty() == true)
             {
-                jta.append("\nHenüz Sensör eklenmemiş\n");
+                jta.append("\n Henüz Sensör eklenmemiş \n");
             }
               
             else
         {
+            jta.append("\n Sensors: \n");
+            
                 for(int i = 0;i <Sensors._sensors.size();i++)
             {
-                jta.append("\n"+Sensors._sensors.get(i)+"\n");
+                int counter = i + 1;
+                jta.append("\n"+counter+") "+Sensors._sensors.get(i));
             }
         }
         }  
