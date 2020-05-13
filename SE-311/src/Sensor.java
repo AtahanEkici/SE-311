@@ -1,14 +1,8 @@
-
 import java.util.ArrayList;
 import java.util.Random;
 
-
-
-
-
-
-
-interface AbstractAggregate {
+interface AbstractAggregate 
+{
 	public AbstractIterator CreateIterator();
 	public void add(Apartments it); 		// Not needed for iteration.
 	public int getCount (); // Needed for iteration.
@@ -16,10 +10,9 @@ interface AbstractAggregate {
         public ArrayList<Apartments> getItems();
 };
 
-//
 //This is the concrete Aggregate.
 //			Collection
-//
+
 
 class Collection implements AbstractAggregate 
 {
@@ -102,7 +95,7 @@ class ApartmentIterator implements AbstractIterator
 */
 abstract class Sensor implements Element         
 {  
-     protected static ArrayList <Sensor> AllSensors = new ArrayList<>();
+     protected static ArrayList <Sensor> AllSensors = new ArrayList<Sensor>();
     
 public int CodeGenerator(int deger)
 {
@@ -120,8 +113,6 @@ public int CodeGenerator(int deger)
 
     //protected ArrayList<Apartments> _subscribedApartments = new ArrayList<>();
     protected ArrayList<Pole> _subscribedPoles = new ArrayList<>();
-    
-    
     AbstractAggregate _subscribedApartments = new Collection();
     
     
@@ -140,14 +131,11 @@ public int CodeGenerator(int deger)
     Iterate over the _subscribedApartments and write sensors' observers.
     */
     
-    public void getAllSubs(){
-    
-
+    public void getAllSubs()
+    {
     // Create Iterator
     AbstractIterator iterator = _subscribedApartments.CreateIterator();
-    
-        printAggregate(iterator);
-    
+    printAggregate(iterator);
     }
     
      @Override
@@ -164,6 +152,10 @@ public int CodeGenerator(int deger)
        }
     }
     
+    public void AddSensor(Sensor sensor)
+    {
+        AllSensors.add(sensor);
+    }
     /*
     //Register the apartments Observers
     */
@@ -260,22 +252,27 @@ AN CONCRETE SENSORFACTORY CLASS
 class ConcreteSensorFactory extends sensorFactory
 {
         @Override
-        public Pollution_Sensor createPollutionSensor(int pol) {
+        public Pollution_Sensor createPollutionSensor(int pol) 
+        {
+             Pollution_Sensor sen = new Pollution_Sensor(pol);
             return new Pollution_Sensor(pol);
         }
 
         @Override
-        public Temperature_Sensor createTemperatureSensor(int temp) {
+        public Temperature_Sensor createTemperatureSensor(int temp) 
+        {
            return new Temperature_Sensor(temp);
         }
 
         @Override
-        public Congestion_Sensor createCongestionSensor(int conges) {
+        public Congestion_Sensor createCongestionSensor(int conges) 
+        {
             return new Congestion_Sensor(conges);
         }
 
         @Override
-        public Noise_Sensor createNoiseSensor(int noise) {
+        public Noise_Sensor createNoiseSensor(int noise) 
+        {
             return new Noise_Sensor(noise);
         }
 }
@@ -316,7 +313,7 @@ public Noise_Sensor createNoiseSensor(ConcreteSensorFactory sensorFactory, int v
 
 class Sensors
 {
-private ArrayList<Sensor> _sensors = new ArrayList<>();
+protected static ArrayList<Sensor> _sensors = new ArrayList<>();
 public void add(Sensor sensor){_sensors.add(sensor);}
 public void Accept(Visitor visitor){
 for(int i = 0; i < _sensors.size() ; i++){
@@ -418,11 +415,6 @@ class Pollution_Sensor extends Sensor
     }
 }
 
-
-
-
-
-
 /*
 Temp sonsor is a ConcreteSubject
 */
@@ -441,7 +433,8 @@ class Temperature_Sensor extends Sensor
     int Fahrenheit;
 */
     
-    public Temperature_Sensor(int temp){
+    public Temperature_Sensor(int temp)
+    {
         _celcius = temp;
     }
     
@@ -501,33 +494,18 @@ class Temperature_Sensor extends Sensor
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
 /*
 Congestion sonsor is a ConcreteSubject
 */
-
 
 /*
 Concrete sensor inherits from Sensor.
 */
 
-
 class Congestion_Sensor extends Sensor 
 {
     int _congestion;
-    
-    
-    
+      
     public Congestion_Sensor(int conges){
     _congestion = conges;
     }
@@ -588,13 +566,9 @@ class Congestion_Sensor extends Sensor
     }
 }
 
-
-
 /*
 Noise sonsor is a ConcreteSubject
 */
-
-
 
 /*
 Concrete sensor inherits from Sensor.
@@ -605,11 +579,10 @@ class Noise_Sensor extends Sensor
     
     
     
-    public Noise_Sensor( int volume ){
+    public Noise_Sensor( int volume )
+    {
     _volume = volume;
     }
-    
-    
 
     @Override
     public int sensorID() 
