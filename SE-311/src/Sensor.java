@@ -141,7 +141,7 @@ public int CodeGenerator(int deger)
      @Override
         public String toString()
      {
-    return "Neighborhood Name: "+this.sensorModel()+" Street Name: "+this.sensorName()+" Apartment Name: "+this.sensorID()+"";
+    return "Sensor Model: "+this.sensorModel()+" Sensor Name: "+this.sensorName()+" Sensor ID: "+this.sensorID()+"";
      }
     
     public static void ShowAllSensors()
@@ -633,8 +633,8 @@ class Noise_Sensor extends Sensor
     }
 
     @Override
-    public void Accept(Visitor visitor) {
+    public void Accept(Visitor visitor) 
+    {
         visitor.Visit(this);
     }
 }
-
