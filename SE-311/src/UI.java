@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.*;  
 import java.awt.event.*;  
@@ -12,7 +11,7 @@ public final class UI extends JFrame implements ActionListener
     JTextField tf1_apt,tf2_apt,tf3_apt,tf4_apt; // Apartment Text Areas //
     JTextField tf1_pol,tf2_pol,tf3_pol,tf4_pol;   // Pole Text Areas //
     
-    JButton b_pol,b_apt,b_main_apt,b_main_pole,b_main_apt_show,b_main_pol_show,main_clear;  // Buttons //
+    JButton b_pol,b_apt,b_main_apt,b_main_pole,b_main_apt_show,b_main_pol_show,main_clear,show_sensors;  // Buttons //
     
     JTextArea jta;
     
@@ -40,10 +39,11 @@ public static int CodeGenerator(int i)
     {
         JFrame f = new JFrame("Main Frame");
         f.setSize(720, 480);
-        f.setLayout(new BorderLayout());
+        f.setLayout(new FlowLayout());
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JPanel tutucu = new JPanel();
+        //tutucu.setLayout(new FlowLayout());
         
         b_main_apt = new JButton("Add Apartment");
         b_main_apt.addActionListener(this);
@@ -54,6 +54,9 @@ public static int CodeGenerator(int i)
         b_main_apt_show = new JButton("Show Apartments");
         b_main_apt_show.addActionListener(this);
         
+        show_sensors = new JButton("Show Sensors");
+        show_sensors.addActionListener(this);
+        
         b_main_pole = new JButton("Add Pole");
         b_main_pole.addActionListener(this);
         
@@ -62,6 +65,7 @@ public static int CodeGenerator(int i)
         
         tutucu.add(b_main_apt);
         tutucu.add(b_main_apt_show);
+        tutucu.add(show_sensors);
         tutucu.add(b_main_pole);
         tutucu.add(b_main_pol_show);
         tutucu.add(main_clear);
@@ -80,10 +84,10 @@ public static int CodeGenerator(int i)
         repaint();
         
         tutucu.add(jsp); 
-        f.getContentPane().add(tutucu);  // Text'leri tutan panelin JFrame'e iliştirilmesi //
-        f.pack();
-        f.setVisible(true);
         
+        f.add(tutucu,BorderLayout.NORTH);  // Text'leri tutan panelin JFrame'e iliştirilmesi //
+        f.pack();
+        f.setVisible(true);  
     }
     
     public void Construct_Pole_Builder()
@@ -189,7 +193,6 @@ public static int CodeGenerator(int i)
          jcb_temp_apt.setSize(jcb_temp_apt.getPreferredSize());
          jcb_temp_apt.addActionListener(this);
          
-         
          jcb_pol_apt = new JCheckBox("Poll.Sensor");
          jcb_pol_apt.setLocation(325, 75);
          jcb_pol_apt.setOpaque(false);
@@ -265,6 +268,7 @@ public static int CodeGenerator(int i)
      @Override
     public void actionPerformed(ActionEvent e) 
     {
+            
         if(e.getSource() == b_main_apt)
         {
             Construct_Apartment_Builder(); // Apartman ekleye basıldığında ilgili Frame'i çağırır //
@@ -280,6 +284,22 @@ public static int CodeGenerator(int i)
             jta.setText("");
         }
         
+        else if(e.getSource() == show_sensors)
+        {
+            if(Sensors._sensors.isEmpty() == true)
+            {
+                jta.append("\nHenüz Sensör eklenmemiş\n");
+            }
+              
+            else
+        {
+                for(int i = 0;i <Sensors._sensors.size();i++)
+            {
+                jta.append("\n"+Sensors._sensors.get(i)+"\n");
+            }
+        }
+        }  
+        
         else if(e.getSource() == b_main_apt_show) // Apartmanları Göster Butonu //
         {
             String temp;
@@ -294,7 +314,8 @@ public static int CodeGenerator(int i)
             
             for(int i = 0;i < Apartments.list.size();i++)
            {
-               temp = "\n"+i+")"+Apartments.list.get(i).toString();
+               int counter = i+1;
+               temp = "\n"+counter+")"+Apartments.list.get(i).toString();
                jta.append(temp);
            }
            temp = "\n";
@@ -313,7 +334,8 @@ public static int CodeGenerator(int i)
                // listede değer varsa ilgili değeri yazdır //   
            for(int i = 0;i < Pole.Pole_list.size();i++)
            {
-               temp = "\n"+i+")"+Pole.Pole_list.get(i).toString();
+               int counter = i+1;
+               temp = "\n"+counter+")"+Pole.Pole_list.get(i).toString();
                jta.append(temp);
            }
            String temp3 = "\n";
@@ -400,6 +422,7 @@ public static int CodeGenerator(int i)
         
         else if(e.getSource() == b_pol)
         {
+            
             if(tf1_pol.getText().isEmpty() == true | tf2_pol.getText().isEmpty() == true | tf3_pol.getText().isEmpty() == true) // Bütün Textler Dolu mu diye kontrol eden mekanizma //
             {
                 tf4_pol.setBackground(Color.red);
@@ -471,5 +494,5 @@ public static int CodeGenerator(int i)
             }
         }    
         }
-    }
+    } 
 }                 
