@@ -24,15 +24,15 @@ public  class Apartments extends Street implements Observer_Apartment
          Apartments(String N_name, String S_name, String Name)
         {
             super(N_name,S_name);
-            this.Name = Name;
-            list.add(this);
             Neighborhood_list.add(this);
             Street_list.add(this);
+            this.Name = Name;
+            list.add(this);    
         }
         @Override
         public String toString()
      {
-         return "Neighborhood Name:"+N_name+" Street Name:"+S_name+" Apartment Name: "+Name+"";
+         return "Neighborhood Name: "+N_name+" Street Name: "+S_name+" Apartment Name: "+Name+"";
      }
         
         public static void pushApartments(Apartments a)
@@ -48,7 +48,7 @@ public  class Apartments extends Street implements Observer_Apartment
             }
         }
         
-        int Total_Number()
+        int Total_Number_Of_Apartments()
         {
             return list.size();
         }

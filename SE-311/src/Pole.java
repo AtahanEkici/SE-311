@@ -20,8 +20,11 @@ public class Pole extends Street implements Observer_Pole
      Pole(String N_name, String S_name, String Name)
     {
         super(N_name,S_name);
-        Pole_list.add(this);
+        Neighborhood_list.add(this);
+        Street_list.add(this);
         this.Name = Name; 
+        Pole_list.add(this);
+        
     }
 @Override
         public String toString()
@@ -54,7 +57,6 @@ public class Pole extends Street implements Observer_Pole
             return Pole_list.size();
         }
         
-
     /**
      *
      * @param sensor

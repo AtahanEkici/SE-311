@@ -254,25 +254,28 @@ class ConcreteSensorFactory extends sensorFactory
         @Override
         public Pollution_Sensor createPollutionSensor(int pol) 
         {
-             Pollution_Sensor sen = new Pollution_Sensor(pol);
+            Sensors._sensors.add(new Pollution_Sensor(pol));         
             return new Pollution_Sensor(pol);
         }
 
         @Override
         public Temperature_Sensor createTemperatureSensor(int temp) 
         {
+           Sensors._sensors.add(new Temperature_Sensor(temp));
            return new Temperature_Sensor(temp);
         }
 
         @Override
         public Congestion_Sensor createCongestionSensor(int conges) 
         {
+            Sensors._sensors.add(new Congestion_Sensor(conges));
             return new Congestion_Sensor(conges);
         }
 
         @Override
         public Noise_Sensor createNoiseSensor(int noise) 
         {
+            Sensors._sensors.add(new Noise_Sensor(noise));
             return new Noise_Sensor(noise);
         }
 }
@@ -281,15 +284,18 @@ class ConcreteSensorFactory extends sensorFactory
 
 class BuildSensor
 {
-public Pollution_Sensor createPollutionSensor(ConcreteSensorFactory sensorFactory, int value){
+public Pollution_Sensor createPollutionSensor(ConcreteSensorFactory sensorFactory, int value)
+{
     return sensorFactory.createPollutionSensor(value);
 }
 
-public Temperature_Sensor createTemperatureSensor(ConcreteSensorFactory sensorFactory, int value){
+public Temperature_Sensor createTemperatureSensor(ConcreteSensorFactory sensorFactory, int value)
+{
     return sensorFactory.createTemperatureSensor(value);
 }
 
-public Congestion_Sensor createCongestionSensor(ConcreteSensorFactory sensorFactory, int value){
+public Congestion_Sensor createCongestionSensor(ConcreteSensorFactory sensorFactory, int value)
+{
     return sensorFactory.createCongestionSensor(value);
 
 }
@@ -303,26 +309,37 @@ public Noise_Sensor createNoiseSensor(ConcreteSensorFactory sensorFactory, int v
 /*
     Visitor pattern
 */
-    interface Element{
+    interface Element
+    {
         public void Accept(Visitor visitor);
     }
 
-    interface Visitor{
+    interface Visitor
+    {
         public void Visit(Sensor sensor);
     }
 
 class Sensors
 {
 protected static ArrayList<Sensor> _sensors = new ArrayList<>();
-public void add(Sensor sensor){_sensors.add(sensor);}
-public void Accept(Visitor visitor){
-for(int i = 0; i < _sensors.size() ; i++){
+
+public void add(Sensor sensor)
+{
+    _sensors.add(sensor);
+}
+
+public void Accept(Visitor visitor)
+{
+for(int i = 0; i < _sensors.size() ; i++)
+{
 _sensors.get(i).Accept(visitor);
 }
 }
+
 }
 
-class ResetVisitor implements Visitor{
+class ResetVisitor implements Visitor
+{
     @Override
     public void Visit(Sensor sensor) 
     {
@@ -428,16 +445,16 @@ Concrete sensor inherits from Sensor.
 class Temperature_Sensor extends Sensor 
 {
     int _celcius;
-/*
-    int Kelvin;
-    int Fahrenheit;
-*/
+    int Kelvin = _celcius + 273;
+    float Fahrenheit = (float) ((_celcius * 1.80) +(32));
+
     
     public Temperature_Sensor(int temp)
     {
         _celcius = temp;
+        Kelvin = temp + 273;
+        Fahrenheit = (float) ((temp * 1.80) +(32));
     }
-    
     
     @Override
     public int sensorID() 
@@ -473,6 +490,14 @@ class Temperature_Sensor extends Sensor
     public int getSensorValue() 
     {
         return _celcius;
+    }
+    public int getSensorValue_K() 
+    {
+        return Kelvin;
+    }
+    public float getSensorValue_F() 
+    {
+        return Fahrenheit;
     }
 
     public Temperature_Sensor createTemperatureSensor()

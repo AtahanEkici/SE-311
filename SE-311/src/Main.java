@@ -5,76 +5,66 @@ public class Main
 {
     public static void main(String[] args) 
     {
-      
         /*
             create apartments.
         */
         Apartments firstApartment = new Apartments("Bucak Mahallesi","Allahın Sokağı","Birşey Birşey apartmanı");
-        Apartments secondApartment = new Apartments("Mahalle","Sokak","Apartman1");
-       
+        Apartments secondApartment = new Apartments("Mahalle","Sokak","Apartman");
 
         /*
         CREATE FACTORY
         */
-        
         sensorFactory sensorFac = new ConcreteSensorFactory();
    
         /*
-        CREATE BUİLDER
+        CREATE BUILDER
         */
         BuildSensor sensorBuilder = new BuildSensor();
         
-        
+        sensorBuilder.createCongestionSensor((ConcreteSensorFactory) sensorFac, 0);
+        sensorBuilder.createNoiseSensor((ConcreteSensorFactory) sensorFac, 0);
+        sensorBuilder.createPollutionSensor((ConcreteSensorFactory) sensorFac, 0);
+        sensorBuilder.createTemperatureSensor((ConcreteSensorFactory) sensorFac, 0);
         /*
-        CREATE SENSORS VİA SENSORFACTORY.
+        CREATE SENSORS VİA SENSOR FACTORY.
         */
         Sensor tempSensor = sensorFac.createTemperatureSensor(0);
         Sensor polSensor = sensorFac.createPollutionSensor(0);
         Sensor noiseSensor = sensorFac.createNoiseSensor(0);
         Sensor congSensor = sensorFac.createCongestionSensor(0);
-        
-        
 
-
-        
         /*
         Attach apartments to the sensor to let them notified for changes
         that are wanted to know if spesific values occurs.
         */
+        
         tempSensor.Attach(firstApartment);
         tempSensor.Attach(secondApartment);
 
         polSensor.Attach(firstApartment);
         polSensor.Attach(secondApartment);
         
-
         noiseSensor.Attach(firstApartment);
         noiseSensor.Attach(secondApartment);
 
         congSensor.Attach(firstApartment);
         congSensor.Attach(secondApartment);
-        
-
 
         /*
         Set sensor values to give alerts.
         */
+        
         tempSensor.setSensorValue(-20);
         polSensor.setSensorValue(222);
         noiseSensor.setSensorValue(2222);
         congSensor.setSensorValue(1);
 
-        
-        
         /*
         Iterate over subscribed apartments collection and get the subscribed
         aperments names and print them all.
         */
         
         tempSensor.getAllSubs();
-        
-        
-        
         
                 /*
         Create a sensors class object to collect all sensors and visit them to reset.
@@ -87,19 +77,9 @@ public class Main
         sensorCollection.add(noiseSensor);
         sensorCollection.add(congSensor);
         
-            
         //sensors visited to the admin to Reset them.
         
-        sensorCollection.Accept(new ResetVisitor());
-        
-        
-        
-        
-        
-        
-        
-        
-       
+        sensorCollection.Accept(new ResetVisitor()); 
         
         InterfacePanel ip;
         ip = new InterfacePanel();
@@ -114,7 +94,7 @@ public class Main
         Apartments.Print_Apartments();
    
       */
-        UI ui = new UI(); 
+        UI.ShowUI();
         
 }
     public static int CodeGenerator(int i) 
