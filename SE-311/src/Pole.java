@@ -57,10 +57,6 @@ public class Pole extends Street implements Observer_Pole
             return Pole_list.size();
         }
         
-    /**
-     *
-     * @param sensor
-     */
     @Override
         public void Update_Pole(Sensor sensor) 
         {

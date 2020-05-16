@@ -15,7 +15,7 @@ public final class UI extends JFrame implements ActionListener
     
     JButton b_pol,b_apt,b_main_apt,b_main_pole,b_main_apt_show,b_main_pol_show,main_clear,show_sensors,reset_sensor;  // Buttons //
     
-    JTextArea jta; // Kocaman Text area //
+    JTextArea jta; // Kocaman Text Area //
     
     JScrollPane jsp; // Kocaman Text Area'nın  Kocaman Scroll Bar'ı //
     
@@ -24,12 +24,6 @@ public final class UI extends JFrame implements ActionListener
     
     Sensors sensorCollection = new Sensors();
     
-    //Boolean pole_temp,pole_pol,pole_con,pole_noise = false;
-    //Boolean apt_temp,apt_pol,apt_con,apt_noise = false;
-    
-    UI()
-    {   
-    }
     
     /**
      */
@@ -98,19 +92,16 @@ public static int CodeGenerator(int i)
         jsp.getViewport().setBackground(Color.WHITE);
         jsp.getViewport().add(jta);
         add(jsp);
-                    
-        //repaint();
-        
+                     
         textArea.add(jsp); 
         
-          // Text'leri tutan panelin JFrame'e iliştirilmesi //
-        f.add(textArea,BorderLayout.PAGE_END);
+        f.add(textArea,BorderLayout.PAGE_END); // Text'leri tutan panelin JFrame'e iliştirilmesi //
         f.add(tutucu,BorderLayout.AFTER_LINE_ENDS);
-        f.pack();
+        f.pack(); // Function that packs the frame and cuts the unnecessary lines //
         
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize(); // getting the current screen size //
         
-        f.setLocation(dim.width/2-f.getSize().width/2, dim.height/2-f.getSize().height/2); // render first frame in the center of the screen //
+        f.setLocation(dim.width/2-f.getSize().width/2, dim.height/2-f.getSize().height/2); // locate the frame in the center of the screen (initially of course user can define the location from there on out) //
         
         f.setVisible(true);  
     }
@@ -285,7 +276,6 @@ public static int CodeGenerator(int i)
         labeltutucu.add(jcb_con_apt);
         labeltutucu.add(jcb_noise_apt);
         
-        
         f.add(labeltutucu);
         f.setVisible(true);
     }
@@ -334,12 +324,12 @@ public static int CodeGenerator(int i)
               
             else // Sensörler boş değilse göster //
         {
-            jta.append("\n Sensors: \n");
+            jta.append("\nSensors: \n");
             
-                for(int i = 0;i <Sensors._sensors.size();i++)
+                for(int i = 0;i <Sensor.AllSensors.size();i++)
             {
                 int counter = i + 1;
-                jta.append("\n" +counter+" \"\n\" ) "+Sensors._sensors.get(i));
+                jta.append("\n" +counter+")"+Sensor.AllSensors.get(i));
             }
         }
         }  
@@ -399,13 +389,7 @@ public static int CodeGenerator(int i)
              else  // Doğruysa veriyi ekleyen mekanizma //
         {
                  
-                 sensorFactory sensorFac = new ConcreteSensorFactory();
-                 BuildSensor sensorBuilder = new BuildSensor();
-                 
-        Sensor tempSensor = sensorFac.createTemperatureSensor(CodeGenerator(100));
-        Sensor polSensor = sensorFac.createPollutionSensor(CodeGenerator(100));
-        Sensor noiseSensor = sensorFac.createNoiseSensor(CodeGenerator(100));
-        Sensor congSensor = sensorFac.createCongestionSensor(CodeGenerator(100));
+        sensorFactory sensorFac = new ConcreteSensorFactory();
                  
             tf4_apt.setBackground(Color.green);
             tf4_apt.setBounds(125,275,110,20);
@@ -422,50 +406,39 @@ public static int CodeGenerator(int i)
              
             if(jcb_temp_apt.isSelected() == true) // İlgili Apartmana yeni temp sensör eklenip eklenmediğini kontrol eder //
             {
+                Sensor tempSensor = sensorFac.createTemperatureSensor(CodeGenerator(100));
                tempSensor = sensorFac.createTemperatureSensor(0);
                tempSensor.Attach(yeni_apt);
-               //tempSensor.setSensorValue(CodeGenerator(100));
-              // tempSensor.getSensorValue();
                
                jta.append("\n"  +tempSensor.sensorName()+ " is installed \n");
                
-                //int temp2 = tempSensor.getSensorValue();
-                //jta.append("\n"+Integer.toString(temp2)+"\n");
             }
  
             if(jcb_con_apt.isSelected() == true) // İlgili Apartmana yeni cong sensör eklenip eklenmediğini kontrol eder //
             {
+                Sensor congSensor = sensorFac.createCongestionSensor(CodeGenerator(100));
                 congSensor.Attach(yeni_apt);
                 congSensor.setSensorValue(CodeGenerator(100));
                 
                 jta.append("\n"  +congSensor.sensorName()+ " is installed \n");
-                
-                //int temp2 = congSensor.getSensorValue();
-               // jta.append("\n"+Integer.toString(temp2)+"\n");
             }
             
             if(jcb_pol_apt.isSelected() == true) // İlgili Apartmana yeni pollution sensör eklenip eklenmediğini kontrol eder //
             {
+                Sensor polSensor = sensorFac.createPollutionSensor(CodeGenerator(100));
                 polSensor.Attach(yeni_apt);
                 polSensor.setSensorValue(CodeGenerator(100));
-                //polSensor.getSensorValue();
                 
                 jta.append("\n"  +polSensor.sensorName()+ " is installed \n");
-                
-                //int temp2 = polSensor.getSensorValue();
-                //jta.append("\n"+Integer.toString(temp2)+"\n");
             }
             
             if(jcb_noise_apt.isSelected() == true) // İlgili Apartmana yeni noise sensör eklenip eklenmediğini kontrol eder //
             {
+                Sensor noiseSensor = sensorFac.createNoiseSensor(CodeGenerator(100));
                 noiseSensor.Attach(yeni_apt);
                 noiseSensor.setSensorValue(CodeGenerator(100));
-                //noiseSensor.getSensorValue();
                 
                 jta.append(" \n "  +noiseSensor.sensorName()+ " is installed \n ");
-                
-                //int temp2 = noiseSensor.getSensorValue();
-                //jta.append("\n"+Integer.toString(temp2)+"\n");
             }
         } 
         }
@@ -515,47 +488,32 @@ public static int CodeGenerator(int i)
             {
                tempSensor.Attach_Pole(yeni_direk);
                tempSensor.setSensorValue(CodeGenerator(100));
-               //tempSensor.getSensorValue();
                
-               jta.append(" \n "  +tempSensor.sensorName()+ " is installed \n ");
-               
-                //int temp2 = tempSensor.getSensorValue();
-                //jta.append("\n"+Integer.toString(temp2)+"\n");
+               jta.append(" \n " +tempSensor.sensorName()+ " is installed \n ");
             }
  
-            if(jcb_pole_pol.isSelected() == true)
+            if(jcb_pole_pol.isSelected() == true) // İlgili direğe yeni pollution sensör eklenip eklenmediğini kontrol eder //
             {
                 congSensor.Attach_Pole(yeni_direk);
                 congSensor.setSensorValue(CodeGenerator(100));
                 
-                jta.append(" \n "  +congSensor.sensorName()+ " is installed \n ");
-                
-                //int temp2 = congSensor.getSensorValue();
-                //jta.append("\n"+Integer.toString(temp2)+"\n");
+                jta.append(" \n " +congSensor.sensorName()+ " is installed \n ");
             }
             
-            if(jcb_pole_con.isSelected() == true)
+            if(jcb_pole_con.isSelected() == true) // İlgili direğe yeni congestion sensör eklenip eklenmediğini kontrol eder //
             {
                 polSensor.Attach_Pole(yeni_direk);
                 polSensor.setSensorValue(CodeGenerator(100));
-               // polSensor.getSensorValue();
                 
-                jta.append(" \n "  +polSensor.sensorName()+ " is installed \n ");
-                
-                //int temp2 = polSensor.getSensorValue();
-                //jta.append("\n"+Integer.toString(temp2)+"\n");
+                jta.append(" \n " +polSensor.sensorName()+ " is installed \n ");
             }
             
-            if(jcb_pole_noise.isSelected() == true)
+            if(jcb_pole_noise.isSelected() == true) // İlgili direğe yeni noise sensör eklenip eklenmediğini kontrol eder //
             {
                 noiseSensor.Attach_Pole(yeni_direk);
                 noiseSensor.setSensorValue(CodeGenerator(100));
-                //noiseSensor.getSensorValue();
                 
-                jta.append(" \n "  +noiseSensor.sensorName()+ " is installed \n ");
-                
-                //int temp2 = noiseSensor.getSensorValue();
-                //jta.append("\n"+Integer.toString(temp2)+"\n");
+                jta.append(" \n " +noiseSensor.sensorName()+ " is installed \n ");
             }
         }    
         }

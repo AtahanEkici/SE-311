@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.function.Consumer;
 
 interface AbstractAggregate 
 {
@@ -16,7 +17,7 @@ interface AbstractAggregate
 
 class Collection implements AbstractAggregate 
 {
-	private	 ArrayList<Apartments> _items = new ArrayList<>();
+	private ArrayList<Apartments> _items = new ArrayList<>();
         
         @Override
 	public	ApartmentIterator CreateIterator() 
@@ -40,7 +41,8 @@ class Collection implements AbstractAggregate
         }
 };
 
-interface AbstractIterator{
+interface AbstractIterator
+{
     void first();
     void next();
     Boolean isDone();
@@ -49,7 +51,6 @@ interface AbstractIterator{
 
 class ApartmentIterator implements AbstractIterator
 {
-
     private Collection _collection;
     private int _current;
     
@@ -96,6 +97,16 @@ class ApartmentIterator implements AbstractIterator
 abstract class Sensor implements Element         
 {  
      protected static ArrayList <Sensor> AllSensors = new ArrayList<Sensor>();
+     public static int counter = 0;
+     public final int SensorID;
+     
+     Sensor()
+     {
+         SensorID = counter;
+         counter++;
+         AllSensors.add(this);
+     }
+     
     
 public int CodeGenerator(int deger)
 {
@@ -116,8 +127,8 @@ public int CodeGenerator(int deger)
     AbstractAggregate _subscribedApartments = new Collection();
     
     
-    static void printAggregate(AbstractIterator i) {
-        
+    static void printAggregate(AbstractIterator i) 
+    {
 		System.out.println("Subscribed Apartment names are : ");
                 
                 
@@ -126,7 +137,6 @@ public int CodeGenerator(int deger)
 		}
 		System.out.println();
 	}
-    
     /*
     Iterate over the _subscribedApartments and write sensors' observers.
     */
@@ -136,6 +146,24 @@ public int CodeGenerator(int deger)
     // Create Iterator
     AbstractIterator iterator = _subscribedApartments.CreateIterator();
     printAggregate(iterator);
+    }
+    
+    public void getInstalledOn_apt()
+    {
+        /*
+        for(int i = 0; i< _subscribedApartments.getCount();i++)
+        {
+            if(_subscribedApartments.get(i).Name == )
+        }
+        */
+    }
+    
+    public void getInstalledOn_pol()
+    {
+         for(int i = 0; i< _subscribedPoles.size();i++)
+         {
+             
+         }
     }
     
      @Override
@@ -195,7 +223,7 @@ public int CodeGenerator(int deger)
     {
         for(int i = 0;i<= _subscribedApartments.getCount();i++ )
         {
-            
+            this.setSensorValue(0);
         }
     }
 
@@ -203,9 +231,8 @@ public int CodeGenerator(int deger)
     // tell the Observers what happened
     public void Notify() 
     {
-        _subscribedApartments.getItems().forEach((subscribedApartment) -> {
-            subscribedApartment.Update(this);
-            //this.notified() == true;
+        _subscribedApartments.getItems().forEach((Apartments subscribedApartment) -> {
+            subscribedApartment.Update(Sensor.this);
         });
     }
     
@@ -300,7 +327,8 @@ public Congestion_Sensor createCongestionSensor(ConcreteSensorFactory sensorFact
 
 }
 
-public Noise_Sensor createNoiseSensor(ConcreteSensorFactory sensorFactory, int value){
+public Noise_Sensor createNoiseSensor(ConcreteSensorFactory sensorFactory, int value)
+{
     return sensorFactory.createNoiseSensor(value);
 
 }
@@ -360,10 +388,15 @@ Concrete sensor inherits from Sensor.
 class Pollution_Sensor extends Sensor 
 {
     private int _pollution;
-    private boolean pollutionNoticed;
     
-    public Pollution_Sensor(int pollution){
+    protected final int Pol_ID;
+    protected static int pol_cnt = 1;
+    
+    public Pollution_Sensor(int pollution)
+    {
         _pollution = pollution;
+        Pol_ID = pol_cnt;
+        pol_cnt++;
     }
     
     public void setPollution(int pollution)
@@ -375,13 +408,13 @@ class Pollution_Sensor extends Sensor
     @Override
     public int sensorID() 
     {
-        return 0;
+      return this.SensorID;
     }
 
     @Override
     public String sensorName() 
     {
-        return "Pollution Sensor";
+        return " Pollution Sensor("+this.Pol_ID+")";
     }
 
     @Override
@@ -447,25 +480,32 @@ class Temperature_Sensor extends Sensor
     int _celcius;
     int Kelvin = _celcius + 273;
     float Fahrenheit = (float) ((_celcius * 1.80) +(32));
-
+    
+    protected static int tmp_cnt = 1;
+    protected final int tem_ID;
     
     public Temperature_Sensor(int temp)
     {
         _celcius = temp;
         Kelvin = temp + 273;
         Fahrenheit = (float) ((temp * 1.80) +(32));
+        
+        tem_ID = tmp_cnt;
+        tmp_cnt++;
     }
+    
+   
     
     @Override
     public int sensorID() 
     {
-        return 1;
+       return this.SensorID;
     }
 
     @Override
     public String sensorName() 
     {
-        return "Temp Sensor";
+        return " Temparature Sensor("+this.tem_ID+")";
     }
 
     @Override
@@ -529,22 +569,29 @@ Concrete sensor inherits from Sensor.
 
 class Congestion_Sensor extends Sensor 
 {
-    int _congestion;
+    private int _congestion;
+    
+    protected final int Con_ID;
+    protected static int pol_cnt = 1;
       
-    public Congestion_Sensor(int conges){
+    public Congestion_Sensor(int conges)
+    {
     _congestion = conges;
+    
+    Con_ID = pol_cnt;
+    pol_cnt++;
     }
-
+    
     @Override
     public int sensorID() 
     {
-        return 2;
+       return this.SensorID;
     }
 
     @Override
     public String sensorName()
     {
-        return "congestion";
+        return " Congestion Sensor ("+this.Con_ID+")";
     }
 
     @Override
@@ -600,25 +647,29 @@ Concrete sensor inherits from Sensor.
 */
 class Noise_Sensor extends Sensor
 {
-    int _volume;
+    int _volume; 
     
+    protected final int No_ID;
+    protected static int no_cnt = 1;
     
-    
-    public Noise_Sensor( int volume )
+    public Noise_Sensor(int volume)
     {
     _volume = volume;
+    
+    No_ID = no_cnt;
+    no_cnt++;
     }
 
     @Override
     public int sensorID() 
     {
-        return 3;
+      return this.SensorID;
     }
 
     @Override
     public String sensorName() 
     {
-        return "noise sensor";
+       return " Noise Sensor ("+this.No_ID+")";
     }
 
     @Override
@@ -662,4 +713,6 @@ class Noise_Sensor extends Sensor
     {
         visitor.Visit(this);
     }
+    
+    
 }
