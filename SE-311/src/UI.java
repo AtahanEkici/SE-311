@@ -9,7 +9,7 @@ import javax.swing.border.LineBorder;
  import java.util.Random;
  
 
-public class UI extends JFrame implements ActionListener 
+public final class UI extends JFrame implements ActionListener 
 {    
     JTextField tf1_apt,tf2_apt,tf3_apt,tf4_apt; // Apartment Text Areas //
     JTextField tf1_pol,tf2_pol,tf3_pol,tf4_pol;   // Pole Text Areas //
@@ -26,15 +26,23 @@ public class UI extends JFrame implements ActionListener
     JCheckBox jcb_temp_apt,jcb_pol_apt,jcb_con_apt,jcb_noise_apt; // Apartment Sensors //
 
     Sensors sensorCollection = new Sensors();
-    
-    int index;
+
+    JFrame cpa = new JFrame("Pole Adder");
+    JFrame cpb = new JFrame("Apartment Adder");
+    JFrame main = new JFrame("Main Frame");
+    JFrame svl = new JFrame("Sensor Value Loop");
     
     /**
      */
+   
+
     public static final void ShowUI()
     {
        UI ui = new UI();
        ui.Construct_Main_Frame();
+       ui.Construct_Apartment_Builder();
+       ui.Construct_Pole_Builder();
+       ui.Construct_Sensor_Loop();
     }
 
 public static int CodeGenerator(int i) 
@@ -46,9 +54,9 @@ public static int CodeGenerator(int i)
     
     public void Construct_Main_Frame()
     {
-        JFrame f = new JFrame("Main Frame");
-        f.setLayout(new BorderLayout());
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        main.setLayout(new BorderLayout());
+        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JPanel tutucu = new JPanel();
         tutucu.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -102,23 +110,21 @@ public static int CodeGenerator(int i)
                      
         textArea.add(jsp); 
         
-        f.add(textArea,BorderLayout.PAGE_END); // Text'leri tutan panelin JFrame'e iliştirilmesi //
-        f.add(tutucu,BorderLayout.AFTER_LINE_ENDS);
-        f.pack(); // Function that packs the frame and cuts the unnecessary lines //
+        main.add(textArea,BorderLayout.PAGE_END); // Text'leri tutan panelin JFrame'e iliştirilmesi //
+        main.add(tutucu,BorderLayout.AFTER_LINE_ENDS);
+        main.pack(); // Function that packs the frame and cuts the unnecessary lines //
         
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize(); // getting the current screen size //
         
-        f.setLocation(dim.width/2-f.getSize().width/2, dim.height/2-f.getSize().height/2); // locate the frame in the center of the screen (initially of course user can define the location from there on out) //
+        main.setLocation(dim.width/2-main.getSize().width/2, dim.height/2-main.getSize().height/2); // locate the frame in the center of the screen (initially of course user can define the location from there on out) //
         
-        f.setVisible(true);  
+        main.setVisible(true);  
     }
     
-    public void Construct_Sensor_Loop() throws InterruptedException
-    {
-        
-        JFrame f = new JFrame("Sensor Value Loop");
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        f.setLayout(new BorderLayout());
+void Construct_Sensor_Loop()
+    { 
+        svl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        svl.setLayout(new BorderLayout());
         
         JPanel jp = new JPanel();
         jp.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -150,18 +156,18 @@ public static int CodeGenerator(int i)
             timer.setCoalesce(true);
             timer.start();
         
-        f.add(jp);
-        f.pack();
-        f.setVisible(true);
-        
+        svl.add(jp);
+        svl.pack();
+        svl.setVisible(false);
     }
+    
     public void Construct_Pole_Builder()
     {
-        JFrame f = new JFrame("Pole Adder"); 
-        f.setResizable(false);
-        f.setSize(450,350);  
-        f.setLayout(null);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+         
+        cpa.setResizable(false);
+        cpa.setSize(450,350);  
+        cpa.setLayout(null);
+        cpa.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
          jcb_pole_temp = new JCheckBox("Temp. Sensor");
          jcb_pole_pol = new JCheckBox("Poll. Sensor");
@@ -224,12 +230,12 @@ public static int CodeGenerator(int i)
         
         b_pol.addActionListener(this);  
         
-        f.add(tf1_pol); // text field attaching with JFrame//
-        f.add(tf2_pol); // text field attaching with JFrame//
-        f.add(tf3_pol); // text field attaching with JFrame//
-        f.add(tf4_pol); // text field attaching with JFrame//
+        cpa.add(tf1_pol); // text field attaching with JFrame//
+        cpa.add(tf2_pol); // text field attaching with JFrame//
+        cpa.add(tf3_pol); // text field attaching with JFrame//
+        cpa.add(tf4_pol); // text field attaching with JFrame//
         
-        f.add(b_pol); // button attached to JFrame //
+        cpa.add(b_pol); // button attached to JFrame //
         
         labeltutucu.add(label);
         labeltutucu.add(label2);
@@ -240,18 +246,17 @@ public static int CodeGenerator(int i)
         labeltutucu.add(jcb_pole_con);
         labeltutucu.add(jcb_pole_noise);
         
-        f.add(labeltutucu);
-
-        f.setVisible(true);
+        cpa.add(labeltutucu);
+        cpa.setVisible(false);
     }
     
     public void Construct_Apartment_Builder()
     {  
-        JFrame f = new JFrame("Apartment Adder");
-        f.setResizable(false);
-        f.setSize(450,350);  
-        f.setLayout(null);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        cpb.setResizable(false);
+        cpb.setSize(450,350);  
+        cpb.setLayout(null);
+        cpb.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
          jcb_temp_apt = new JCheckBox("Temp.Sensor");
          jcb_temp_apt.setLocation(325, 50);
@@ -311,11 +316,11 @@ public static int CodeGenerator(int i)
         b_apt.addActionListener(this);
         
         
-        f.add(tf1_apt); // text field attaching with JFrame//
-        f.add(tf2_apt); // text field attaching with JFrame//
-        f.add(tf3_apt); // text field attaching with JFrame//
-        f.add(tf4_apt); // text field attaching with JFrame//
-        f.add(b_apt); // buton attached to JFrame //
+        cpb.add(tf1_apt); // text field attaching with JFrame//
+        cpb.add(tf2_apt); // text field attaching with JFrame//
+        cpb.add(tf3_apt); // text field attaching with JFrame//
+        cpb.add(tf4_apt); // text field attaching with JFrame//
+        cpb.add(b_apt); // buton attached to JFrame //
         
         labeltutucu.add(label);
         labeltutucu.add(label2);
@@ -326,8 +331,8 @@ public static int CodeGenerator(int i)
         labeltutucu.add(jcb_con_apt);
         labeltutucu.add(jcb_noise_apt);
         
-        f.add(labeltutucu);
-        f.setVisible(true);
+        cpb.add(labeltutucu);
+        cpb.setVisible(false);
     }
     
      @Override
@@ -336,12 +341,12 @@ public static int CodeGenerator(int i)
             
         if(e.getSource() == b_main_apt) // Apartman ekleye basıldığında ilgili Frame'i çağırır //
         {
-            Construct_Apartment_Builder(); 
+            cpb.setVisible(true);
         }
         
         else if(e.getSource() == b_main_pole) // Direk ekleye basıldığında ilgili Frame'i çağırır //
         {
-            Construct_Pole_Builder(); 
+            cpa.setVisible(true);
         }
         
         else if(e.getSource() == main_clear)  // Text Area'yı sıfırlama butonu //
@@ -372,12 +377,7 @@ class ResetVisitor implements Visitor
 }
         else if(e.getSource() == sensor_loop)
         {
-            try {
-                Construct_Sensor_Loop();
-            } catch (InterruptedException ex) 
-            {
-                jta.append(""+ex+"");
-            }
+            svl.setVisible(true);
         }
         
         else if(e.getSource() == show_sensors) // Sensörleri Göster butonu //
@@ -523,7 +523,6 @@ class ResetVisitor implements Visitor
             }
         } 
         }
-        
         
         else if(e.getSource() == b_pol) // Direk Ekleden sonra açılan frame'deki "ok" için Action Listener kısmı //
         {

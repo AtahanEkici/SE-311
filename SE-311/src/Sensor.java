@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 interface AbstractAggregate 
 {
@@ -17,7 +16,7 @@ interface AbstractAggregate
 
 class Collection implements AbstractAggregate 
 {
-	private ArrayList<Apartments> _items = new ArrayList<>();
+	private final ArrayList<Apartments> _items = new ArrayList<>();
         
         @Override
 	public	ApartmentIterator CreateIterator() 
