@@ -9,7 +9,7 @@ public class Pole extends Street implements Observer_Pole
 {
     @SuppressWarnings("LeakingThisInConstructor")
     
-        protected String Name;
+        protected  String Name;
         protected static ArrayList<Pole> Pole_list = new ArrayList<>();
        
         protected Sensor _polSensor;

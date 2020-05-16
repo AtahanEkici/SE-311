@@ -1,3 +1,5 @@
 Observer_Apartment
 Apartments
-se311.pkg2.Apartments
+Observer
+com.company.Observer
+com.company.Apartments

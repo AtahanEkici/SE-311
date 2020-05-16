@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.function.Consumer;
+import java.util.concurrent.TimeUnit;
 
 interface AbstractAggregate 
 {
@@ -95,10 +95,12 @@ class ApartmentIterator implements AbstractIterator
 
 */
 abstract class Sensor implements Element         
-{  
+{
      protected static ArrayList <Sensor> AllSensors = new ArrayList<Sensor>();
      public static int counter = 0;
      public final int SensorID;
+     protected String attached_to_apt = null;
+     protected String  attached_to_pol = null;
      
      Sensor()
      {
@@ -106,15 +108,35 @@ abstract class Sensor implements Element
          counter++;
          AllSensors.add(this);
      }
-     
     
-public int CodeGenerator(int deger)
+public static String getValues()
+     {
+        String result = "";
+        
+        for(int i = 0; i<AllSensors.size();i++)
+        {
+            AllSensors.get(i).setSensorValue(CodeGenerator(100));
+            
+            result +=  AllSensors.get(i).sensorName()+": " +AllSensors.get(i).getSensorValue() + " \n ";
+        }
+        return result;   
+     }
+    
+public static int CodeGenerator(int deger)
 {
     Random random = new Random();
     int a = random.nextInt(deger);
     return a;
 }
 
+     @Override
+    public void Accept(Visitor visitor)
+{
+for(int i = 0; i < Sensor.AllSensors.size() ; i++)
+{
+Sensor.AllSensors.get(i).Accept(visitor);
+}
+}
     public abstract int sensorID();
     public abstract String sensorName();
     public abstract String sensorModel();
@@ -148,24 +170,6 @@ public int CodeGenerator(int deger)
     printAggregate(iterator);
     }
     
-    public void getInstalledOn_apt()
-    {
-        /*
-        for(int i = 0; i< _subscribedApartments.getCount();i++)
-        {
-            if(_subscribedApartments.get(i).Name == )
-        }
-        */
-    }
-    
-    public void getInstalledOn_pol()
-    {
-         for(int i = 0; i< _subscribedPoles.size();i++)
-         {
-             
-         }
-    }
-    
      @Override
         public String toString()
      {
@@ -190,14 +194,15 @@ public int CodeGenerator(int deger)
     public void Attach(Apartments apartmen)
     {
         _subscribedApartments.add(apartmen);
+        this.attached_to_apt = apartmen.Name;
     }
-     
 
     //Unregister from the list of Observers.
     public void Detach(Apartments apartment)
     {
         for(int i = 0 ; i  <=  _subscribedApartments.getCount()  ; i++ ){
-           if(this.getName().equals(_subscribedApartments.get(i).getName())) {
+           if(this.getName().equals(_subscribedApartments.get(i).getName())) 
+           {
                _subscribedApartments.getItems().remove(apartment);
            }
         }
@@ -207,6 +212,7 @@ public int CodeGenerator(int deger)
      public void Attach_Pole(Pole pole)
     {
         _subscribedPoles.add(pole);
+        this.attached_to_pol = pole.Name;
     }
      
     //Unregister from the list of Observers.
@@ -261,7 +267,7 @@ public int CodeGenerator(int deger)
     private Object getName_Pole() 
     {
         return this._subscribedPoles;
-    }
+    } 
 }
 
 //An 'Abstract Factory' class
@@ -280,29 +286,25 @@ class ConcreteSensorFactory extends sensorFactory
 {
         @Override
         public Pollution_Sensor createPollutionSensor(int pol) 
-        {
-            Sensors._sensors.add(new Pollution_Sensor(pol));         
+        {      
             return new Pollution_Sensor(pol);
         }
 
         @Override
         public Temperature_Sensor createTemperatureSensor(int temp) 
         {
-           Sensors._sensors.add(new Temperature_Sensor(temp));
            return new Temperature_Sensor(temp);
         }
 
         @Override
         public Congestion_Sensor createCongestionSensor(int conges) 
         {
-            Sensors._sensors.add(new Congestion_Sensor(conges));
             return new Congestion_Sensor(conges);
         }
 
         @Override
         public Noise_Sensor createNoiseSensor(int noise) 
         {
-            Sensors._sensors.add(new Noise_Sensor(noise));
             return new Noise_Sensor(noise);
         }
 }
@@ -349,21 +351,19 @@ public Noise_Sensor createNoiseSensor(ConcreteSensorFactory sensorFactory, int v
 
 class Sensors
 {
-protected static ArrayList<Sensor> _sensors = new ArrayList<>();
 
 public void add(Sensor sensor)
 {
-    _sensors.add(sensor);
+    Sensor.AllSensors.add(sensor);
 }
 
 public void Accept(Visitor visitor)
 {
-for(int i = 0; i < _sensors.size() ; i++)
+for(int i = 0; i < Sensor.AllSensors.size() ; i++)
 {
-_sensors.get(i).Accept(visitor);
+Sensor.AllSensors.get(i).Accept(visitor);
 }
 }
-
 }
 
 class ResetVisitor implements Visitor
@@ -371,10 +371,11 @@ class ResetVisitor implements Visitor
     @Override
     public void Visit(Sensor sensor) 
     {
-       System.out.println(sensor.sensorName()+" is resetted by admin.");
+       System.out.println(sensor.sensorName()+" is resetted \n");
        sensor.setSensorValue(0);
        System.out.println("new sensorValue is : " + sensor.getSensorValue());    
     }
+
 }
 
 /*
@@ -713,6 +714,5 @@ class Noise_Sensor extends Sensor
     {
         visitor.Visit(this);
     }
-    
-    
+   
 }

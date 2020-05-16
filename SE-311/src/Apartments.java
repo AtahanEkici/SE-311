@@ -11,9 +11,9 @@ interface Observer_Apartment // Observer Pattern //
     Apartments is a concrete observer.
 
 */
-public  class Apartments extends Street implements Observer_Apartment
+public class Apartments extends Street implements Observer_Apartment
     {
-        protected String Name;
+        protected  String Name;
         protected static ArrayList<Apartments> list = new ArrayList<>();
      
         protected Sensor _polSensor;

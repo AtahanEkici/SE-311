@@ -1,18 +1,13 @@
 
-import java.util.Random;
 
 public class Main 
 {
     public static void main(String[] args) 
-    {
-      
+{
         UI.ShowUI();
-        
+       //TestTextArea03 t = new TestTextArea03();
+       
+    
+    //Sensor.Loop();
 }
-    public static int CodeGenerator(int i) 
-    {
-    Random random = new Random();
-    int a = random.nextInt(i);
-    return a;   
-    }
 }
