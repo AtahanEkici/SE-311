@@ -1,3 +1,9 @@
+
+// ATAHAN EKİCİ 
+// MESUT ŞİMŞEK 
+// ONAT KOCABAŞOĞLU
+// Smart City Application
+
 import java.util.ArrayList;
 
 interface Observer_Pole //Observer Pattern //

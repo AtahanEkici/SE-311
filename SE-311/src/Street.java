@@ -1,3 +1,8 @@
+// ATAHAN EKİCİ 
+// MESUT ŞİMŞEK 
+// ONAT KOCABAŞOĞLU
+// Smart City Application
+
 import java.util.ArrayList;
 
 public class Street extends Neighborhood

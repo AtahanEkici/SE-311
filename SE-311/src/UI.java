@@ -1,4 +1,9 @@
- import java.awt.BorderLayout;
+// ATAHAN EKİCİ 
+// MESUT ŞİMŞEK 
+// ONAT KOCABAŞOĞLU
+// Smart City Application
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -9,8 +14,26 @@ import javax.swing.border.LineBorder;
  import java.util.Random;
  
 
-public final class UI extends JFrame implements ActionListener 
+public class UI extends JFrame implements ActionListener 
 {    
+    private static UI single_instance = null;
+    
+    UI()
+    {
+        
+    }
+ 
+    
+    public static UI getInstance() // Singleton Pattern //
+    {
+        if(single_instance == null)
+        {
+            single_instance = new UI();
+            UI.ShowUI();
+        }
+            return single_instance;    
+    }
+    
     JTextField tf1_apt,tf2_apt,tf3_apt,tf4_apt; // Apartment Text Areas //
     JTextField tf1_pol,tf2_pol,tf3_pol,tf4_pol;   // Pole Text Areas //
     
@@ -45,14 +68,14 @@ public final class UI extends JFrame implements ActionListener
        ui.Construct_Sensor_Loop();
     }
 
-public static int CodeGenerator(int i) 
+public static int CodeGenerator(int i) // Random Number Generator
     {
     Random random = new Random();
     int a = random.nextInt(i);
     return a;   
     }
     
-    public void Construct_Main_Frame()
+    public void Construct_Main_Frame() // Man Frame //
     {
         
         main.setLayout(new BorderLayout());
@@ -121,7 +144,7 @@ public static int CodeGenerator(int i)
         main.setVisible(true);  
     }
     
-void Construct_Sensor_Loop()
+void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a Loop //
     { 
         svl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         svl.setLayout(new BorderLayout());
@@ -161,7 +184,7 @@ void Construct_Sensor_Loop()
         svl.setVisible(false);
     }
     
-    public void Construct_Pole_Builder()
+    public void Construct_Pole_Builder() // Frame that let's you add new poles //
     {
          
         cpa.setResizable(false);
@@ -250,7 +273,7 @@ void Construct_Sensor_Loop()
         cpa.setVisible(false);
     }
     
-    public void Construct_Apartment_Builder()
+    public void Construct_Apartment_Builder() // Frame that let's you build new Apartments //
     {  
         
         cpb.setResizable(false);
@@ -337,8 +360,7 @@ void Construct_Sensor_Loop()
     
      @Override
     public void actionPerformed(ActionEvent e) // Action Listener bir değişim algıladığında execute edilecek komut dizini  başlangıcı //
-    {
-            
+    {           
         if(e.getSource() == b_main_apt) // Apartman ekleye basıldığında ilgili Frame'i çağırır //
         {
             cpb.setVisible(true);
@@ -408,8 +430,7 @@ class ResetVisitor implements Visitor
                 else
                 {
                     jta.append("This Sensor ID: ("+Sensor.AllSensors.get(i).SensorID+") appears to be attached to no other pole or apartment \n");
-                }
-                
+                } 
             }
         }
         }  
@@ -470,7 +491,6 @@ class ResetVisitor implements Visitor
         {
                  
         sensorFactory sensorFac = new ConcreteSensorFactory();
-        
                  
             tf4_apt.setBackground(Color.green);
             tf4_apt.setBounds(125,275,110,20);
