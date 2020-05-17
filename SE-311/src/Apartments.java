@@ -86,6 +86,13 @@ public class Apartments extends Street implements Observer_Apartment
            return result;
         }
 
+        
+        
+        
+        //Check if the value of sensors that are given by observer method
+        // have the value that the user wants to be notified.
+                
+        
     @Override
         public void Update(Sensor sensor) 
         {
