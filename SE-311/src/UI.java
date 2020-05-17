@@ -16,6 +16,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
  
@@ -40,6 +41,9 @@ public class UI extends JFrame implements ActionListener
             return single_instance;    
     }
     
+    ArrayList <String> subs = new ArrayList <>();
+    ArrayList <Sensor> construct = new ArrayList <>();
+    
     JTextField tf1_apt,tf2_apt,tf3_apt,tf4_apt; // Apartment Text Areas //
     JTextField tf1_pol,tf2_pol,tf3_pol,tf4_pol;   // Pole Text Areas //
     
@@ -62,11 +66,11 @@ public class UI extends JFrame implements ActionListener
     JFrame cpb = new JFrame("Apartment Adder");
     JFrame main = new JFrame("Main Frame");
     JFrame svl = new JFrame("Sensor Value Loop");
+    JFrame frame = new JFrame("Sensor Subscriber");
     
     /**
      */
-   
-
+  
     public static final void ShowUI()
     {
        UI ui = new UI();
@@ -74,6 +78,7 @@ public class UI extends JFrame implements ActionListener
        ui.Construct_Apartment_Builder();
        ui.Construct_Pole_Builder();
        ui.Construct_Sensor_Loop();
+       ui.Construct_Sensor_Selecter();
     }
 
 public static int CodeGenerator(int i) // Random Number Generator
@@ -162,6 +167,29 @@ public static int CodeGenerator(int i) // Random Number Generator
         main.setVisible(true);  
     }
     
+    public void authenticate()
+    {
+         for(int i = 0; i<subs.size();i++)
+        {  
+            for(int j = 0; j < Sensor.AllSensors.size(); j++)
+            {                
+                 if(Sensor.AllSensors.get(j).sensorName().replaceAll("\\s+","").equals(subs.get(i).replaceAll("\\s+","")))
+                {
+                    String temp1 = Sensor.AllSensors.get(j).sensorName().replaceAll("\\s+","");
+                    String temp2 = subs.get(i).replaceAll("\\s+","");
+                    
+                    if(construct.contains(Sensor.AllSensors.get(j)) == false)
+                    {
+                        construct.add(Sensor.AllSensors.get(j));
+                    }
+                }
+            }
+        }
+         //System.out.println("Çağrıldı\n");
+         System.out.println(construct.size());
+         //System.out.println(Sensor.AllSensors.get(1).sensorName());
+    }
+    
 void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a Loop //
     { 
         Timer timer;
@@ -172,7 +200,7 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
         JPanel jp = new JPanel();
         jp.setLayout(new FlowLayout(FlowLayout.CENTER));
         
-         jsp_sen = new JScrollPane();
+        jsp_sen = new JScrollPane();
         jsp_sen.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
        
         
@@ -182,73 +210,78 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
         
         jsp_sen.getViewport().setBackground(Color.WHITE);
         jsp_sen.getViewport().add(jta_sen);
+        
+        jsp_sen.setAutoscrolls(false);
+        jta_sen.setAutoscrolls(false); // To prevent Auto_Scrolling //
+        
         add(jsp_sen);
                      
         jp.add(jsp_sen); 
-        
+
          timer = new Timer(2000, (ActionEvent e) -> 
-         {
-            if(Sensor.AllSensors.isEmpty() == true)
-            {
-                jta_sen.append(" \n No Sensor is registered yet! \n ");
-            }
-            else
-            {
-                 for(int i = 0; i < Sensor.AllSensors.size();i++)
+         {  
+             authenticate();
+             
+          for(int i = 0; i < construct.size();i++)
         {
-           if(Sensor.AllSensors.get(i) instanceof Temperature_Sensor)
+            if(construct.isEmpty() == true)
+            {
+                jta_sen.append("No Sensor is registered yet \n");
+            }
+
+            else if(construct.get(i) instanceof Temperature_Sensor)
            {
-              Sensor.AllSensors.get(i).setSensorValue(CodeGenerator(100));
+              construct.get(i).setSensorValue(CodeGenerator(100));
               
-              if(Sensor.AllSensors.get(i).getSensorValue() < 0 )
+              if(construct.get(i).getSensorValue() < 0 )
               {
-                   jta_sen.append(" !!WARNING!!  "+Sensor.AllSensors.get(i).SensorID+")"+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " !!WARNING!! \n");
+                   jta_sen.append(" !!WARNING!!  "+construct.get(i).SensorID+")"+Sensor.AllSensors.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " !!WARNING!! \n");
               }
               else
               {
-                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ "\n");
+                   jta_sen.append(""+construct.get(i).SensorID+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "\n");
               } 
            }
            
-           else if(Sensor.AllSensors.get(i) instanceof Congestion_Sensor)
+           else if(construct.get(i) instanceof Congestion_Sensor)
            {
-                Sensor.AllSensors.get(i).setSensorValue(CodeGenerator(100));
+                construct.get(i).setSensorValue(CodeGenerator(100));
               
-              if(Sensor.AllSensors.get(i).getSensorValue() < 10 )
+              if(construct.get(i).getSensorValue() < 10 )
               {
-                   jta_sen.append(" !!WARNING!!  "+Sensor.AllSensors.get(i).SensorID+")"+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " !!WARNING!! \n");
+                   jta_sen.append(" !!WARNING!!  "+construct.get(i).SensorID+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " !!WARNING!! \n");
               }
               else
               {
-                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+"  Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " \n");
+                   jta_sen.append(""+construct.get(i).SensorID+") "+construct.get(i).sensorName()+"  Value: "+construct.get(i).getSensorValue()+ " \n");
               } 
            }
            
-           else if(Sensor.AllSensors.get(i) instanceof Noise_Sensor)
+           else if(construct.get(i) instanceof Noise_Sensor)
            {
-                Sensor.AllSensors.get(i).setSensorValue(CodeGenerator(100));
+                construct.get(i).setSensorValue(CodeGenerator(100));
               
-              if(Sensor.AllSensors.get(i).getSensorValue() > 85 )
+              if(construct.get(i).getSensorValue() > 85 )
               {
-                  jta_sen.append(" !!WARNING!!  "+Sensor.AllSensors.get(i).SensorID+")"+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " !!WARNING!! \n");
+                  jta_sen.append(" !!WARNING!!  "+construct.get(i).SensorID+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " !!WARNING!! \n");
               }
               else
               {
-                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " \n");
+                   jta_sen.append(""+construct.get(i).SensorID+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " \n");
               } 
            }
            
-           else if(Sensor.AllSensors.get(i) instanceof Pollution_Sensor)
+           else if(construct.get(i) instanceof Pollution_Sensor)
            {
-                Sensor.AllSensors.get(i).setSensorValue(CodeGenerator(110));
+                construct.get(i).setSensorValue(CodeGenerator(110));
               
-              if(Sensor.AllSensors.get(i).getSensorValue() > 100 )
+              if(construct.get(i).getSensorValue() > 100 )
               {
-                   jta_sen.append(" !!WARNING!!  "+Sensor.AllSensors.get(i).SensorID+")"+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " !!WARNING!! \n");
+                   jta_sen.append(" !!WARNING!!  "+construct.get(i).SensorID+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " !!WARNING!! \n");
               }
               else
               {
-                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " \n");
+                   jta_sen.append(""+construct.get(i).SensorID+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " \n");
               } 
            }
            
@@ -256,10 +289,10 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
            {
                jta_sen.append(" \n Sensor Error \n");
            }
-        }
                  
-           jta_sen.append("\n");
+           
             }
+          jta_sen.append("\n");
         });
             timer.setRepeats(true);
             timer.setCoalesce(true);
@@ -267,12 +300,87 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
         
         svl.add(jp);
         svl.pack();
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize(); // getting the current screen size //
+        
+        svl.setLocation(dim.width/2-svl.getSize().width/2, dim.height/2-svl.getSize().height/2); // locate the frame in the center of the screen (initially of course user can define the location from there on out) //
+        
         svl.setVisible(false);
+    }
+        
+
+    public void Construct_Sensor_Selecter()
+    {
+        frame.setLayout(new BorderLayout());
+        frame.setResizable(false);
+        //frame.setSize(350,350);  
+        //frame.setLayout(null);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        DefaultListModel<String> defaultListModel = new DefaultListModel<>();
+        
+        JPanel panel = new JPanel(new BorderLayout());
+        JTextArea jt = new JTextArea("deneme");
+        jt.setPreferredSize(new Dimension(30, 20));
+        panel.add(jt);
+        jt.setLineWrap(true);
+        jt.setWrapStyleWord(true);
+        jt.setEditable(false);
+        
+       for(int i = 0; i < Sensor.AllSensors.size();i++)
+       {
+           if(Sensor.AllSensors.get(i).attached_to_apt == null)
+           {
+               String Temp = Sensor.AllSensors.get(i).sensorName() +"=> " +Sensor.AllSensors.get(i).attached_to_pol+" (Pole)" ;
+               defaultListModel.addElement(Temp);
+           }
+           
+           else
+           {
+               String Temp = Sensor.AllSensors.get(i).sensorName() +"=> " +Sensor.AllSensors.get(i).attached_to_apt+" Apt." ;
+               defaultListModel.addElement(Temp);
+           }
+       }
+
+       JList<String> list = new JList<>();
+       list.setPreferredSize(new Dimension(500, 200));
+       list.setModel(defaultListModel);
+
+       JButton button = new JButton("Subscribe");
+       button.addActionListener((ActionEvent e) -> 
+       {
+           String selected = list.getSelectedValue();
+           selected = selected.trim();
+           String temp = selected.split("=")[0];
+           
+           temp = temp.replaceAll("\\s+","");
+
+           if(subs.contains(temp) == true)
+           {
+               jt.setBackground(Color.red);
+               jt.setBounds(125,275,200,20);
+               jt.setText(" Already Subscribed ");
+           }
+           
+           else
+           {
+               subs.add(temp);
+               jt.setBackground(Color.green);
+               jt.setBounds(125,275,200,20);
+               jt.setText(" Successfully Added to Subs  "+temp+"");
+               System.out.println(temp);
+           }
+       });
+       
+       frame.add(panel);
+       frame.add(new JScrollPane(list), BorderLayout.NORTH);
+       frame.add(button,BorderLayout.PAGE_END);
+       frame.pack();
+       frame.setVisible(false);
     }
     
     public void Construct_Pole_Builder() // Frame that let's you add new poles //
-    {
-         
+    { 
         cpa.setResizable(false);
         cpa.setSize(450,350);  
         cpa.setLayout(null);
@@ -504,6 +612,9 @@ class ResetVisitor implements Visitor
         
         else if(e.getSource() == show_sensors) // Sensörleri Göster butonu //
         {
+            frame.setVisible(true);
+            
+            /*
             if(Sensor.AllSensors.isEmpty() == true) // Boşsa hata mesajı döndürür //
             {
                 jta.append("\n Henüz Sensör eklenmemiş \n");
@@ -535,7 +646,8 @@ class ResetVisitor implements Visitor
             }
                 jta.append("\n");
         }
-        }  
+*/
+        }
         
         else if(e.getSource() == b_main_apt_show) // Apartmanları Göster Butonu //
         {

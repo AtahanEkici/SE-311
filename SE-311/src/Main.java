@@ -7,25 +7,18 @@ public class Main
 {
     public static void main(String[] args) 
 {
-        Pole poleOne = new Pole("Korutürk Mahallesi","Ülker Sokak","Meriç Apartmanı");
-        Pole poleTwo = new Pole("Korutürk Mahallesi","Ülker Sokak","Beyhan Apartmanı");
-        Pole poleThree = new Pole("Korutürk Mahallesi","Ülker Sokak","Karhani Apartmanı");
+        Pole poleOne = new Pole("Korutürk Mahallesi","Ülker Sokak","Pole 1");
+        Pole poleTwo = new Pole("Korutürk Mahallesi","Ülker Sokak","Pole 2");
+        Pole poleThree = new Pole("Korutürk Mahallesi","Ülker Sokak","Pole 3");
         
         Apartments MeriçApartmanı = new Apartments("Korutürk Mahallesi ","Ülker Sokak ","Meriç Apartmanı");
         Apartments BeyhanApartmanı = new Apartments("Korutürk Mahallesi ","Ülker Sokak ","Beyhan Apartmanı");
         Apartments KarhaniApartmanı = new Apartments("Korutürk Mahallesi ","Ülker Sokak ","Karhani Apartmanı");
         
-        
-        
-        
-        ConcreteSensorFactory myFac = new ConcreteSensorFactory();
-        BuildSensor sensorBuilder = new BuildSensor();
-        
-        
-        Sensor pSensorOne = sensorBuilder.createPollutionSensor(myFac, 18);
-        Sensor tSensorOne = sensorBuilder.createTemperatureSensor(myFac, 18);
-        Sensor cSensorOne = sensorBuilder.createCongestionSensor(myFac, 18);
-        Sensor nSensorOne = sensorBuilder.createNoiseSensor(myFac, 18);
+        Sensor pSensorOne = new Pollution_Sensor(18);
+        Sensor tSensorOne = new Temperature_Sensor(25);
+        Sensor cSensorOne = new Congestion_Sensor(2);
+        Sensor nSensorOne = new Noise_Sensor(0);
         
         pSensorOne.Attach(MeriçApartmanı);
         pSensorOne.Attach_Pole(poleOne);
@@ -42,10 +35,10 @@ public class Main
         nSensorOne.Attach(MeriçApartmanı);
         nSensorOne.Attach_Pole(poleTwo);
         
-        Sensor pSensorTwo = sensorBuilder.createPollutionSensor(myFac, 18);
-        Sensor tSensorTwo =  sensorBuilder.createTemperatureSensor(myFac, 18);
-        Sensor cSensorTwo = sensorBuilder.createCongestionSensor(myFac, 18);
-        Sensor nSensorTwo = sensorBuilder.createNoiseSensor(myFac, 18);
+        Sensor pSensorTwo = new Pollution_Sensor(18);
+        Sensor tSensorTwo = new Temperature_Sensor(25);
+        Sensor cSensorTwo = new Congestion_Sensor(2);
+        Sensor nSensorTwo = new Noise_Sensor(0);
         
         pSensorTwo.Attach(BeyhanApartmanı);
         pSensorTwo.Attach_Pole(poleTwo);
@@ -62,10 +55,10 @@ public class Main
         nSensorTwo.Attach(MeriçApartmanı);
         nSensorTwo.Attach_Pole(poleTwo);
         
-        Sensor pSensorThree = sensorBuilder.createPollutionSensor(myFac, 18);
-        Sensor tSensorThree = sensorBuilder.createTemperatureSensor(myFac, 18);
-        Sensor cSensorThree = sensorBuilder.createCongestionSensor(myFac, 18);
-        Sensor nSensorThree = sensorBuilder.createNoiseSensor(myFac, 18);
+        Sensor pSensorThree = new Pollution_Sensor(18);
+        Sensor tSensorThree = new Temperature_Sensor(25);
+        Sensor cSensorThree = new Congestion_Sensor(2);
+        Sensor nSensorThree = new Noise_Sensor(0);
         
         pSensorThree.Attach(KarhaniApartmanı);
         pSensorThree.Attach_Pole(poleThree);

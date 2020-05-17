@@ -15,8 +15,8 @@ interface AbstractAggregate
         public ArrayList<Apartments> getItems();
 };
 
-//This is the concrete Aggregate.
-//			Collection
+//This is the concrete Aggregate Collection //
+			
 
 
 class Collection implements AbstractAggregate 
