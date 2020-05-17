@@ -1,5 +1,5 @@
-## SE-311 ##
-SE-311 Project (Smart City With Design Patterns)
+## Group No. 3 ##
+SE-311 Project (Smart City With Design Patterns #3)
 
 ### Patterns We Used
 
