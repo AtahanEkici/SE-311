@@ -175,9 +175,6 @@ public static int CodeGenerator(int i) // Random Number Generator
             {                
                  if(Sensor.AllSensors.get(j).sensorName().replaceAll("\\s+","").equals(subs.get(i).replaceAll("\\s+","")))
                 {
-                    String temp1 = Sensor.AllSensors.get(j).sensorName().replaceAll("\\s+","");
-                    String temp2 = subs.get(i).replaceAll("\\s+","");
-                    
                     if(construct.contains(Sensor.AllSensors.get(j)) == false)
                     {
                         construct.add(Sensor.AllSensors.get(j));
@@ -186,7 +183,7 @@ public static int CodeGenerator(int i) // Random Number Generator
             }
         }
          //System.out.println("Çağrıldı\n");
-         System.out.println(construct.size());
+         //System.out.println(construct.size());
          //System.out.println(Sensor.AllSensors.get(1).sensorName());
     }
     
@@ -289,9 +286,7 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
            {
                jta_sen.append(" \n Sensor Error \n");
            }
-                 
-           
-            }
+}
           jta_sen.append("\n");
         });
             timer.setRepeats(true);

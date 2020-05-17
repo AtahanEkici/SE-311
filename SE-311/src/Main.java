@@ -7,6 +7,8 @@ public class Main
 {
     public static void main(String[] args) 
 {
+    
+    /*
         Pole poleOne = new Pole("Korutürk Mahallesi","Ülker Sokak","Pole 1");
         Pole poleTwo = new Pole("Korutürk Mahallesi","Ülker Sokak","Pole 2");
         Pole poleThree = new Pole("Korutürk Mahallesi","Ülker Sokak","Pole 3");
@@ -72,7 +74,13 @@ public class Main
         nSensorThree.Attach(KarhaniApartmanı);
         nSensorThree.Attach_Pole(poleThree);
         
-       // Singleton proof //
+        
+        InterfacePanel ip;
+        ip = new InterfacePanel();
+        ip.showInterface1();
+    */
+    
+    // Singleton proof //
         UI ui = UI.getInstance();
         UI ui2 = UI.getInstance(); // Only One Frame will be on display //
         UI ui3 = UI.getInstance();
@@ -81,6 +89,5 @@ public class Main
         System.out.println(ui2);
         System.out.println(ui3);//you should see frame0 in all the calls //
         // Singleton Proof //
-        
 }
 }
