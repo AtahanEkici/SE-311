@@ -146,6 +146,8 @@ public static int CodeGenerator(int i) // Random Number Generator
     
 void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a Loop //
     { 
+        Timer timer;
+    
         svl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         svl.setLayout(new BorderLayout());
         
@@ -154,27 +156,93 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
         
          jsp_sen = new JScrollPane();
         jsp_sen.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+       
         
         jta_sen = new JTextArea(40,75);
         jta_sen.setBorder(new LineBorder(Color.BLACK));
+        jta_sen.setEditable(false);
         
         jsp_sen.getViewport().setBackground(Color.WHITE);
         jsp_sen.getViewport().add(jta_sen);
         add(jsp_sen);
                      
         jp.add(jsp_sen); 
-
-            Timer timer = new Timer(1000, (ActionEvent e) -> 
+        
+         timer = new Timer(2000, (ActionEvent e) -> 
+         {
+            if(Sensor.AllSensors.isEmpty() == true)
             {
-                if(Sensor.AllSensors.isEmpty() == true)
-                {
-                    jta_sen.append(" \n No Sensor is registered yet! \n ");
-                }
-                else
-                {
-                    jta_sen.append(" \n "+Sensor.getValues()+" \n");
-                } 
-            });
+                jta_sen.append(" \n No Sensor is registered yet! \n ");
+            }
+            else
+            {
+                 for(int i = 0; i < Sensor.AllSensors.size();i++)
+        {
+           if(Sensor.AllSensors.get(i) instanceof Temperature_Sensor)
+           {
+              Sensor.AllSensors.get(i).setSensorValue(100);
+              
+              if(Sensor.AllSensors.get(i).getSensorValue() < 0 )
+              {
+                   jta_sen.append(" !!WARNING!!  "+Sensor.AllSensors.get(i).SensorID+")"+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " !!WARNING!! \n");
+              }
+              else
+              {
+                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" \n");
+              } 
+           }
+           
+           else if(Sensor.AllSensors.get(i) instanceof Congestion_Sensor)
+           {
+                Sensor.AllSensors.get(i).setSensorValue(CodeGenerator(100));
+              
+              if(Sensor.AllSensors.get(i).getSensorValue() < 10 )
+              {
+                   jta_sen.append(" !!WARNING!!  "+Sensor.AllSensors.get(i).SensorID+")"+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " !!WARNING!! \n");
+              }
+              else
+              {
+                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" \n");
+              } 
+           }
+           
+           else if(Sensor.AllSensors.get(i) instanceof Noise_Sensor)
+           {
+                Sensor.AllSensors.get(i).setSensorValue(CodeGenerator(100));
+              
+              if(Sensor.AllSensors.get(i).getSensorValue() > 85 )
+              {
+                  jta_sen.append(" !!WARNING!!  "+Sensor.AllSensors.get(i).SensorID+")"+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " !!WARNING!! \n");
+              }
+              else
+              {
+                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" \n");
+              } 
+           }
+           
+           else if(Sensor.AllSensors.get(i) instanceof Pollution_Sensor)
+           {
+                Sensor.AllSensors.get(i).setSensorValue(CodeGenerator(200));
+              
+              if(Sensor.AllSensors.get(i).getSensorValue() > 100 )
+              {
+                   jta_sen.append(" !!WARNING!!  "+Sensor.AllSensors.get(i).SensorID+")"+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " !!WARNING!! \n");
+              }
+              else
+              {
+                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" \n");
+              } 
+           }
+           
+           else
+           {
+               jta_sen.append(" \n Sensor Error \n");
+           }
+        }
+                 
+           jta_sen.append("\n");
+            }
+        });
             timer.setRepeats(true);
             timer.setCoalesce(true);
             timer.start();
@@ -391,10 +459,10 @@ class ResetVisitor implements Visitor
     public void Visit(Sensor sensor) 
     {
        sensor.setSensorValue(0);
-       jta.append(" \n "+sensor.sensorName()+" is resetted : new sensorValue is : " + sensor.getSensorValue()+" \n ");
+       jta.append(" ID:"+sensor.SensorID+"  "+sensor.sensorName()+" is resetted => new sensorValue is : "+sensor.getSensorValue()+" \n ");
     }
 }
-               sensorCollection.Accept(new ResetVisitor());
+            sensorCollection.Accept(new ResetVisitor());
 }
 }
         else if(e.getSource() == sensor_loop)
@@ -419,17 +487,17 @@ class ResetVisitor implements Visitor
                 
                 if(Sensor.AllSensors.get(i).attached_to_apt != null)
                 {
-                    jta.append("\n" +counter+") ID: ("+Sensor.AllSensors.get(i).SensorID+"): attached to "+Sensor.AllSensors.get(i).attached_to_apt+" \n ");
+                    jta.append("\n" +counter+") ID:"+Sensor.AllSensors.get(i).SensorID+" ("+Sensor.AllSensors.get(i).sensorName()+"): attached to "+Sensor.AllSensors.get(i).attached_to_apt+" \n ");
                 }
                 
                 else if(Sensor.AllSensors.get(i).attached_to_pol != null)
                 {
-                    jta.append("\n" +counter+") ID: ("+Sensor.AllSensors.get(i).SensorID+"): attached to "+Sensor.AllSensors.get(i).attached_to_pol+" \n ");
+                    jta.append("\n" +counter+") ID:"+Sensor.AllSensors.get(i).SensorID+" ("+Sensor.AllSensors.get(i).sensorName()+"): attached to "+Sensor.AllSensors.get(i).attached_to_pol+" \n ");
                 }
                 
                 else
                 {
-                    jta.append("This Sensor ID: ("+Sensor.AllSensors.get(i).SensorID+") appears to be attached to no other pole or apartment \n");
+                    jta.append("This Sensor ID:"+Sensor.AllSensors.get(i).SensorID+" ("+Sensor.AllSensors.get(i).sensorName()+") appears to be attached to no other pole or apartment \n");
                 } 
             }
         }
@@ -474,12 +542,11 @@ class ResetVisitor implements Visitor
                temp = "\n"+counter+") "+Pole.Pole_list.get(i).toString()+" ";
                jta.append(temp);
            }
-           temp = "\n";
-           jta.append(temp);
+           jta.append(" \n ");
         }
         
         else if(e.getSource() == b_apt) // Apartman Ekle Butonu için Action Listener //
-        {
+        {       
              if(tf1_apt.getText().isEmpty() == true | tf2_apt.getText().isEmpty() == true | tf3_apt.getText().isEmpty() == true)// Bütün Textler Dolu mu diye kontrol eden mekanizma //
             {
                 tf4_apt.setBackground(Color.red);
@@ -490,15 +557,25 @@ class ResetVisitor implements Visitor
              else  // Doğruysa veriyi ekleyen mekanizma //
         {
                  
-        sensorFactory sensorFac = new ConcreteSensorFactory();
+            String mahalle = tf1_apt.getText();
+            String sokak = tf2_apt.getText();
+            String apartman = tf3_apt.getText();
                  
+             if(Apartments.Apt_IsExists(apartman) == true)
+             {
+                tf4_apt.setBackground(Color.red);
+                tf4_apt.setBounds(125,275,200,20);
+                tf4_apt.setText(" Apartment is already exists ");
+             }
+             else
+             {
+                 
+         sensorFactory sensorFac = new ConcreteSensorFactory();         
+                  
             tf4_apt.setBackground(Color.green);
             tf4_apt.setBounds(125,275,110,20);
             tf4_apt.setText("Başarıyla eklendi");
             
-            String mahalle = tf1_apt.getText();
-            String sokak = tf2_apt.getText();
-            String apartman = tf3_apt.getText();
             
             Apartments yeni_apt = new Apartments(mahalle,sokak,apartman);
             
@@ -542,11 +619,11 @@ class ResetVisitor implements Visitor
                 jta.append(" \n " +noiseSensor.sensorName()+ " is installed on " +noiseSensor.attached_to_apt+ " \n ");
             }
         } 
-        }
+}
+}
         
         else if(e.getSource() == b_pol) // Direk Ekleden sonra açılan frame'deki "ok" için Action Listener kısmı //
         {
-            
             if(tf1_pol.getText().isEmpty() == true | tf2_pol.getText().isEmpty() == true | tf3_pol.getText().isEmpty() == true) // Bütün Textler Dolu mu diye kontrol eden mekanizma //
             {
                 tf4_pol.setBackground(Color.red);
@@ -556,22 +633,29 @@ class ResetVisitor implements Visitor
                 
             else // Doğruysa veriyi ekleyen mekanizma //
         {  
+             
+            String mahalle = tf1_pol.getText();
+            String sokak = tf1_pol.getText();
+            String direk = tf1_pol.getText();
                 
-        sensorFactory sensorFac = new ConcreteSensorFactory();
+                
+                  if(Pole.Pol_IsExists(direk) == true)
+            {
+                tf4_pol.setBackground(Color.red);
+                tf4_pol.setBounds(125,275,200,20);
+                tf4_pol.setText(" Pole is Already exist ");
+            }
+            else
+            {
+            sensorFactory sensorFac = new ConcreteSensorFactory();
         
             tf4_pol.setBackground(Color.green);
             tf4_pol.setBounds(125,275,110,20);
             tf4_pol.setText("Başarıyla eklendi");
-            
-            String mahalle = tf1_pol.getText();
-            String sokak = tf1_pol.getText();
-            String direk = tf1_pol.getText();
-            
-            Pole yeni_direk = new Pole(mahalle,sokak,direk);
-            
-            String temp = "Yeni Direk Eklendi";
-            jta.append(temp);
-            
+          
+            Pole yeni_direk = new Pole(mahalle,sokak,direk); 
+            jta.append(" \n Yeni Direk Eklendi \n ");
+
             if(jcb_pole_temp.isSelected() == true) // İlgili direğe yeni temperature sensör eklenip eklenmediğini kontrol eder //
             {
                Sensor tempSensor = sensorFac.createTemperatureSensor(CodeGenerator(100));
@@ -610,4 +694,5 @@ class ResetVisitor implements Visitor
         }    
         }
     } 
-}                 
+    }
+}

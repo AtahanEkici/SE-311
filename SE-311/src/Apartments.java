@@ -18,7 +18,7 @@ interface Observer_Apartment // Observer Pattern //
 */
 public class Apartments extends Street implements Observer_Apartment
     {
-        protected  String Name;
+        protected  String apt_Name;
         protected static ArrayList<Apartments> list = new ArrayList<>();
      
         protected Sensor _polSensor;
@@ -31,13 +31,13 @@ public class Apartments extends Street implements Observer_Apartment
             super(N_name,S_name);
             Neighborhood_list.add(this);
             Street_list.add(this);
-            this.Name = Name;
+            this.apt_Name = Name;
             list.add(this);    
         }
         @Override
         public String toString()
      {
-         return "Neighborhood Name: "+N_name+" Street Name: "+S_name+" Apartment Name: "+Name+"";
+         return "Neighborhood Name: "+N_name+" Street Name: "+S_name+" Apartment Name: "+apt_Name+"";
      }
         
         public static void pushApartments(Apartments a)
@@ -62,7 +62,7 @@ public class Apartments extends Street implements Observer_Apartment
 {
             for(int i=0;i<list.size();i++)
             {
-                if(list.get(i).equals(""+Name+""))
+                if(list.get(i).apt_Name.equals(""+Name+""))
                 {
                     list.remove(i-2);
                     list.remove(i-1);
@@ -70,6 +70,21 @@ public class Apartments extends Street implements Observer_Apartment
                 }
             }
 }
+        
+        public static boolean Apt_IsExists(String name)
+        {
+           boolean result = false;
+           
+           for(int i = 0;i < list.size();i++)
+           {
+               if(list.get(i).apt_Name.equals(""+name+"") == true)
+               {
+                   result = true;
+                   return result;
+               }
+           }
+           return result;
+        }
 
     @Override
         public void Update(Sensor sensor) 
@@ -83,7 +98,7 @@ public class Apartments extends Street implements Observer_Apartment
                      */
                      
                      if(_polSensor.getSensorValue() >= 100){
-                     System.out.println("Pollution is announced to " + this.Name + " as :" + sensor.getSensorValue());
+                     System.out.println("Pollution is announced to " + this.apt_Name + " as :" + sensor.getSensorValue());
                      
                      }
                      break;
@@ -96,7 +111,7 @@ public class Apartments extends Street implements Observer_Apartment
                      */
                      
                      if(_tempSensor.getSensorValue() <= 0){
-                     System.out.println("Temp is announced to " + this.Name + " as :" + sensor.getSensorValue());
+                     System.out.println("Temp is announced to " + this.apt_Name + " as :" + sensor.getSensorValue());
                      }
                      break;
 
@@ -109,7 +124,7 @@ public class Apartments extends Street implements Observer_Apartment
                      */
                    
                      if(_congSensor.getSensorValue() <= 10){
-                     System.out.println("Cong is announced to " + this.Name + " as :"+ sensor.getSensorValue());
+                     System.out.println("Cong is announced to " + this.apt_Name + " as :"+ sensor.getSensorValue());
                      }
                      break;
 
@@ -122,15 +137,14 @@ public class Apartments extends Street implements Observer_Apartment
                      */
                      
                      if(_noiseSensor.getSensorValue() >= 85){
-                      System.out.println("Noise is announced to " + this.Name + " as : "+ sensor.getSensorValue() );
+                      System.out.println("Noise is announced to " + this.apt_Name + " as : "+ sensor.getSensorValue() );
                      }
                     
                      break;           
              }
         }
-
     Object getName() 
     {
-        return this.Name;
+        return this.apt_Name;
     }
     }

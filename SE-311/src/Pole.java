@@ -15,7 +15,7 @@ public class Pole extends Street implements Observer_Pole
 {
     @SuppressWarnings("LeakingThisInConstructor")
     
-        protected  String Name;
+        protected  String pol_Name;
         protected static ArrayList<Pole> Pole_list = new ArrayList<>();
        
         protected Sensor _polSensor;
@@ -28,14 +28,29 @@ public class Pole extends Street implements Observer_Pole
         super(N_name,S_name);
         Neighborhood_list.add(this);
         Street_list.add(this);
-        this.Name = Name; 
+        this.pol_Name = Name; 
         Pole_list.add(this);
         
     }
+     
+     public static boolean Pol_IsExists(String name)
+        {
+           boolean result = false;
+           
+           for(int i = 0;i < Pole_list.size();i++)
+           {
+               if(Pole_list.get(i).pol_Name.equals(""+name+"") == true)
+               {
+                   result = true;
+                   return result;
+               }
+           }
+           return result;
+        }
 @Override
         public String toString()
      {
-    return "Neighborhood Name: "+N_name+" Street Name: "+S_name+" Apartment Name: "+Name+"";
+    return "Neighborhood Name: "+N_name+" Street Name: "+S_name+" Apartment Name: "+pol_Name+"";
      }
         
         public static void PrintPoles()
@@ -69,28 +84,28 @@ public class Pole extends Street implements Observer_Pole
              switch (sensor.sensorID()){
                  case 0:
                      _polSensor = sensor;
-                     System.out.println("Pollution is announced to " + this.Name + " as :" + sensor.getSensorValue());
+                     System.out.println("Pollution is announced to " + this.pol_Name + " as :" + sensor.getSensorValue());
                      break;
 
                  case 1:
                      _tempSensor = sensor;
-                     System.out.println("Temp is announced to " + this.Name + " as :" + sensor.getSensorValue());
+                     System.out.println("Temp is announced to " + this.pol_Name + " as :" + sensor.getSensorValue());
                      break;
 
                  case 2:
                      _congSensor = sensor;
-                     System.out.println("Cong is announced to " + this.Name + " as :"+ sensor.getSensorValue());
+                     System.out.println("Cong is announced to " + this.pol_Name + " as :"+ sensor.getSensorValue());
                      break;
 
                  case 3:
                      _noiseSensor = sensor;
-                     System.out.println("Noise is announced to " + this.Name + " as : "+ sensor.getSensorValue() );
+                     System.out.println("Noise is announced to " + this.pol_Name + " as : "+ sensor.getSensorValue() );
                      break;           
              }
         }
 
     Object getName_Pole() 
     {
-        return this.Name;
+        return this.pol_Name;
     }
 }

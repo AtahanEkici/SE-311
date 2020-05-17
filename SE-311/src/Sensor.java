@@ -198,7 +198,7 @@ Sensor.AllSensors.get(i).Accept(visitor);
     public void Attach(Apartments apartmen)
     {
         _subscribedApartments.add(apartmen);
-        this.attached_to_apt = apartmen.Name;
+        this.attached_to_apt = apartmen.apt_Name;
     }
 
     //Unregister from the list of Observers.
@@ -216,7 +216,7 @@ Sensor.AllSensors.get(i).Accept(visitor);
      public void Attach_Pole(Pole pole)
     {
         _subscribedPoles.add(pole);
-        this.attached_to_pol = pole.Name;
+        this.attached_to_pol = pole.pol_Name;
     }
      
     //Unregister from the list of Observers.
@@ -241,7 +241,8 @@ Sensor.AllSensors.get(i).Accept(visitor);
     // tell the Observers what happened
     public void Notify() 
     {
-        _subscribedApartments.getItems().forEach((Apartments subscribedApartment) -> {
+        _subscribedApartments.getItems().forEach((Apartments subscribedApartment) -> 
+        {
             subscribedApartment.Update(Sensor.this);
         });
     }
