@@ -12,6 +12,12 @@ import javax.swing.*;
 import java.awt.event.*;  
 import javax.swing.border.LineBorder;
  import java.util.Random;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
  
 
 public class UI extends JFrame implements ActionListener 
@@ -37,7 +43,7 @@ public class UI extends JFrame implements ActionListener
     JTextField tf1_apt,tf2_apt,tf3_apt,tf4_apt; // Apartment Text Areas //
     JTextField tf1_pol,tf2_pol,tf3_pol,tf4_pol;   // Pole Text Areas //
     
-    JButton b_pol,b_apt,b_main_apt,b_main_pole,b_main_apt_show,b_main_pol_show,main_clear,show_sensors,reset_sensor,sensor_loop;  // Buttons //
+    JButton b_pol,b_apt,b_main_apt,b_main_pole,b_main_apt_show,b_main_pol_show,main_clear,show_sensors,reset_sensor,sensor_loop,menu_button;  // Buttons //
     
     JTextArea jta; // Kocaman Text Area //
     JTextArea jta_sen; //Sendika //
@@ -47,6 +53,8 @@ public class UI extends JFrame implements ActionListener
     
     JCheckBox jcb_pole_temp,jcb_pole_pol,jcb_pole_con,jcb_pole_noise;    // Pole Sensors //
     JCheckBox jcb_temp_apt,jcb_pol_apt,jcb_con_apt,jcb_noise_apt; // Apartment Sensors //
+    
+    JMenuBar mb;
 
     Sensors sensorCollection = new Sensors();
 
@@ -87,6 +95,9 @@ public static int CodeGenerator(int i) // Random Number Generator
         JPanel textArea = new JPanel();
         textArea.setLayout(new FlowLayout(FlowLayout.CENTER));
         
+        mb = new JMenuBar();
+        main.setJMenuBar(mb);
+
         b_main_apt = new JButton("Add Apartment");
         b_main_apt.addActionListener(this);
         
@@ -111,6 +122,13 @@ public static int CodeGenerator(int i) // Random Number Generator
         b_main_pol_show = new JButton("Show Poles");
         b_main_pol_show.addActionListener(this);
         
+        menu_button = new JButton("GitHub");
+        menu_button.setOpaque(true);
+        menu_button.setFocusable(false);
+        menu_button.addActionListener(this);
+        
+        mb.add(menu_button);
+        
         tutucu.add(b_main_apt,BorderLayout.NORTH);
         tutucu.add(b_main_apt_show,BorderLayout.NORTH);
         tutucu.add(show_sensors,BorderLayout.NORTH);
@@ -131,8 +149,8 @@ public static int CodeGenerator(int i) // Random Number Generator
         jsp.getViewport().add(jta);
         add(jsp);
                      
-        textArea.add(jsp); 
-        
+        textArea.add(jsp);
+  
         main.add(textArea,BorderLayout.PAGE_END); // Text'leri tutan panelin JFrame'e iliştirilmesi //
         main.add(tutucu,BorderLayout.AFTER_LINE_ENDS);
         main.pack(); // Function that packs the frame and cuts the unnecessary lines //
@@ -180,7 +198,7 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
         {
            if(Sensor.AllSensors.get(i) instanceof Temperature_Sensor)
            {
-              Sensor.AllSensors.get(i).setSensorValue(100);
+              Sensor.AllSensors.get(i).setSensorValue(CodeGenerator(100));
               
               if(Sensor.AllSensors.get(i).getSensorValue() < 0 )
               {
@@ -188,7 +206,7 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
               }
               else
               {
-                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" \n");
+                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ "\n");
               } 
            }
            
@@ -202,7 +220,7 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
               }
               else
               {
-                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" \n");
+                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+"  Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " \n");
               } 
            }
            
@@ -216,13 +234,13 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
               }
               else
               {
-                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" \n");
+                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " \n");
               } 
            }
            
            else if(Sensor.AllSensors.get(i) instanceof Pollution_Sensor)
            {
-                Sensor.AllSensors.get(i).setSensorValue(CodeGenerator(200));
+                Sensor.AllSensors.get(i).setSensorValue(CodeGenerator(110));
               
               if(Sensor.AllSensors.get(i).getSensorValue() > 100 )
               {
@@ -230,7 +248,7 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
               }
               else
               {
-                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" \n");
+                   jta_sen.append(""+Sensor.AllSensors.get(i).SensorID+") "+Sensor.AllSensors.get(i).sensorName()+" Value: "+Sensor.AllSensors.get(i).getSensorValue()+ " \n");
               } 
            }
            
@@ -434,6 +452,18 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
             cpb.setVisible(true);
         }
         
+        else if(e.getSource() == menu_button)
+        {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
+            {
+                try {
+                    Desktop.getDesktop().browse(new URI("https://github.com/AtahanEkici/SE-311"));
+                } catch (URISyntaxException | IOException ex) {
+                    Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+}
+        }
+        
         else if(e.getSource() == b_main_pole) // Direk ekleye basıldığında ilgili Frame'i çağırır //
         {
             cpa.setVisible(true);
@@ -461,9 +491,11 @@ class ResetVisitor implements Visitor
        sensor.setSensorValue(0);
        jta.append(" ID:"+sensor.SensorID+"  "+sensor.sensorName()+" is resetted => new sensorValue is : "+sensor.getSensorValue()+" \n ");
     }
+    
 }
             sensorCollection.Accept(new ResetVisitor());
 }
+            jta.append("\n");
 }
         else if(e.getSource() == sensor_loop)
         {
@@ -487,19 +519,21 @@ class ResetVisitor implements Visitor
                 
                 if(Sensor.AllSensors.get(i).attached_to_apt != null)
                 {
-                    jta.append("\n" +counter+") ID:"+Sensor.AllSensors.get(i).SensorID+" ("+Sensor.AllSensors.get(i).sensorName()+"): attached to "+Sensor.AllSensors.get(i).attached_to_apt+" \n ");
+                    jta.append(" " +counter+") ID:"+Sensor.AllSensors.get(i).SensorID+" ("+Sensor.AllSensors.get(i).sensorName()+": attached to "+Sensor.AllSensors.get(i).attached_to_apt+" ");
                 }
                 
                 else if(Sensor.AllSensors.get(i).attached_to_pol != null)
                 {
-                    jta.append("\n" +counter+") ID:"+Sensor.AllSensors.get(i).SensorID+" ("+Sensor.AllSensors.get(i).sensorName()+"): attached to "+Sensor.AllSensors.get(i).attached_to_pol+" \n ");
+                    jta.append(" " +counter+") ID:"+Sensor.AllSensors.get(i).SensorID+" ("+Sensor.AllSensors.get(i).sensorName()+": attached to "+Sensor.AllSensors.get(i).attached_to_pol+" ");
                 }
                 
                 else
                 {
-                    jta.append("This Sensor ID:"+Sensor.AllSensors.get(i).SensorID+" ("+Sensor.AllSensors.get(i).sensorName()+") appears to be attached to no other pole or apartment \n");
-                } 
+                    jta.append(" This Sensor ID:"+Sensor.AllSensors.get(i).SensorID+" ("+Sensor.AllSensors.get(i).sensorName()+" appears to be attached to no other pole or apartment ");
+                }
+                jta.append("\n");
             }
+                jta.append("\n");
         }
         }  
         
@@ -529,6 +563,7 @@ class ResetVisitor implements Visitor
         else if(e.getSource() == b_main_pol_show)// Direkleri Göster Butonu //
         {
              String temp;
+             jta.append(" \n Poles: \n");
              
            if(Pole.Pole_list.isEmpty() == true) // liste boşsa hata mesajı yazdır //
             {
@@ -538,6 +573,7 @@ class ResetVisitor implements Visitor
                // listede değer varsa ilgili değeri yazdır //   
            for(int i = 0;i < Pole.Pole_list.size();i++)
            {
+               
                int counter = i+1;
                temp = "\n"+counter+") "+Pole.Pole_list.get(i).toString()+" ";
                jta.append(temp);
