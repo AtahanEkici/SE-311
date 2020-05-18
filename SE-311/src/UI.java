@@ -68,6 +68,9 @@ public class UI extends JFrame implements ActionListener
     JFrame svl = new JFrame("Sensor Value Loop");
     JFrame frame = new JFrame("Sensor Subscriber");
     
+    DefaultListModel<String> defaultListModel = new DefaultListModel<>();
+    JList<String> list = new JList<>();
+    
     /**
      */
   
@@ -182,9 +185,6 @@ public static int CodeGenerator(int i) // Random Number Generator
                 }
             }
         }
-         //System.out.println("Çağrıldı\n");
-         //System.out.println(construct.size());
-         //System.out.println(Sensor.AllSensors.get(1).sensorName());
     }
     
 void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a Loop //
@@ -303,6 +303,39 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
         svl.setVisible(false);
     }
         
+public void respin()
+{
+    defaultListModel.removeAllElements();
+    
+    for(int i = 0; i < Sensor.AllSensors.size();i++)
+       {
+           if(Sensor.AllSensors.get(i).attached_to_apt == null)
+           {
+               String Temp = Sensor.AllSensors.get(i).sensorName() +"=> " +Sensor.AllSensors.get(i).attached_to_pol+" (Pole) " ;
+               defaultListModel.addElement(Temp);
+           }
+           
+           else if(Sensor.AllSensors.get(i).attached_to_pol == null)
+           {
+               String Temp = Sensor.AllSensors.get(i).sensorName() +"=> " +Sensor.AllSensors.get(i).attached_to_apt+" (Apt) " ;
+               defaultListModel.addElement(Temp);
+           }
+           
+           else
+           {
+               String Temp = Sensor.AllSensors.get(i).sensorName() +"=>  (Not Attached)";
+               defaultListModel.addElement(Temp);
+           }
+       }
+list.setModel(defaultListModel);
+
+SwingUtilities.updateComponentTreeUI(frame);
+
+frame.invalidate();
+frame.validate();
+frame.repaint();
+}
+
 
     public void Construct_Sensor_Selecter()
     {
@@ -312,11 +345,11 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
         //frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
-        DefaultListModel<String> defaultListModel = new DefaultListModel<>();
+        defaultListModel = new DefaultListModel<>();
         
         JPanel panel = new JPanel(new BorderLayout());
-        JTextArea jt = new JTextArea("deneme");
-        jt.setPreferredSize(new Dimension(30, 20));
+        JTextArea jt = new JTextArea();
+        jt.setPreferredSize(new Dimension(50, 30));
         panel.add(jt);
         jt.setLineWrap(true);
         jt.setWrapStyleWord(true);
@@ -336,10 +369,14 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
                defaultListModel.addElement(Temp);
            }
        }
-
-       JList<String> list = new JList<>();
+       
        list.setPreferredSize(new Dimension(500, 200));
-       list.setModel(defaultListModel);
+       
+       if(defaultListModel.isEmpty() == true)
+       {
+           defaultListModel.addElement("No Sensors were found");
+           list.setModel(defaultListModel);
+       }
 
        JButton button = new JButton("Subscribe");
        button.addActionListener((ActionEvent e) -> 
@@ -353,7 +390,7 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
            if(subs.contains(temp) == true)
            {
                jt.setBackground(Color.red);
-               jt.setBounds(125,275,200,20);
+               //jt.setBounds(125,275,200,20);
                jt.setText(" Already Subscribed ");
            }
            
@@ -361,7 +398,7 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
            {
                subs.add(temp);
                jt.setBackground(Color.green);
-               jt.setBounds(125,275,200,20);
+               //jt.setBounds(125,275,200,20);
                jt.setText(" Successfully Added to Subs  "+temp+"");
                System.out.println(temp);
            }
@@ -371,6 +408,7 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
        frame.add(new JScrollPane(list), BorderLayout.NORTH);
        frame.add(button,BorderLayout.PAGE_END);
        frame.pack();
+ 
        frame.setVisible(false);
     }
     
@@ -607,6 +645,7 @@ class ResetVisitor implements Visitor
         
         else if(e.getSource() == show_sensors) // Sensörleri Göster butonu //
         {
+            respin();
             frame.setVisible(true);
             
             /*
@@ -762,6 +801,7 @@ class ResetVisitor implements Visitor
                 jta.append(" \n " +noiseSensor.sensorName()+ " is installed on " +noiseSensor.attached_to_apt+ " \n ");
             }
         } 
+    respin();            
 }
 }
         
@@ -834,7 +874,8 @@ class ResetVisitor implements Visitor
                 
                 jta.append(" \n " +noiseSensor.sensorName()+ " is installed on "+noiseSensor.attached_to_pol+" \n ");
             }
-        }    
+        } 
+                  respin();
         }
     } 
     }
