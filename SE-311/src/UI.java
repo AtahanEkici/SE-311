@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
  
@@ -228,7 +229,9 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
 
             else if(construct.get(i) instanceof Temperature_Sensor)
            {
-              construct.get(i).setSensorValue(CodeGenerator(100));
+               int randomNum = ThreadLocalRandom.current().nextInt(-10, 50 + 1);
+               
+              construct.get(i).setSensorValue(randomNum);
               
               if(construct.get(i).getSensorValue() < 0 )
               {
