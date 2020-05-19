@@ -1,7 +1,7 @@
-// ATAHAN EKİCİ 
-// MESUT ŞİMŞEK 
-// ONAT KOCABAŞOĞLU
-// Smart City Application
+// ATAHAN EKICI //
+// MESUT SIMSEK //
+// ONAT KOCABASOGLU //
+// Smart City Application //
 
 import java.util.ArrayList;
 /*
@@ -12,9 +12,7 @@ interface Observer_Apartment // Observer Pattern //
     public void Update(Sensor sensor);
 }
 /*
-
     Apartments is a concrete observer.
-
 */
 public class Apartments extends Street implements Observer_Apartment
     {
@@ -26,13 +24,13 @@ public class Apartments extends Street implements Observer_Apartment
         protected Sensor _congSensor;
         protected Sensor _noiseSensor;
 
-         Apartments(String N_name, String S_name, String Name)
+         Apartments(String N_name, String S_name, String apt_Name)
         {
             super(N_name,S_name);
             Neighborhood_list.add(this);
             Street_list.add(this);
-            this.apt_Name = Name;
-            list.add(this);    
+            this.apt_Name = apt_Name;
+            list.add(this);  
         }
         @Override
         public String toString()

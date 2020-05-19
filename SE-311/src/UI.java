@@ -22,13 +22,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
  
 
-public class UI extends JFrame implements ActionListener 
+public final class UI extends JFrame implements ActionListener 
 {    
     private static UI single_instance = null;
     
     UI()
-    {
-        
+    {  
+       Construct_Main_Frame();
+       Construct_Apartment_Builder();
+       Construct_Pole_Builder();
+       Construct_Sensor_Loop();
+       Construct_Sensor_Selecter();
     }
  
     
@@ -37,7 +41,6 @@ public class UI extends JFrame implements ActionListener
         if(single_instance == null)
         {
             single_instance = new UI();
-            UI.ShowUI();
         }
             return single_instance;    
     }
@@ -52,9 +55,11 @@ public class UI extends JFrame implements ActionListener
     
     JTextArea jta; // Kocaman Text Area //
     JTextArea jta_sen; //Sendika //
+    JTextArea jt;
     
     JScrollPane jsp; // Kocaman Text Area'nın  Kocaman Scroll Bar'ı //
-    JScrollPane jsp_sen; // paralel yapılanma //
+    JScrollPane jsp_sen;
+    JScrollPane jsp_shsen;// paralel yapılanma //
     
     JCheckBox jcb_pole_temp,jcb_pole_pol,jcb_pole_con,jcb_pole_noise;    // Pole Sensors //
     JCheckBox jcb_temp_apt,jcb_pol_apt,jcb_con_apt,jcb_noise_apt; // Apartment Sensors //
@@ -73,17 +78,9 @@ public class UI extends JFrame implements ActionListener
     JList<String> list = new JList<>();
     
     /**
+     * @param i
+     * @return 
      */
-  
-    public static final void ShowUI()
-    {
-       UI ui = new UI();
-       ui.Construct_Main_Frame();
-       ui.Construct_Apartment_Builder();
-       ui.Construct_Pole_Builder();
-       ui.Construct_Sensor_Loop();
-       ui.Construct_Sensor_Selecter();
-    }
 
 public static int CodeGenerator(int i) // Random Number Generator
     {
@@ -309,26 +306,13 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
 public void respin()
 {
     defaultListModel.removeAllElements();
+    jt.setText("");
+    jt.setBackground(Color.white);
     
     for(int i = 0; i < Sensor.AllSensors.size();i++)
        {
-           if(Sensor.AllSensors.get(i).attached_to_apt == null)
-           {
-               String Temp = Sensor.AllSensors.get(i).sensorName() +"=> " +Sensor.AllSensors.get(i).attached_to_pol+" (Pole) " ;
+               String Temp = Sensor.AllSensors.get(i).sensorName()+" => " +Sensor.AllSensors.get(i).attached_to_apt+"";
                defaultListModel.addElement(Temp);
-           }
-           
-           else if(Sensor.AllSensors.get(i).attached_to_pol == null)
-           {
-               String Temp = Sensor.AllSensors.get(i).sensorName() +"=> " +Sensor.AllSensors.get(i).attached_to_apt+" (Apt) " ;
-               defaultListModel.addElement(Temp);
-           }
-           
-           else
-           {
-               String Temp = Sensor.AllSensors.get(i).sensorName() +"=>  (Not Attached)";
-               defaultListModel.addElement(Temp);
-           }
        }
 list.setModel(defaultListModel);
 
@@ -342,43 +326,30 @@ frame.repaint();
 
     public void Construct_Sensor_Selecter()
     {
-        frame.setLayout(new BorderLayout());
-        frame.setResizable(false);
-        //frame.setSize(350,350);  
-        //frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         defaultListModel = new DefaultListModel<>();
         
-        JPanel panel = new JPanel(new BorderLayout());
-        JTextArea jt = new JTextArea();
-        jt.setPreferredSize(new Dimension(50, 30));
+        JPanel panel = new JPanel();
+        
+        jt = new JTextArea();
         panel.add(jt);
-        jt.setLineWrap(true);
-        jt.setWrapStyleWord(true);
+        
         jt.setEditable(false);
         
        for(int i = 0; i < Sensor.AllSensors.size();i++)
        {
            if(Sensor.AllSensors.get(i).attached_to_apt == null)
            {
-               String Temp = Sensor.AllSensors.get(i).sensorName() +"=> " +Sensor.AllSensors.get(i).attached_to_pol+" (Pole)" ;
+               String Temp = Sensor.AllSensors.get(i).sensorName();
                defaultListModel.addElement(Temp);
            }
            
            else
            {
-               String Temp = Sensor.AllSensors.get(i).sensorName() +"=> " +Sensor.AllSensors.get(i).attached_to_apt+" Apt." ;
+               String Temp = Sensor.AllSensors.get(i).sensorName();
                defaultListModel.addElement(Temp);
            }
-       }
-       
-       list.setPreferredSize(new Dimension(500, 200));
-       
-       if(defaultListModel.isEmpty() == true)
-       {
-           defaultListModel.addElement("No Sensors were found");
-           list.setModel(defaultListModel);
        }
 
        JButton button = new JButton("Subscribe");
@@ -393,7 +364,6 @@ frame.repaint();
            if(subs.contains(temp) == true)
            {
                jt.setBackground(Color.red);
-               //jt.setBounds(125,275,200,20);
                jt.setText(" Already Subscribed ");
            }
            
@@ -401,15 +371,17 @@ frame.repaint();
            {
                subs.add(temp);
                jt.setBackground(Color.green);
-               //jt.setBounds(125,275,200,20);
-               jt.setText(" Successfully Added to Subs  "+temp+"");
+               jt.setText(" Successfully Added to Subs "+temp+"");
                System.out.println(temp);
            }
        });
+        
+       frame.setPreferredSize(new Dimension(550,300));
        
-       frame.add(panel);
-       frame.add(new JScrollPane(list), BorderLayout.NORTH);
+       frame.add(new JScrollPane(list),BorderLayout.NORTH);
+       frame.add(panel,BorderLayout.CENTER);
        frame.add(button,BorderLayout.PAGE_END);
+         
        frame.pack();
  
        frame.setVisible(false);
@@ -594,8 +566,9 @@ frame.repaint();
         if(e.getSource() == b_main_apt) // Apartman ekleye basıldığında ilgili Frame'i çağırır //
         {
             cpb.setVisible(true);
+            tf4_apt.setText("");
+            tf4_apt.setBackground(Color.white);
         }
-        
         else if(e.getSource() == menu_button)
         {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
@@ -603,13 +576,15 @@ frame.repaint();
                 try {
                     Desktop.getDesktop().browse(new URI("https://github.com/AtahanEkici/SE-311"));
                 } catch (URISyntaxException | IOException ex) {
-                    Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+                    jta.append("\n ERROR: "+ex+" => Not enough Permissions are granted \n");
                 }
 }
         }
         
         else if(e.getSource() == b_main_pole) // Direk ekleye basıldığında ilgili Frame'i çağırır //
         {
+            tf4_pol.setText("");
+            tf4_pol.setBackground(Color.white);
             cpa.setVisible(true);
         }
         

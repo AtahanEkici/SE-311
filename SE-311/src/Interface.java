@@ -1,7 +1,7 @@
-// ATAHAN EKİCİ 
-// MESUT ŞİMŞEK 
-// ONAT KOCABAŞOĞLU
-// Smart City Application
+// ATAHAN EKICI //
+// MESUT SIMSEK //
+// ONAT KOCABASOGLU //
+// Smart City Application //
 
 interface UserInterface
 {

@@ -1,7 +1,7 @@
-// ATAHAN EKİCİ 
-// MESUT ŞİMŞEK 
-// ONAT KOCABAŞOĞLU
-// Smart City Application
+// ATAHAN EKICI //
+// MESUT SIMSEK //
+// ONAT KOCABASOGLU //
+// Smart City Application //
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -9,7 +9,7 @@ import java.util.Random;
 interface AbstractAggregate 
 {
 	public AbstractIterator CreateIterator();
-	public void add(Apartments it); 		// Not needed for iteration.
+	public void add(Apartments it); // Not needed for iteration.
 	public int getCount (); // Needed for iteration.
 	public Apartments get(int idx); // Needed for iteration.
         public ArrayList<Apartments> getItems();
@@ -55,7 +55,7 @@ interface AbstractIterator
 
 class ApartmentIterator implements AbstractIterator
 {
-    private Collection _collection;
+    private final Collection _collection;
     private int _current;
     
     	public ApartmentIterator(Collection collection) 
@@ -197,8 +197,15 @@ Sensor.AllSensors.get(i).Accept(visitor);
     */
     public void Attach(Apartments apartmen)
     {
-        _subscribedApartments.add(apartmen);
         this.attached_to_apt = apartmen.apt_Name;
+        _subscribedApartments.add(apartmen);
+    }
+
+    //Register the pole observer
+     public void Attach_Pole(Pole pole)
+    {
+        this.attached_to_pol = pole.pol_Name;
+        _subscribedPoles.add(pole);
     }
 
     //Unregister from the list of Observers.
@@ -211,14 +218,7 @@ Sensor.AllSensors.get(i).Accept(visitor);
            }
         }
     }
-    
-    //Register the pole observer
-     public void Attach_Pole(Pole pole)
-    {
-        _subscribedPoles.add(pole);
-        this.attached_to_pol = pole.pol_Name;
-    }
-     
+ 
     //Unregister from the list of Observers.
      public void Detach_Pole(Pole pole)
     {
