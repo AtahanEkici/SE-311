@@ -4,16 +4,20 @@
 // Smart City Application //
 
 import java.util.ArrayList;
+
 /*
     An observer that observes the Sensors.
 */
+
 interface Observer_Apartment // Observer Pattern //
 {
     public void Update(Sensor sensor);
 }
+
 /*
     Apartments is a concrete observer.
 */
+
 public class Apartments extends Street implements Observer_Apartment
     {
         protected  String apt_Name;

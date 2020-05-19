@@ -103,8 +103,10 @@ abstract class Sensor implements Element
      protected static ArrayList <Sensor> AllSensors = new ArrayList<Sensor>();
      public static int counter = 0;
      public final int SensorID;
-     protected String attached_to_apt = null;
-     protected String  attached_to_pol = null;
+     public boolean attached_to_apt;
+     public boolean  attached_to_pol;
+     
+     protected String Attached = "Default";
      
      Sensor()
      {
@@ -197,14 +199,18 @@ Sensor.AllSensors.get(i).Accept(visitor);
     */
     public void Attach(Apartments apartmen)
     {
-        this.attached_to_apt = apartmen.apt_Name;
+        this.attached_to_apt = true;
+        this.attached_to_pol = false;
+        this.Attached = apartmen.apt_Name;
         _subscribedApartments.add(apartmen);
     }
 
     //Register the pole observer
      public void Attach_Pole(Pole pole)
     {
-        this.attached_to_pol = pole.pol_Name;
+        this.attached_to_pol = true;
+        this.attached_to_apt = false;
+        this.Attached = pole.pol_Name;
         _subscribedPoles.add(pole);
     }
 

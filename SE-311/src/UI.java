@@ -232,11 +232,11 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
               
               if(construct.get(i).getSensorValue() < 0 )
               {
-                   jta_sen.append(" !!WARNING!!  "+construct.get(i).SensorID+")"+Sensor.AllSensors.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " !!WARNING!! \n");
+                   jta_sen.append(""+i+")"+Sensor.AllSensors.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "   !!WARNING!! \n");
               }
               else
               {
-                   jta_sen.append(""+construct.get(i).SensorID+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "\n");
+                   jta_sen.append(""+i+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "\n");
               } 
            }
            
@@ -246,11 +246,11 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
               
               if(construct.get(i).getSensorValue() < 10 )
               {
-                   jta_sen.append(" !!WARNING!!  "+construct.get(i).SensorID+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " !!WARNING!! \n");
+                   jta_sen.append(""+i+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "   !!WARNING!! \n");
               }
               else
               {
-                   jta_sen.append(""+construct.get(i).SensorID+") "+construct.get(i).sensorName()+"  Value: "+construct.get(i).getSensorValue()+ " \n");
+                   jta_sen.append(""+i+") "+construct.get(i).sensorName()+"  Value: "+construct.get(i).getSensorValue()+ " \n");
               } 
            }
            
@@ -260,11 +260,11 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
               
               if(construct.get(i).getSensorValue() > 85 )
               {
-                  jta_sen.append(" !!WARNING!!  "+construct.get(i).SensorID+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " !!WARNING!! \n");
+                  jta_sen.append(""+i+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "   !!WARNING!! \n");
               }
               else
               {
-                   jta_sen.append(""+construct.get(i).SensorID+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " \n");
+                   jta_sen.append(""+i+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " \n");
               } 
            }
            
@@ -274,11 +274,11 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
               
               if(construct.get(i).getSensorValue() > 100 )
               {
-                   jta_sen.append(" !!WARNING!!  "+construct.get(i).SensorID+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " !!WARNING!! \n");
+                   jta_sen.append(""+i+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "     !!WARNING!! \n");
               }
               else
               {
-                   jta_sen.append(""+construct.get(i).SensorID+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " \n");
+                   jta_sen.append(""+i+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " \n");
               } 
            }
            
@@ -296,8 +296,7 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
         svl.add(jp);
         svl.pack();
         
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize(); // getting the current screen size //
-        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize(); // getting the current screen size // 
         svl.setLocation(dim.width/2-svl.getSize().width/2, dim.height/2-svl.getSize().height/2); // locate the frame in the center of the screen (initially of course user can define the location from there on out) //
         
         svl.setVisible(false);
@@ -311,8 +310,22 @@ public void respin()
     
     for(int i = 0; i < Sensor.AllSensors.size();i++)
        {
-               String Temp = Sensor.AllSensors.get(i).sensorName()+" => " +Sensor.AllSensors.get(i).attached_to_apt+"";
+           if(Sensor.AllSensors.get(i).attached_to_apt == true & Sensor.AllSensors.get(i).attached_to_pol == false)
+           {
+               String Temp = Sensor.AllSensors.get(i).sensorName()+" => " +Sensor.AllSensors.get(i).Attached+" (Apt.) ";
                defaultListModel.addElement(Temp);
+           }
+           else if(Sensor.AllSensors.get(i).attached_to_pol == true & Sensor.AllSensors.get(i).attached_to_apt == false)
+           {
+               String Temp = Sensor.AllSensors.get(i).sensorName()+" => " +Sensor.AllSensors.get(i).Attached+" (Pole) ";
+               defaultListModel.addElement(Temp);
+           }
+           else
+           {
+               String Temp = Sensor.AllSensors.get(i).sensorName()+" => Not Attached";
+               defaultListModel.addElement(Temp);
+           }
+               
        }
 list.setModel(defaultListModel);
 
@@ -336,21 +349,6 @@ frame.repaint();
         panel.add(jt);
         
         jt.setEditable(false);
-        
-       for(int i = 0; i < Sensor.AllSensors.size();i++)
-       {
-           if(Sensor.AllSensors.get(i).attached_to_apt == null)
-           {
-               String Temp = Sensor.AllSensors.get(i).sensorName();
-               defaultListModel.addElement(Temp);
-           }
-           
-           else
-           {
-               String Temp = Sensor.AllSensors.get(i).sensorName();
-               defaultListModel.addElement(Temp);
-           }
-       }
 
        JButton button = new JButton("Subscribe");
        button.addActionListener((ActionEvent e) -> 
@@ -748,7 +746,7 @@ class ResetVisitor implements Visitor
                //sensorCollection.add(tempSensor);
                tempSensor.Attach(yeni_apt);
                
-               jta.append(" \n " +tempSensor.sensorName()+ " is installed on " +tempSensor.attached_to_apt+ " \n ");
+               jta.append(" \n " +tempSensor.sensorName()+ " is installed on " +tempSensor.Attached+ " \n ");
                
             }
  
@@ -758,7 +756,7 @@ class ResetVisitor implements Visitor
                 //sensorCollection.add(congSensor);
                 congSensor.Attach(yeni_apt);
                 
-                jta.append(" \n " +congSensor.sensorName()+ " is installed on " +congSensor.attached_to_apt+ " \n ");
+                jta.append(" \n " +congSensor.sensorName()+ " is installed on " +congSensor.Attached+ " \n ");
             }
             
             if(jcb_pol_apt.isSelected() == true) // İlgili Apartmana yeni pollution sensör eklenip eklenmediğini kontrol eder //
@@ -767,7 +765,7 @@ class ResetVisitor implements Visitor
                 //sensorCollection.add(polSensor);
                 polSensor.Attach(yeni_apt);
                 
-                jta.append(" \n " +polSensor.sensorName()+ " is installed on " +polSensor.attached_to_apt+ " \n ");
+                jta.append(" \n " +polSensor.sensorName()+ " is installed on " +polSensor.Attached+ " \n ");
             }
             
             if(jcb_noise_apt.isSelected() == true) // İlgili Apartmana yeni noise sensör eklenip eklenmediğini kontrol eder //
@@ -776,7 +774,7 @@ class ResetVisitor implements Visitor
                 //sensorCollection.add(noiseSensor);
                 noiseSensor.Attach(yeni_apt);
                 
-                jta.append(" \n " +noiseSensor.sensorName()+ " is installed on " +noiseSensor.attached_to_apt+ " \n ");
+                jta.append(" \n " +noiseSensor.sensorName()+ " is installed on " +noiseSensor.Attached+ " \n ");
             }
         } 
     respin();            
@@ -823,7 +821,7 @@ class ResetVisitor implements Visitor
                //sensorCollection.add(tempSensor);
                tempSensor.Attach_Pole(yeni_direk);
                
-               jta.append(" \n " +tempSensor.sensorName()+ " is installed on " +tempSensor.attached_to_pol+ " \n ");
+               jta.append(" \n " +tempSensor.sensorName()+ " is installed on " +tempSensor.Attached+ " \n ");
             }
  
             if(jcb_pole_pol.isSelected() == true) // İlgili direğe yeni pollution sensör eklenip eklenmediğini kontrol eder //
@@ -832,7 +830,7 @@ class ResetVisitor implements Visitor
                 //sensorCollection.add(polSensor);
                 polSensor.Attach_Pole(yeni_direk);
                 
-                jta.append(" \n " +polSensor.sensorName()+ " is installed on " +polSensor.attached_to_pol+ " \n ");
+                jta.append(" \n " +polSensor.sensorName()+ " is installed on " +polSensor.Attached+ " \n ");
             }
             
             if(jcb_pole_con.isSelected() == true) // İlgili direğe yeni congestion sensör eklenip eklenmediğini kontrol eder //
@@ -841,7 +839,7 @@ class ResetVisitor implements Visitor
                 //sensorCollection.add(congSensor);
                 congSensor.Attach_Pole(yeni_direk);             
                 
-                jta.append(" \n " +congSensor.sensorName()+ " is installed on " +congSensor.attached_to_pol+ " \n ");
+                jta.append(" \n " +congSensor.sensorName()+ " is installed on " +congSensor.Attached+ " \n ");
             }
             
             if(jcb_pole_noise.isSelected() == true) // İlgili direğe yeni noise sensör eklenip eklenmediğini kontrol eder //
@@ -850,7 +848,7 @@ class ResetVisitor implements Visitor
                 //sensorCollection.add(noiseSensor);
                 noiseSensor.Attach_Pole(yeni_direk);
                 
-                jta.append(" \n " +noiseSensor.sensorName()+ " is installed on "+noiseSensor.attached_to_pol+" \n ");
+                jta.append(" \n " +noiseSensor.sensorName()+ " is installed on "+noiseSensor.Attached+" \n ");
             }
         } 
                   respin();

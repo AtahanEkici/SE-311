@@ -19,12 +19,7 @@ class Interface1 implements UserInterface
         CREATE FACTORY
         */
         sensorFactory sensorFac = new ConcreteSensorFactory();
-        
-        /*
-        CREATE BUILDER
-        */
-        BuildSensor sensorBuilder = new BuildSensor();
-        
+
         /*
         CREATE SENSORS VİA SENSORFACTORY.
         */
