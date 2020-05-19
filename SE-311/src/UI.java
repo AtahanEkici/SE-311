@@ -219,12 +219,9 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
              
           for(int i = 0; i < construct.size();i++)
         {
-            if(construct.isEmpty() == true)
-            {
-                jta_sen.append("No Sensor is registered yet \n");
-            }
+            int counter = i + 1;
 
-            else if(construct.get(i) instanceof Temperature_Sensor)
+             if(construct.get(i) instanceof Temperature_Sensor)
            {
                int randomNum = ThreadLocalRandom.current().nextInt(-10, 50 + 1);
                
@@ -232,11 +229,11 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
               
               if(construct.get(i).getSensorValue() < 0 )
               {
-                   jta_sen.append(""+i+")"+Sensor.AllSensors.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "   !!WARNING!! \n");
+                   jta_sen.append(""+counter+")"+Sensor.AllSensors.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "   !!WARNING!! \n ");
               }
               else
               {
-                   jta_sen.append(""+i+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "\n");
+                   jta_sen.append(""+counter+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "\n");
               } 
            }
            
@@ -246,11 +243,11 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
               
               if(construct.get(i).getSensorValue() < 10 )
               {
-                   jta_sen.append(""+i+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "   !!WARNING!! \n");
+                   jta_sen.append(""+counter+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "   !!WARNING!! \n ");
               }
               else
               {
-                   jta_sen.append(""+i+") "+construct.get(i).sensorName()+"  Value: "+construct.get(i).getSensorValue()+ " \n");
+                   jta_sen.append(""+counter+") "+construct.get(i).sensorName()+"  Value: "+construct.get(i).getSensorValue()+ " \n");
               } 
            }
            
@@ -260,11 +257,11 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
               
               if(construct.get(i).getSensorValue() > 85 )
               {
-                  jta_sen.append(""+i+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "   !!WARNING!! \n");
+                  jta_sen.append(""+counter+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "   !!WARNING!! \n ");
               }
               else
               {
-                   jta_sen.append(""+i+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " \n");
+                   jta_sen.append(""+counter+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " \n");
               } 
            }
            
@@ -274,11 +271,11 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
               
               if(construct.get(i).getSensorValue() > 100 )
               {
-                   jta_sen.append(""+i+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "     !!WARNING!! \n");
+                   jta_sen.append(""+counter+")"+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ "     !!WARNING!! \n");
               }
               else
               {
-                   jta_sen.append(""+i+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " \n");
+                   jta_sen.append(""+counter+") "+construct.get(i).sensorName()+" Value: "+construct.get(i).getSensorValue()+ " \n ");
               } 
            }
            
