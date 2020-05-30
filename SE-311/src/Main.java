@@ -1,8 +1,5 @@
-
-import java.util.Random;
-
-// ATAHAN EKICI //
 // MESUT SIMSEK //
+//ATAHAN EKICI //
 // ONAT KOCABASOGLU //
 // Smart City Application //
 

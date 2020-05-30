@@ -18,8 +18,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Level;
-import java.util.logging.Logger;
  
 
 public final class UI extends JFrame implements ActionListener 
@@ -93,6 +91,7 @@ public static int CodeGenerator(int i) // Random Number Generator
     {
         
         main.setLayout(new BorderLayout());
+        main.setResizable(false);
         main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JPanel tutucu = new JPanel();
@@ -162,7 +161,6 @@ public static int CodeGenerator(int i) // Random Number Generator
         main.pack(); // Function that packs the frame and cuts the unnecessary lines //
         
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize(); // getting the current screen size //
-        
         main.setLocation(dim.width/2-main.getSize().width/2, dim.height/2-main.getSize().height/2); // locate the frame in the center of the screen (initially of course user can define the location from there on out) //
         
         main.setVisible(true);  
@@ -206,8 +204,6 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
         jsp_sen.getViewport().setBackground(Color.WHITE);
         jsp_sen.getViewport().add(jta_sen);
         
-        jsp_sen.setAutoscrolls(false);
-        jta_sen.setAutoscrolls(false); // To prevent Auto_Scrolling //
         
         add(jsp_sen);
                      
@@ -239,7 +235,7 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
            
            else if(construct.get(i) instanceof Congestion_Sensor)
            {
-                construct.get(i).setSensorValue(CodeGenerator(100));
+                construct.get(i).setSensorValue(CodeGenerator(200));
               
               if(construct.get(i).getSensorValue() < 10 )
               {
@@ -267,7 +263,7 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
            
            else if(construct.get(i) instanceof Pollution_Sensor)
            {
-                construct.get(i).setSensorValue(CodeGenerator(110));
+                construct.get(i).setSensorValue(CodeGenerator(150));
               
               if(construct.get(i).getSensorValue() > 100 )
               {

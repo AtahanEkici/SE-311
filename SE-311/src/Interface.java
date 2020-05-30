@@ -54,10 +54,11 @@ class Interface1 implements UserInterface
     @Override
     public void showStreet()
     {
-        Street street = new Street("Test Street", "Test Neighbour")
+        Street street = new Street("Test Neighbour", "Test Street")
         {
             @Override
-            public String toString() {
+            public String toString() 
+            {
                 return super.toString();
             }
         };
@@ -65,9 +66,11 @@ class Interface1 implements UserInterface
 
     @Override
     public void showNeighbour() {
-        Neighborhood neighborhood = new Neighborhood("Test Neighbour") {
+        Neighborhood neighborhood = new Neighborhood("Test Neighbour") 
+        {
             @Override
-            public String toString() {
+            public String toString() 
+            {
                 return super.toString();
             }
         };
@@ -75,9 +78,11 @@ class Interface1 implements UserInterface
 
     @Override
     public void showApartment() {
-        Apartments apt1 = new Apartments("Test Apartment", "Test Street", "Test Neighbour"){
+        Apartments apt1 = new Apartments("Test Neighbour", "Test Street", "Test Apartment")
+        {
             @Override
-            public String toString() {
+            public String toString() 
+            {
                 return super.toString();
             }
         };
