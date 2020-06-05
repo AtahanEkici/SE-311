@@ -1,53 +1,110 @@
-public class Pole extends Street implements Observer
+// ATAHAN EKICI //
+// MESUT SIMSEK //
+// ONAT KOCABASOGLU //
+// Smart City Application //
+
+import java.util.ArrayList;
+
+interface Observer_Pole //Observer Pattern //
 {
-    public static String Pole_ID;
+    public void Update_Pole(Sensor sensor);
+}
+
+public class Pole extends Street implements Observer_Pole
+{
+    @SuppressWarnings("LeakingThisInConstructor")
     
+        protected  String pol_Name;
+        protected static ArrayList<Pole> Pole_list = new ArrayList<>();
+       
         protected Sensor _polSensor;
         protected Sensor _tempSensor;
         protected Sensor _congSensor;
         protected Sensor _noiseSensor;
     
-     Pole(String Pole_ID,String S_name, String N_name)
+     Pole(String N_name, String S_name, String Name)
     {
-        super(S_name, N_name);
-        Pole.Pole_ID = Pole_ID;
+        super(N_name,S_name);
+        Neighborhood_list.add(this);
+        Street_list.add(this);
+        this.pol_Name = Name; 
+        Pole_list.add(this);
+        
     }
      
-             @Override
+     public static boolean Pol_IsExists(String name)
+        {
+           boolean result = false;
+           
+           for(int i = 0;i < Pole_list.size();i++)
+           {
+               if(Pole_list.get(i).pol_Name.equals(""+name+"") == true)
+               {
+                   result = true;
+                   return result;
+               }
+           }
+           return result;
+        }
+@Override
         public String toString()
      {
-    return "Pole_ID: "+Pole_ID+"Street_Name: "+S_name+"Neighbor_Name: "+N_name+"";
+    return "Neighborhood Name: "+N_name+" Street Name: "+S_name+" Apartment Name: "+pol_Name+"";
      }
-     
-    /**
-     *
-     * @param sensor
-     */
+        
+        public static void PrintPoles()
+        {
+            int counter = 1;
+            
+            for(int i = 0;i<Pole_list.size();i++)
+            {
+                if(counter % 3 == 0)
+                {
+                   System.out.println("");
+                   System.out.println(Pole_list.get(i));
+                }
+                
+                else
+                {
+                System.out.println(Pole_list.get(i));
+                System.out.println("");
+                counter++;
+                } 
+            }
+        }
+        int Total_Number_of_Poles()
+        {
+            return Pole_list.size();
+        }
+        
     @Override
-        public void Update(Sensor sensor) 
+        public void Update_Pole(Sensor sensor) 
         {
              switch (sensor.sensorID()){
                  case 0:
                      _polSensor = sensor;
-                     System.out.println("Pollution is announced to " + Pole.Name + " as :" + sensor.getSensorValue());
+                     System.out.println("Pollution is announced to " + this.pol_Name + " as :" + sensor.getSensorValue());
                      break;
 
                  case 1:
                      _tempSensor = sensor;
-                     System.out.println("Temp is announced to " + Pole.Name + " as :" + sensor.getSensorValue());
+                     System.out.println("Temp is announced to " + this.pol_Name + " as :" + sensor.getSensorValue());
                      break;
 
                  case 2:
                      _congSensor = sensor;
-                     System.out.println("Cong is announced to " + Pole.Name + " as :"+ sensor.getSensorValue());
+                     System.out.println("Cong is announced to " + this.pol_Name + " as :"+ sensor.getSensorValue());
                      break;
 
                  case 3:
                      _noiseSensor = sensor;
-                     System.out.println("Noise is announced to " + Pole.Name + " as : "+ sensor.getSensorValue() );
+                     System.out.println("Noise is announced to " + this.pol_Name + " as : "+ sensor.getSensorValue() );
                      break;           
              }
+        }
 
-        } 
-
+    Object getName_Pole() 
+    {
+        return this.pol_Name;
+    }
 }

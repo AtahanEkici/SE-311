@@ -1,17 +1,35 @@
-public class Street extends Neighborhood
+// ATAHAN EKICI //
+// MESUT SIMSEK //
+// ONAT KOCABASOGLU //
+// Smart City Application //
+
+import java.util.ArrayList;
+
+public abstract class Street extends Neighborhood
 {
-    public static String S_name;
-    protected String N_name;
+    protected String S_name;
+    protected static ArrayList<Street> Street_list = new ArrayList<Street>();
     
-    Street(String name,String N_name)
+    Street(String N_name,String S_name)
     {
-        super(name);
-        this.N_name = Neighborhood.Name;
+        super(N_name);
+        this.S_name = S_name;
+        Neighborhood_list.add(this);
+        Street_list.add(this);
     }
     
      @Override
         public String toString()
      {
-    return "Street Name: "+Name+"";
+    return " Neighborhood Name: "+N_name+" Street Name: "+S_name+"";
      }
+        
+         public static void Print_Street()
+        { 
+            for(int i = 0;i<Street_list.size();i++)
+            {
+                   System.out.println("");
+                   System.out.println(Street_list.get(i));              
+            }
+        }
 }
