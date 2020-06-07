@@ -11,7 +11,7 @@ import java.awt.Toolkit;
 import javax.swing.*;  
 import java.awt.event.*;  
 import javax.swing.border.LineBorder;
- import java.util.Random;
+import java.util.Random;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
@@ -32,7 +32,6 @@ public final class UI extends JFrame implements ActionListener
        Construct_Sensor_Loop();
        Construct_Sensor_Selecter();
     }
- 
     
     public static UI getInstance() // Singleton Pattern //
     {

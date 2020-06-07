@@ -65,7 +65,8 @@ class Interface1 implements UserInterface
     }
 
     @Override
-    public void showNeighbour() {
+    public void showNeighbour()
+    {
         Neighborhood neighborhood = new Neighborhood("Test Neighbour") 
         {
             @Override
@@ -77,7 +78,8 @@ class Interface1 implements UserInterface
     }
 
     @Override
-    public void showApartment() {
+    public void showApartment()
+    {
         Apartments apt1 = new Apartments("Test Neighbour", "Test Street", "Test Apartment")
         {
             @Override

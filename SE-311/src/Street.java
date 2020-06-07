@@ -5,7 +5,7 @@
 
 import java.util.ArrayList;
 
-public class Street extends Neighborhood
+public abstract class Street extends Neighborhood
 {
     protected String S_name;
     protected static ArrayList<Street> Street_list = new ArrayList<Street>();
