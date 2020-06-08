@@ -5,6 +5,8 @@
 
 import java.util.ArrayList;
 
+@SuppressWarnings("LeakingThisInConstructor")
+
 interface Observer_Pole //Observer Pattern //
 {
     public void Update_Pole(Sensor sensor);
@@ -12,8 +14,6 @@ interface Observer_Pole //Observer Pattern //
 
 public class Pole extends Street implements Observer_Pole
 {
-    @SuppressWarnings("LeakingThisInConstructor")
-    
         protected  String pol_Name;
         protected static ArrayList<Pole> Pole_list = new ArrayList<>();
        

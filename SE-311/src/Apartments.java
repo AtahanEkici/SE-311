@@ -17,6 +17,7 @@ interface Observer_Apartment // Observer Pattern //
 /*
     Apartments is a concrete observer.
 */
+@SuppressWarnings("LeakingThisInConstructor")
 
 public class Apartments extends Street implements Observer_Apartment
     {
@@ -88,8 +89,12 @@ public class Apartments extends Street implements Observer_Apartment
            return result;
         }
 
+    /**
+     *
+     * @param sensor
+     */
     @Override
-        public void Update(Sensor sensor) 
+         public void Update(Sensor sensor) 
         {
              switch (sensor.sensorID()){
                  case 0:

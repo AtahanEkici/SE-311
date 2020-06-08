@@ -16,8 +16,6 @@ interface AbstractAggregate
 };
 
 //This is the concrete Aggregate Collection //
-			
-
 
 class Collection implements AbstractAggregate 
 {
@@ -96,8 +94,8 @@ class ApartmentIterator implements AbstractIterator
 
 /*
     Sensor is the Subject of the Observer Method. It will be followed by the Apartments and Poles.
-
 */
+
 abstract class Sensor implements Element         
 {
      protected static ArrayList <Sensor> AllSensors = new ArrayList<Sensor>();

@@ -1,6 +1,6 @@
-// ATAHAN EKİCİ 
-// MESUT ŞİMŞEK 
-// ONAT KOCABAŞOĞLU
+// ATAHAN EKICI
+// MESUT SIMSEK
+// ONAT KOCABASOGLU
 // Smart City Application
 
 import java.awt.BorderLayout;
@@ -211,6 +211,11 @@ void Construct_Sensor_Loop() // Printing All The Sensor values on a Window in a 
          timer = new Timer(2000, (ActionEvent e) -> 
          {  
              authenticate();
+             if(construct.isEmpty() == true)
+             {
+                 jta_sen.setText("");
+             }
+             else
              
           for(int i = 0; i < construct.size();i++)
         {
@@ -316,8 +321,7 @@ public void respin()
            {
                String Temp = Sensor.AllSensors.get(i).sensorName()+" => Not Attached";
                defaultListModel.addElement(Temp);
-           }
-               
+           }  
        }
 list.setModel(defaultListModel);
 
@@ -563,9 +567,11 @@ frame.repaint();
         {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
             {
-                try {
+                try 
+                {
                     Desktop.getDesktop().browse(new URI("https://github.com/AtahanEkici/SE-311"));
-                } catch (URISyntaxException | IOException ex) {
+                } catch (URISyntaxException | IOException ex) 
+                {
                     jta.append("\n ERROR: "+ex+" => Not enough Permissions are granted \n");
                 }
 }
@@ -842,7 +848,7 @@ class ResetVisitor implements Visitor
                 
                 jta.append(" \n " +noiseSensor.sensorName()+ " is installed on "+noiseSensor.Attached+" \n ");
             }
-        } 
+        }
                   respin();
         }
     } 

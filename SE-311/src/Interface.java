@@ -90,7 +90,6 @@ class Interface1 implements UserInterface
         };
     }
 }
-    //Burada bir concrete pattern bulunmaktadır.
     class InterfacePanel
     {
         private final UserInterface interface1;
